@@ -48,7 +48,12 @@ object MAv1 {
         a
       }).filter((a: (Long, Long)) => {
         YLogger.ylogInfo(s"RDD-filter-${Thread.currentThread.getId}") (s"s ${System.nanoTime}")
-        val stan = a._2 >= winHeader
+        var stan = false
+        if (a._2 >= winHeader) {
+          stan = true
+        } else {
+          stan = false
+        }
         YLogger.ylogInfo(s"RDD-filter-${Thread.currentThread.getId}") (s"s ${System.nanoTime}")
         stan
       }).persist(StorageLevel.MEMORY_ONLY)
