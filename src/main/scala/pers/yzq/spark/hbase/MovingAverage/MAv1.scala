@@ -36,7 +36,9 @@ object MAv1 {
     var midRDD = sc.emptyRDD[Long].persist(StorageLevel.MEMORY_ONLY)
     for(i <- Range(0, winLength)) {
       // Fetch data from HBase with the restriction of start and end.
-      val rdd = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
+      val rdd = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_AND_DISK)
+      rdd.count()
+      // the new part of winRDD was cached in memory.
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"rdd[${winRDD.id}] fetches data which ranges from ${startTimeStamp} to ${endTimeStamp}.")
       // There is no need to repartition.
       // winRDD is public and needed to be cached partly in memory.
@@ -44,7 +46,8 @@ object MAv1 {
         a._2 >= winHeader
       }).persist(StorageLevel.MEMORY_ONLY)
       winRDD.count()
-      winRDD = winRDD.union(rdd).persist(StorageLevel.MEMORY_AND_DISK)
+      // the preceding part of winRDD was handled in memory
+      winRDD = winRDD.union(rdd)
       winRDD.count()
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"winRDD unions rdd and itself which ranges from ${winHeader} to ${endTimeStamp}.")
       // Calculate the time window.
