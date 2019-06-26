@@ -41,20 +41,20 @@ object MAv1 {
       // There is no need to repartition.
       // winRDD is public and needed to be cached partly in memory.
       winRDD = winRDD.map((a: (Long, Long)) => {
-        YLogger.ylogInfo(s"RDD-union-${Thread.currentThread.getId}") (s"s ${System.nanoTime()}")
+//        YLogger.ylogInfo(s"RDD-union-${Thread.currentThread.getId}") (s"s ${System.nanoTime()}")
         a
       }).union(rdd).map((a: (Long, Long)) => {
-        YLogger.ylogInfo(s"RDD-union-${Thread.currentThread.getId}") (s"e ${System.nanoTime()}")
+//        YLogger.ylogInfo(s"RDD-union-${Thread.currentThread.getId}") (s"e ${System.nanoTime()}")
         a
       }).filter((a: (Long, Long)) => {
-        YLogger.ylogInfo(s"RDD-filter-${Thread.currentThread.getId}") (s"s ${System.nanoTime}")
+//        YLogger.ylogInfo(s"RDD-filter-${Thread.currentThread.getId}") (s"s ${System.nanoTime}")
         var stan = false
         if (a._2 >= winHeader) {
           stan = true
         } else {
           stan = false
         }
-        YLogger.ylogInfo(s"RDD-filter-${Thread.currentThread.getId}") (s"s ${System.nanoTime}")
+//        YLogger.ylogInfo(s"RDD-filter-${Thread.currentThread.getId}") (s"s ${System.nanoTime}")
         stan
       }).persist(StorageLevel.MEMORY_ONLY)
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"winRDD unions rdd and itself which ranges from ${winHeader} to ${endTimeStamp}.")
