@@ -42,7 +42,9 @@ object MAv1 {
       // winRDD is public and needed to be cached partly in memory.
       winRDD = winRDD.filter((a: (Long, Long)) => {
         a._2 >= winHeader
-      }).union(rdd).persist(StorageLevel.MEMORY_ONLY)
+      }).persist(StorageLevel.MEMORY_ONLY)
+      winRDD.count()
+      winRDD = winRDD.union(rdd).persist(StorageLevel.MEMORY_AND_DISK)
       winRDD.count()
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"winRDD unions rdd and itself which ranges from ${winHeader} to ${endTimeStamp}.")
       // Calculate the time window.
