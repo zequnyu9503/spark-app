@@ -42,6 +42,8 @@ object MAv1 {
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"rdd[${winRDD.id}] fetches data which ranges from ${startTimeStamp} to ${endTimeStamp}.")
       // There is no need to repartition.
       // winRDD is public and needed to be cached partly in memory.
+      // 这里对winRDD进行计时.
+      winRDD.count()
       winRDD = winRDD.filter((a: (Long, Long)) => {
         a._2 >= winHeader
       }).persist(StorageLevel.MEMORY_ONLY)
