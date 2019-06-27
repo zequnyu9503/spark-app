@@ -37,6 +37,7 @@ object MAv1 {
     for(i <- Range(0, winLength)) {
       // Fetch data from HBase with the restriction of start and end.
       val rdd = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_AND_DISK)
+      rdd.count()
       // the new part of winRDD was cached in memory.
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"rdd[${winRDD.id}] fetches data which ranges from ${startTimeStamp} to ${endTimeStamp}.")
       // There is no need to repartition.

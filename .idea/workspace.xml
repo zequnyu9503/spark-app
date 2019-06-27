@@ -22,8 +22,26 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="47" column="65" selection-start-line="47" selection-start-column="65" selection-end-line="47" selection-end-column="65" />
+            <state relative-caret-position="520">
+              <caret line="48" column="47" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/twa.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/run.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="14" column="50" lean-forward="true" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -39,6 +57,8 @@
         <option value="$USER_HOME$/Documents/MobaXterm/slash/RemoteFiles/132776_2_1/MAv1.scala" />
         <option value="$USER_HOME$/Documents/MobaXterm/slash/RemoteFiles/132776_2_4/MAv1.scala" />
         <option value="$USER_HOME$/Documents/MobaXterm/slash/RemoteFiles/132776_2_6/MAv1.scala" />
+        <option value="$PROJECT_DIR$/twa.properties" />
+        <option value="$PROJECT_DIR$/run.sh" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala" />
       </list>
     </option>
@@ -159,7 +179,7 @@
       <workItem from="1561531721498" duration="2547000" />
       <workItem from="1561534611150" duration="1461000" />
       <workItem from="1561546597096" duration="4319000" />
-      <workItem from="1561593939491" duration="6599000" />
+      <workItem from="1561593939491" duration="7542000" />
     </task>
     <task id="LOCAL-00001" summary="Tuesday AM">
       <created>1561513130177</created>
@@ -217,11 +237,25 @@
       <option name="project" value="LOCAL" />
       <updated>1561550397740</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Wednesday AM">
+      <created>1561602891215</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1561602891215</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Wednesday AM">
+      <created>1561603137980</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1561603137980</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18362000" />
+    <option name="totallyTimeSpent" value="19305000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-199" width="1936" height="1056" extended-state="6" />
@@ -264,7 +298,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Tuesday AM" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tuesday AM" />
+    <MESSAGE value="Wednesday AM" />
+    <option name="LAST_COMMIT_MESSAGE" value="Wednesday AM" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Scala.scala">
@@ -326,10 +361,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/twa.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="50" lean-forward="true" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="47" column="65" selection-start-line="47" selection-start-column="65" selection-end-line="47" selection-end-column="65" />
+        <state relative-caret-position="520">
+          <caret line="48" column="47" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="47" />
         </state>
       </provider>
     </entry>
