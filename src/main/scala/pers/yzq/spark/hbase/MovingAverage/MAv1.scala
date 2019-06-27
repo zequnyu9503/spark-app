@@ -38,7 +38,7 @@ object MAv1 {
     var midRDD = sc.emptyRDD[Long]
 
     for(i <- Range(0, winLength)) {
-      val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_ONLY)
+      val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
       val prefixWRDD = winRDD.filter(_._2 >= winHeader)
       winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY)
 
