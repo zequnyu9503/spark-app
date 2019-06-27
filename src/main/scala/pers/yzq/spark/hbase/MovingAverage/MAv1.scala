@@ -32,32 +32,24 @@ object MAv1 {
     var winHeader = winStart
     var startTimeStamp = winHeader
     var endTimeStamp = startTimeStamp + winSize
-    var winRDD = sc.emptyRDD[(Long, Long)]
+    var winRDD = sc.emptyRDD[(Long, Long)].persist(StorageLevel.MEMORY_AND_DISK)
     var midRDD = sc.emptyRDD[Long].persist(StorageLevel.MEMORY_ONLY)
     for(i <- Range(0, winLength)) {
       // Fetch data from HBase with the restriction of start and end.
       val rdd = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_AND_DISK)
-      rdd.count()
       // the new part of winRDD was cached in memory.
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"rdd[${winRDD.id}] fetches data which ranges from ${startTimeStamp} to ${endTimeStamp}.")
       // There is no need to repartition.
       // winRDD is public and needed to be cached partly in memory.
-      // 这里对winRDD进行计时.
-      winRDD.count()
-      winRDD = winRDD.filter((a: (Long, Long)) => {
-        a._2 >= winHeader
-      }).persist(StorageLevel.MEMORY_ONLY)
-      winRDD.count()
-      // the preceding part of winRDD was handled in memory
-      winRDD = winRDD.union(rdd)
+      winRDD = winRDD.filter(_._2 >= winHeader).union(rdd)
       winRDD.count()
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"winRDD unions rdd and itself which ranges from ${winHeader} to ${endTimeStamp}.")
       // Calculate the time window.
-      val average = winRDD.map(e => e._1).reduce((a, b) => a + b) / winSize
+      val average = winRDD.persist(StorageLevel.MEMORY_AND_DISK).map(e => e._1).reduce((a, b) => a + b) / winSize
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"the average is ${average}.")
       val winAve = sc.parallelize(Seq(average))
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"create rdd called winAve[${winAve.id}] which stores the average.")
-      midRDD = midRDD.union(winAve).persist(StorageLevel.MEMORY_ONLY)
+      midRDD = midRDD.union(winAve).persist(StorageLevel.MEMORY_AND_DISK)
       midRDD.count()
 
       startTimeStamp = winHeader + Math.max(winSize, winStep)
