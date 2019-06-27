@@ -32,11 +32,11 @@ object MAv1 {
     var winHeader = winStart
     var startTimeStamp = winHeader
     var endTimeStamp = startTimeStamp + winSize
-    var winRDD = sc.emptyRDD[(Long, Long)].persist(StorageLevel.MEMORY_AND_DISK)
+    var winRDD = sc.emptyRDD[(Long, Long)].persist(StorageLevel.MEMORY_ONLY)
     var midRDD = sc.emptyRDD[Long].persist(StorageLevel.MEMORY_ONLY)
     for(i <- Range(0, winLength)) {
       // Fetch data from HBase with the restriction of start and end.
-      val rdd = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_AND_DISK)
+      val rdd = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_ONLY)
       rdd.count()
       // the new part of winRDD was cached in memory.
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"rdd[${winRDD.id}] fetches data which ranges from ${startTimeStamp} to ${endTimeStamp}.")
@@ -46,11 +46,11 @@ object MAv1 {
       winRDD.count()
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"winRDD unions rdd and itself which ranges from ${winHeader} to ${endTimeStamp}.")
       // Calculate the time window.
-      val average = winRDD.persist(StorageLevel.MEMORY_AND_DISK).map(e => e._1).reduce((a, b) => a + b) / winSize
+      val average = winRDD.persist(StorageLevel.MEMORY_ONLY).map(e => e._1).reduce((a, b) => a + b) / winSize
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"the average is ${average}.")
       val winAve = sc.parallelize(Seq(average))
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"create rdd called winAve[${winAve.id}] which stores the average.")
-      midRDD = midRDD.union(winAve).persist(StorageLevel.MEMORY_AND_DISK)
+      midRDD = midRDD.union(winAve).persist(StorageLevel.MEMORY_ONLY)
       midRDD.count()
 
       startTimeStamp = winHeader + Math.max(winSize, winStep)
