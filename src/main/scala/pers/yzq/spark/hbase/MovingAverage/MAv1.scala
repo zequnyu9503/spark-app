@@ -40,7 +40,7 @@ object MAv1 {
     for(i <- Range(0, winLength)) {
       val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_ONLY)
       val prefixWRDD = winRDD.filter(_._2 >= winHeader)
-      winRDD = prefixWRDD.union(suffixWRDD)
+      winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY)
 
       val average = winRDD.map(e => e._1).reduce(_+_) / winSize
       val winAve = sc.parallelize(Seq(average))
