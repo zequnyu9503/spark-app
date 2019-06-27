@@ -5,7 +5,7 @@ spark-submit \
 --executor-memory 8g \
 --executor-cores 4 \
 --driver-cores 4 \
---class pers.yzq.spark.hbase.MovingAverage.MAv0 \
+--class pers.yzq.spark.hbase.MovingAverage.MAv1 \
 --jars \
 ${libs_dir}/hbase-common-2.1.4.jar,\
 ${libs_dir}/hbase-client-2.1.4.jar,\
