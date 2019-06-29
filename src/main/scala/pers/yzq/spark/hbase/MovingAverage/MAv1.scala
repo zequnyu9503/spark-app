@@ -53,7 +53,7 @@ object MAv1 {
       if (winRDDs.length > minKeepInMem) {
         for(i <- Range(0, winRDDs.length - minKeepInMem)) {
           val winCachedRDD = winRDDs.dequeue()
-          YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口RDD [${winCachedRDD.id}].")
+          YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口RDD [${winCachedRDD.id}] 清除缓存.")
           winCachedRDD.unpersist(false)
         }
       }
