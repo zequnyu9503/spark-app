@@ -36,26 +36,27 @@ object MAv1 {
     var winHeader = winStart
     var startTimeStamp = winHeader
     var endTimeStamp = startTimeStamp + winSize
-    val winRDDs = new mutable.Queue[RDD[(Long, Long)]]()
-    winRDDs.enqueue(sc.emptyRDD[(Long, Long)])
+    val winRDDs = new mutable.LinkedHashMap[Int, RDD[(Long, Long)]]
     var midRDD = sc.emptyRDD[Long]
 
-    for(winId <- Range(0, winLength)) {
+    for(winId <- 0 until winLength) {
       val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"HBase 载入 suffixWRDD 范围 {${startTimeStamp}~${endTimeStamp}}.")
-      val prefixWRDD = winRDDs.dequeue().filter((a:(Long, Long)) => a._2 >= winHeader)
+      val prefixWRDD = winRDDs.get(winId - 1) match {
+        case Some(rdd) => rdd.filter((a:(Long, Long)) => a._2 >= winHeader)
+        case _=>sc.emptyRDD[(Long, Long)]
+      }
       val winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
-      winRDDs.enqueue(winRDD)
+      winRDDs.put(winId, winRDD)
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"窗口RDD [${winRDD.id}] 范围 {${winHeader}~${winHeader + winSize}}.")
 
       val average = winRDD.map(e => e._1).reduce(_+_) / winSize
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"平均值为 ${average}.")
-      if (winRDDs.length > minKeepInMem) {
-        for(i <- Range(0, winRDDs.length - minKeepInMem)) {
-          val winCachedRDD = winRDDs.dequeue()
-          YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口RDD [${winCachedRDD.id}] 清除缓存.")
-          winCachedRDD.unpersist(false)
-        }
+      winRDDs.get(winId - minKeepInMem) match {
+        case Some(rdd) =>
+          YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口RDD[${rdd.id}] 被清除.")
+          rdd.unpersist(true)
+        case _ =>
       }
       val winAve = sc.parallelize(Seq(average))
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口平均值RDD [${winAve.id}].")

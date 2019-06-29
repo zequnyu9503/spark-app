@@ -2,6 +2,8 @@ package pers.yzq.spark
 import org.apache.hadoop.hbase.client.Scan
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil
 import org.apache.hadoop.hbase.util.Bytes
+import org.apache.spark.rdd.RDD
+import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.FunSuite
 import pers.yzq.spark.hbase.MovingAverage.MAv0
 
@@ -47,13 +49,24 @@ class Some extends FunSuite{
   }
 
   test("dynamic RDD") {
-    val queue = new mutable.Queue[Long]()
-    for(winId <- Range(0,0)) {
-      queue.enqueue(winId)
-      if(queue.length > 1) {
-        queue.dequeue()
+    val conf = new SparkConf().setAppName("dynamicRDD").setMaster("local")
+    val sc = new SparkContext(conf)
+    val winRDDs = new mutable.Queue[RDD[Int]]()
+    winRDDs.enqueue(sc.emptyRDD[Int])
+
+    for(i<- Range(0, 5)) {
+      val rdd = sc.parallelize(Seq(1, 1, 1))
+      val mid = rdd.map(e => e + i).cache()
+      winRDDs.enqueue(mid)
+      val res = mid.count()
+      println(s"res -> ${res}")
+      if (winRDDs.length > 1) {
+        for (i <- Range(0, winRDDs.length - 1)) {
+          val winCachedRDD = winRDDs.dequeue()
+          println(s"remove rdd [${winCachedRDD.id}]")
+          winCachedRDD.unpersist(false)
+        }
       }
-      println(s"length -> ${queue.front}")
     }
   }
 }
