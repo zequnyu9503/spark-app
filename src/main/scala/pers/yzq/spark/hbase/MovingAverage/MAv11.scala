@@ -1,21 +1,19 @@
 package pers.yzq.spark.hbase.MovingAverage
-import org.apache.spark.rdd.RDD
+
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
-import pers.yzq.spark.{PropertiesHelper, YLogger}
 import pers.yzq.spark.hbase.Common
-
-import scala.collection.mutable
+import pers.yzq.spark.{PropertiesHelper, YLogger}
 
 /**
   *
   * @Author: YZQ
   * @date 2019/5/21
   */
-object MAv1 {
+object MAv11 {
 
   /**
-    * Assume time-creasing windows
+    * 用于粗粒度计量算子的执行时间.
     * @param args
     */
   def main(args: Array[String]): Unit = {
@@ -26,7 +24,6 @@ object MAv1 {
     val winSize = PropertiesHelper.getProperty("twa.win.size").toLong
     val winStep = PropertiesHelper.getProperty("twa.win.step").toLong
     val winLength = PropertiesHelper.getProperty("twa.win.length").toInt
-    val minKeepInMem = 1
 
     val conf = new SparkConf()
       .setAppName("TWA-HBASE-MAv1" + System.currentTimeMillis())
@@ -36,19 +33,14 @@ object MAv1 {
     var winHeader = winStart
     var startTimeStamp = winHeader
     var endTimeStamp = startTimeStamp + winSize
-    val winRDDs = new mutable.Queue[RDD[(Long, Long)]]()
-    winRDDs.enqueue(sc.emptyRDD[(Long, Long)])
+    var winRDD = sc.emptyRDD[(Long, Long)]
     var midRDD = sc.emptyRDD[Long]
 
     for(winId <- Range(0, winLength)) {
       val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"HBase 载入 suffixWRDD 范围 {${startTimeStamp}~${endTimeStamp}}.")
-      if (winRDDs.length > minKeepInMem) {
-        for(i <- Range(0, winLength - minKeepInMem)) winRDDs.dequeue().unpersist(true)
-      }
-      val prefixWRDD = winRDDs.dequeue().filter((a:(Long, Long)) => a._2 >= winHeader)
-      val winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
-      winRDDs.enqueue(winRDD)
+      val prefixWRDD = winRDD.filter(_._2 >= winHeader)
+      winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"窗口RDD [${winRDD.id}] 范围 {${winHeader}~${winHeader + winSize}}.")
 
       val average = winRDD.map(e => e._1).reduce(_+_) / winSize
