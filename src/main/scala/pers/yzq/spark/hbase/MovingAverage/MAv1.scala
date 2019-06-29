@@ -44,7 +44,7 @@ object MAv1 {
       val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"HBase 载入 suffixWRDD 范围 {${startTimeStamp}~${endTimeStamp}}.")
       if (winRDDs.length > minKeepInMem) {
-        for(i <- Range(0, winLength - minKeepInMem)) winRDDs.dequeue().unpersist(true)
+        for(i <- Range(0, winRDDs.length - minKeepInMem)) winRDDs.dequeue().unpersist(true)
       }
       val prefixWRDD = winRDDs.dequeue().filter((a:(Long, Long)) => a._2 >= winHeader)
       val winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
