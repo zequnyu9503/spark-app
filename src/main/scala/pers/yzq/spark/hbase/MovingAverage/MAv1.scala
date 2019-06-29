@@ -37,10 +37,10 @@ object MAv1 {
     var winRDD = sc.emptyRDD[(Long, Long)]
     var midRDD = sc.emptyRDD[Long]
 
-    for(i <- Range(0, winLength)) {
+    for(winId <- Range(0, winLength)) {
       val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
       val prefixWRDD = winRDD.filter(_._2 >= winHeader)
-      winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY)
+      winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}]")
 
       val average = winRDD.map(e => e._1).reduce(_+_) / winSize
       val winAve = sc.parallelize(Seq(average))
@@ -50,8 +50,6 @@ object MAv1 {
       startTimeStamp = winHeader + Math.max(winSize, winStep)
       endTimeStamp = startTimeStamp + Math.min(winSize, winStep)
       winHeader += winStep
-
-      YLogger.ylogInfo(this.getClass.getSimpleName) ("\r\n")
     }
     val nextWinValue = midRDD.reduce(_+_) / winLength
     YLogger.ylogInfo(this.getClass.getSimpleName) (s"aggregate rdd of windows for average -> ${nextWinValue}")
