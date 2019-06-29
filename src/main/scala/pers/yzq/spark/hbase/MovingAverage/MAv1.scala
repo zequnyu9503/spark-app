@@ -43,9 +43,6 @@ object MAv1 {
     for(winId <- Range(0, winLength)) {
       val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"HBase 载入 suffixWRDD 范围 {${startTimeStamp}~${endTimeStamp}}.")
-      if (winRDDs.length > minKeepInMem) {
-        for(i <- Range(0, winRDDs.length - minKeepInMem)) winRDDs.dequeue().unpersist(true)
-      }
       val prefixWRDD = winRDDs.dequeue().filter((a:(Long, Long)) => a._2 >= winHeader)
       val winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
       winRDDs.enqueue(winRDD)
@@ -53,6 +50,9 @@ object MAv1 {
 
       val average = winRDD.map(e => e._1).reduce(_+_) / winSize
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"平均值为 ${average}.")
+      if (winRDDs.length > minKeepInMem) {
+        for(i <- Range(0, winRDDs.length - minKeepInMem)) winRDDs.dequeue().unpersist(false)
+      }
       val winAve = sc.parallelize(Seq(average))
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口平均值RDD [${winAve.id}].")
       midRDD = midRDD.union(winAve).persist(StorageLevel.MEMORY_ONLY)
