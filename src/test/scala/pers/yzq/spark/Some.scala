@@ -5,6 +5,8 @@ import org.apache.hadoop.hbase.util.Bytes
 import org.scalatest.FunSuite
 import pers.yzq.spark.hbase.MovingAverage.MAv0
 
+import scala.collection.mutable
+
 /**
   *
   * @Author: YZQ
@@ -42,5 +44,16 @@ class Some extends FunSuite{
 
   test("PropertiesHelper") {
     println(s"hdfs.path: ${PropertiesHelper.getProperty("hdfs.path")}")
+  }
+
+  test("dynamic RDD") {
+    val queue = new mutable.Queue[Long]()
+    for(winId <- Range(0,0)) {
+      queue.enqueue(winId)
+      if(queue.length > 1) {
+        queue.dequeue()
+      }
+      println(s"length -> ${queue.front}")
+    }
   }
 }

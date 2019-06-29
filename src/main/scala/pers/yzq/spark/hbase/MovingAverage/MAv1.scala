@@ -51,7 +51,11 @@ object MAv1 {
       val average = winRDD.map(e => e._1).reduce(_+_) / winSize
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"平均值为 ${average}.")
       if (winRDDs.length > minKeepInMem) {
-        for(i <- Range(0, winRDDs.length - minKeepInMem)) winRDDs.dequeue().unpersist(false)
+        for(i <- Range(0, winRDDs.length - minKeepInMem)) {
+          val winCachedRDD = winRDDs.dequeue()
+          YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口RDD [${winCachedRDD.id}].")
+          winCachedRDD.unpersist(false)
+        }
       }
       val winAve = sc.parallelize(Seq(average))
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口平均值RDD [${winAve.id}].")

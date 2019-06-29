@@ -4,6 +4,7 @@
     <list default="true" id="995a8f6f-dc1b-42a8-8ffe-cd534f152c59" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -21,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="42" column="39" lean-forward="true" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="39" />
+            <state relative-caret-position="366">
+              <caret line="55" column="88" lean-forward="true" selection-start-line="55" selection-start-column="88" selection-end-line="55" selection-end-column="88" />
               <folding>
                 <element signature="e#43#74#0" expanded="true" />
               </folding>
@@ -48,6 +49,7 @@
         <option value="$PROJECT_DIR$/run.sh" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv11.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv0.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala" />
       </list>
     </option>
@@ -132,6 +134,27 @@
               <item name="hbase" type="462c0819:PsiDirectoryNode" />
               <item name="MovingAverage" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+              <item name="spark" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -167,6 +190,32 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Some.dynamic RDD" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <module name="spark" />
+      <setting name="path" value="pers.yzq.spark.Some" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="showProgressMessages" value="true" />
+      <setting name="useSbt" value="false" />
+      <setting name="useUiWithSbt" value="false" />
+      <setting name="jrePath" value="" />
+      <envs />
+      <setting name="testKind" value="Test name" />
+      <setting name="path" value="pers.yzq.spark.Some" />
+      <setting name="testName" value="dynamic RDD" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="ScalaTest.Some.dynamic RDD" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -184,7 +233,7 @@
       <workItem from="1561593939491" duration="8157000" />
       <workItem from="1561611425995" duration="3697000" />
       <workItem from="1561776357314" duration="2480000" />
-      <workItem from="1561785983361" duration="5773000" />
+      <workItem from="1561785983361" duration="6869000" />
     </task>
     <task id="LOCAL-00001" summary="Tuesday AM">
       <created>1561513130177</created>
@@ -312,26 +361,45 @@
       <option name="project" value="LOCAL" />
       <updated>1561798368084</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Saturday AM">
+      <created>1561799315474</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1561799315474</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="Some_dynamic_RDD - 2019.06.29 at 17h 22m 39s.xml">
+      <configuration name="Some.dynamic RDD" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="Some_dynamic_RDD - 2019.06.29 at 17h 23m 04s.xml">
+      <configuration name="Some.dynamic RDD" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="Some_dynamic_RDD - 2019.06.29 at 17h 25m 28s.xml">
+      <configuration name="Some.dynamic RDD" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31870000" />
+    <option name="totallyTimeSpent" value="32966000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-199" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14498934" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14498934" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2407809" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -366,23 +434,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="Saturday AM" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Scala.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-726" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="19" column="3" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Documents/MobaXterm/slash/RemoteFiles/132776_2_1/MAv1.scala" />
@@ -461,15 +515,37 @@
     </entry>
     <entry file="jar://D:/Service/REPOSITORIES/org/scala-lang/scala-library/2.11.12/scala-library-2.11.12-sources.jar!/scala/collection/mutable/Queue.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="64" column="16" lean-forward="true" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
+        <state relative-caret-position="298">
+          <caret line="55" column="6" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/MobaXterm/slash/RemoteFiles/328782_3_9/MAv1.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-594" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="50" column="25" lean-forward="true" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+          <folding>
+            <element signature="e#23#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Scala.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="42" column="39" lean-forward="true" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="39" />
+        <state relative-caret-position="366">
+          <caret line="55" column="88" lean-forward="true" selection-start-line="55" selection-start-column="88" selection-end-line="55" selection-end-column="88" />
           <folding>
             <element signature="e#43#74#0" expanded="true" />
           </folding>
