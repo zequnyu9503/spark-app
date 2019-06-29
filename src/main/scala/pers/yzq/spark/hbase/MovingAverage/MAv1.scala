@@ -39,11 +39,15 @@ object MAv1 {
 
     for(winId <- Range(0, winLength)) {
       val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
+      YLogger.ylogInfo(this.getClass.getSimpleName)(s"HBase 载入 suffixWRDD 范围 {${startTimeStamp}~${endTimeStamp}.")
       val prefixWRDD = winRDD.filter(_._2 >= winHeader)
       winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}]")
+      YLogger.ylogInfo(this.getClass.getSimpleName)(s"窗口RDD [${winRDD.id}] 范围 {${winHeader}~${winHeader + winSize}.")
 
       val average = winRDD.map(e => e._1).reduce(_+_) / winSize
+      YLogger.ylogInfo(this.getClass.getSimpleName) (s"平均值为 ${average}")
       val winAve = sc.parallelize(Seq(average))
+      YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口平均值RDD [${winAve.id}]")
       midRDD = midRDD.union(winAve).persist(StorageLevel.MEMORY_ONLY)
       midRDD.count()
 
@@ -52,7 +56,7 @@ object MAv1 {
       winHeader += winStep
     }
     val nextWinValue = midRDD.reduce(_+_) / winLength
-    YLogger.ylogInfo(this.getClass.getSimpleName) (s"aggregate rdd of windows for average -> ${nextWinValue}")
+    YLogger.ylogInfo(this.getClass.getSimpleName) (s"聚合窗口平均值的平均值 -> ${nextWinValue}")
     sc.stop()
   }
 }
