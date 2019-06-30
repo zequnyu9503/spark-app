@@ -40,7 +40,10 @@ object MAv11 {
     var midRDD = sc.emptyRDD[Long]
 
     for(winId <- 0 until winLength) {
-      val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_ONLY)
+      val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
+      // 载入数据+计算
+      suffixWRDD.count()
+      suffixWRDD.persist(StorageLevel.MEMORY_ONLY)
       // 载入数据+缓存+计算.
       suffixWRDD.count()
       // 计算.
