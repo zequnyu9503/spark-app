@@ -69,4 +69,10 @@ class Some extends FunSuite{
       }
     }
   }
+
+  test("about scala") {
+    val op = None
+    if(op.isDefined) println("defined") else println("not defined")
+
+  }
 }
