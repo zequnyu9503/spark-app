@@ -40,13 +40,8 @@ object MAv11 {
     var midRDD = sc.emptyRDD[Long]
 
     for(winId <- 0 until winLength) {
-      val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp))
-      // 载入数据+计算
-      suffixWRDD.count()
-      suffixWRDD.persist(StorageLevel.MEMORY_ONLY)
+      val suffixWRDD = common.trans2DT(common.loadRDD(sc,start = startTimeStamp, end = endTimeStamp)).persist(StorageLevel.MEMORY_ONLY)
       // 载入数据+缓存+计算.
-      suffixWRDD.count()
-      // 计算.
       suffixWRDD.count()
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"HBase 载入 suffixWRDD 范围 {${startTimeStamp}~${endTimeStamp}}.")
       val prefixWRDD = winRDDs.get(winId - 1) match {
@@ -56,8 +51,9 @@ object MAv11 {
       val winRDD = prefixWRDD.union(suffixWRDD)
       // 过滤+聚合+计算.
       winRDD.count()
+      suffixWRDD.unpersist(true)
       winRDD.persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
-      // 过滤+聚合+缓存+计算.
+      // 载入数据+过滤+聚合+缓存+计算.
       winRDD.count()
       // 计算.
       winRDD.count()
