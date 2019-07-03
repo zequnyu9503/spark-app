@@ -47,7 +47,7 @@ object MAv1 {
         case Some(rdd) => rdd.filter((a:(Long, Long)) => a._2 >= winHeader)
         case _=>sc.emptyRDD[(Long, Long)]
       }
-      val winRDD = prefixWRDD.union(suffixWRDD).coalesce(hregions, false).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
+      val winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
       winRDDs.put(winId, winRDD)
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"窗口RDD [${winRDD.id}] 范围 {${winHeader}~${winHeader + winSize}}.")
 
