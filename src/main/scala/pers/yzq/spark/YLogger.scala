@@ -24,7 +24,7 @@ import java.util.logging._
 
 import scala.collection.mutable
 
-protected [spark] object YLogger extends Serializable {
+object YLogger extends Serializable {
 
   private var ylogs_ = new mutable.HashMap[String, Logger]()
 

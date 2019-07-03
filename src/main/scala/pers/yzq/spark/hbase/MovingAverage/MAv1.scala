@@ -27,6 +27,7 @@ object MAv1 {
     val winStep = PropertiesHelper.getProperty("twa.win.step").toLong
     val winLength = PropertiesHelper.getProperty("twa.win.length").toInt
     val minKeepInMem = 1
+    val hregions = 10
 
     val conf = new SparkConf()
       .setAppName("TWA-HBASE-MAv1" + System.currentTimeMillis())
@@ -46,7 +47,7 @@ object MAv1 {
         case Some(rdd) => rdd.filter((a:(Long, Long)) => a._2 >= winHeader)
         case _=>sc.emptyRDD[(Long, Long)]
       }
-      val winRDD = prefixWRDD.union(suffixWRDD).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
+      val winRDD = prefixWRDD.union(suffixWRDD).coalesce(hregions, false).persist(StorageLevel.MEMORY_ONLY).setName(s"winRDD[${winId}].")
       winRDDs.put(winId, winRDD)
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"窗口RDD [${winRDD.id}] 范围 {${winHeader}~${winHeader + winSize}}.")
 
