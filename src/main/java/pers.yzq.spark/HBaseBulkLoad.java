@@ -35,7 +35,7 @@ public class HBaseBulkLoad implements Serializable {
         System.out.println("BulkLoad");
     }
 
-    private Boolean cTable(Admin admin, String tableName, List<String> families, byte[][] splits){
+    public Boolean cTable(Admin admin, String tableName, List<String> families, byte[][] splits){
         try {
             TableName tn = TableName.valueOf(tableName);
             TableDescriptorBuilder tdb = TableDescriptorBuilder.newBuilder(tn);
@@ -58,7 +58,7 @@ public class HBaseBulkLoad implements Serializable {
         }
     }
 
-    private Boolean ddTable(Admin admin, String tableName){
+    public Boolean ddTable(Admin admin, String tableName){
         try{
             TableName tn = TableName.valueOf(tableName);
             if(!admin.isTableDisabled(tn)) {
@@ -72,7 +72,7 @@ public class HBaseBulkLoad implements Serializable {
         }
     }
 
-    protected byte[][] getSplits(long range, int num){
+    public byte[][] getSplits(long range, int num){
         long split = range / num;
         long [] keys = new long[num - 1];
         for(int i = 0;i<keys.length; ++i) {
@@ -90,7 +90,7 @@ public class HBaseBulkLoad implements Serializable {
         return splits;
     }
 
-    private byte[][] getSplits(List<String> ss){
+    public byte[][] getSplits(List<String> ss){
         TreeSet set = new TreeSet<>(Bytes.BYTES_COMPARATOR);
         ss.forEach(e -> set.add(Bytes.toBytes(e)));
         Iterator<byte[]> iterator = set.iterator();
@@ -151,7 +151,7 @@ public class HBaseBulkLoad implements Serializable {
         );
     }
 
-    private JavaPairRDD<ImmutableBytesWritable, KeyValue> hbaseRDDv2(JavaRDD<String> rdd, String columnFamily, String column, int totalTimeStamp){
+    public JavaPairRDD<ImmutableBytesWritable, KeyValue> hbaseRDDv2(JavaRDD<String> rdd, String columnFamily, String column, int totalTimeStamp){
         String [] rkPrefix = {"j","a", "b","c","d","e","f","g","h","i"};
         return rdd.mapToPair((PairFunction<String, String, Tuple2<Integer, Long>>) s -> {
             String[] vt = s.split("-");
