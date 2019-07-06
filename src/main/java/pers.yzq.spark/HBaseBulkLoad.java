@@ -35,7 +35,7 @@ public class HBaseBulkLoad implements Serializable {
         System.out.println("BulkLoad");
     }
 
-    protected Boolean cTable(Admin admin, String tableName, List<String> families, byte[][] splits){
+    private Boolean cTable(Admin admin, String tableName, List<String> families, byte[][] splits){
         try {
             TableName tn = TableName.valueOf(tableName);
             TableDescriptorBuilder tdb = TableDescriptorBuilder.newBuilder(tn);
@@ -58,7 +58,7 @@ public class HBaseBulkLoad implements Serializable {
         }
     }
 
-    protected Boolean ddTable(Admin admin, String tableName){
+    private Boolean ddTable(Admin admin, String tableName){
         try{
             TableName tn = TableName.valueOf(tableName);
             if(!admin.isTableDisabled(tn)) {
@@ -90,7 +90,7 @@ public class HBaseBulkLoad implements Serializable {
         return splits;
     }
 
-    protected byte[][] getSplits(List<String> ss){
+    private byte[][] getSplits(List<String> ss){
         TreeSet set = new TreeSet<>(Bytes.BYTES_COMPARATOR);
         ss.forEach(e -> set.add(Bytes.toBytes(e)));
         Iterator<byte[]> iterator = set.iterator();
@@ -101,7 +101,7 @@ public class HBaseBulkLoad implements Serializable {
         return splits;
     }
 
-    protected void bulkLoad(String tableName, String columnFamily, String column, String hadoop_file, String hfile) throws IOException {
+    public void bulkLoad(String tableName, String columnFamily, String column, String hadoop_file, String hfile) throws IOException {
         final int hRegionSize = 128 * 1024 * 1024;
 
         Configuration hc = HBaseConfiguration.create();
@@ -151,7 +151,7 @@ public class HBaseBulkLoad implements Serializable {
         );
     }
 
-    protected JavaPairRDD<ImmutableBytesWritable, KeyValue> hbaseRDDv2(JavaRDD<String> rdd, String columnFamily, String column, int totalTimeStamp){
+    private JavaPairRDD<ImmutableBytesWritable, KeyValue> hbaseRDDv2(JavaRDD<String> rdd, String columnFamily, String column, int totalTimeStamp){
         String [] rkPrefix = {"j","a", "b","c","d","e","f","g","h","i"};
         return rdd.mapToPair((PairFunction<String, String, Tuple2<Integer, Long>>) s -> {
             String[] vt = s.split("-");

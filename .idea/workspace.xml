@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="995a8f6f-dc1b-42a8-8ffe-cd534f152c59" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java" afterDir="false" />
@@ -20,57 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="175" lean-forward="true" selection-start-line="175" selection-end-line="175" />
-              <folding>
-                <element signature="e#1154#1155#0" expanded="true" />
-                <element signature="e#1200#1201#0" expanded="true" />
-                <element signature="method#cTable#0;class#HBaseBulkLoad#0" />
-                <element signature="method#ddTable#0;class#HBaseBulkLoad#0" />
-                <element signature="method#getSplits#0;class#HBaseBulkLoad#0" />
-                <element signature="method#getSplits#1;class#HBaseBulkLoad#0" />
-                <element signature="method#bulkLoad#0;class#HBaseBulkLoad#0" />
-                <element signature="method#hbaseRDDv2#0;class#HBaseBulkLoad#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/run.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="8" lean-forward="true" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="462">
               <caret line="21" column="68" lean-forward="true" selection-start-line="21" selection-start-column="68" selection-end-line="21" selection-end-column="68" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Starter.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -113,9 +66,9 @@
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv11.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala" />
         <option value="$PROJECT_DIR$/twa.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala" />
         <option value="$PROJECT_DIR$/run.sh" />
+        <option value="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java" />
       </list>
     </option>
   </component>
@@ -239,7 +192,33 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="ScalaTest.Some.about scala">
+  <component name="RunManager" selected="Maven.All">
+    <configuration name="All" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
     <configuration name="Some.about scala" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
       <module name="spark" />
       <setting name="path" value="pers.yzq.spark.Some" />
@@ -278,6 +257,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Maven.All" />
+      <item itemvalue="ScalaTest.Some.about scala" />
+      <item itemvalue="ScalaTest.Some.dynamic RDD" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="ScalaTest.Some.about scala" />
@@ -314,7 +298,7 @@
       <workItem from="1562221058440" duration="1363000" />
       <workItem from="1562243356292" duration="620000" />
       <workItem from="1562290951490" duration="1069000" />
-      <workItem from="1562409179582" duration="5490000" />
+      <workItem from="1562409179582" duration="6140000" />
     </task>
     <task id="LOCAL-00001" summary="Tuesday AM">
       <created>1561513130177</created>
@@ -512,7 +496,14 @@
       <option name="project" value="LOCAL" />
       <updated>1562413868022</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Saturday PM">
+      <created>1562420688431</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1562420688431</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -536,7 +527,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73698000" />
+    <option name="totallyTimeSpent" value="74348000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-199" width="1936" height="1056" extended-state="6" />
@@ -550,7 +541,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2537961" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31019524" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -575,7 +566,7 @@
       <window_info anchor="right" id="Structure" order="10" sideWeight="0.5010846" side_tool="true" weight="0.21108742" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.21641791" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.22867803" />
       <window_info id="Designer" order="1" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -583,7 +574,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2537961" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31019524" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -605,7 +596,7 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info anchor="right" id="Bean Validation" order="9" />
-      <window_info anchor="right" id="Structure" order="10" sideWeight="0.5010846" side_tool="true" visible="true" weight="0.13432837" />
+      <window_info anchor="right" id="Structure" order="10" sideWeight="0.5010846" side_tool="true" weight="0.21108742" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -624,11 +615,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Saturday PM" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-726" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../MobaXterm/slash/RemoteFiles/132776_2_1/MAv1.scala" />
     <entry file="file://$PROJECT_DIR$/../../MobaXterm/slash/RemoteFiles/132776_2_2/MAv1.scala" />
     <entry file="file://$PROJECT_DIR$/../../MobaXterm/slash/RemoteFiles/132776_2_4/MAv1.scala" />
@@ -800,13 +786,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Starter.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
@@ -814,17 +793,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Starter.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="68" lean-forward="true" selection-start-line="21" selection-start-column="68" selection-end-line="21" selection-end-column="68" />
+        <state relative-caret-position="242">
+          <caret line="11" column="3" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-61">
+          <folding>
+            <element signature="n#plugin#0;n#plugins#0;n#build#0;n#project#0;n#!!top" />
+            <element signature="n#plugin#1;n#plugins#0;n#build#0;n#project#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="36" lean-forward="true" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="175" lean-forward="true" selection-start-line="175" selection-end-line="175" />
+        <state relative-caret-position="484">
+          <caret line="103" column="47" selection-start-line="103" selection-start-column="47" selection-end-line="103" selection-end-column="47" />
           <folding>
             <element signature="e#1154#1155#0" expanded="true" />
             <element signature="e#1200#1201#0" expanded="true" />
@@ -838,10 +834,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run.sh">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="8" lean-forward="true" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+        <state relative-caret-position="462">
+          <caret line="21" column="68" lean-forward="true" selection-start-line="21" selection-start-column="68" selection-end-line="21" selection-end-column="68" />
         </state>
       </provider>
     </entry>
