@@ -2,7 +2,7 @@ package pers.yzq.spark.hbase
 
 import pers.yzq.spark.{HBaseBulkLoad, PropertiesHelper, YLogger}
 
-object BulkLoad {
+object BulkLoad extends Serializable {
 
   def main(args: Array[String]): Unit = {
     // Table Name
