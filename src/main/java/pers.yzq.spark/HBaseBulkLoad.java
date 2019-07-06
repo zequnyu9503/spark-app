@@ -102,7 +102,7 @@ public class HBaseBulkLoad implements Serializable {
     }
 
     protected void bulkLoad(String tableName, String columnFamily, String column, String hadoop_file, String hfile) throws IOException {
-        final int hRegionSize = 64 * 1024 * 1024;
+        final int hRegionSize = 128 * 1024 * 1024;
 
         Configuration hc = HBaseConfiguration.create();
         hc.set("hbase.mapred.outputtable", tableName);
@@ -173,18 +173,17 @@ public class HBaseBulkLoad implements Serializable {
                 });
     }
 
-
     public static void main(String[] args) throws IOException {
         // Table Name
-        String tableName = args[0];
+        String tableName = PropertiesHelper.getProperty("hbase.bulkload.tablename");
         // Column Family
-        String family = args[1];
+        String family = PropertiesHelper.getProperty("hbase.bulkload.columnfamily");
         // Column
-        String column = args[2];
+        String column = PropertiesHelper.getProperty("hbase.bulkload.columnqualify");
         // Hadoop File
-        String hadoop_file = args[3];
+        String hadoop_file = PropertiesHelper.getProperty("hbase.bulkload.hadoopfile");
         // HFile
-        String hfile = args[4];
+        String hfile = PropertiesHelper.getProperty("hbase.bulkload.hfile");
 
         HBaseBulkLoad bulkLoad = new HBaseBulkLoad();
         bulkLoad.bulkLoad(tableName, family, column, hadoop_file, hfile);

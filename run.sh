@@ -2,7 +2,7 @@
 libs_dir="hdfs://centos3:9000/spark-libs"
 spark-submit \
 --master spark://centos3:7079 \
---executor-memory 8g \
+--executor-memory 12g \
 --executor-cores 4 \
 --driver-cores 4 \
 --class pers.yzq.spark.hbase.MovingAverage.MAv1 \
