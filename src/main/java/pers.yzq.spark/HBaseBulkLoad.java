@@ -172,20 +172,4 @@ public class HBaseBulkLoad implements Serializable {
                     return new Tuple2<>(writable, keyValue);
                 });
     }
-
-    public static void main(String[] args) throws IOException {
-        // Table Name
-        String tableName = PropertiesHelper.getProperty("hbase.bulkload.tablename");
-        // Column Family
-        String family = PropertiesHelper.getProperty("hbase.bulkload.columnfamily");
-        // Column
-        String column = PropertiesHelper.getProperty("hbase.bulkload.columnqualify");
-        // Hadoop File
-        String hadoop_file = PropertiesHelper.getProperty("hbase.bulkload.hadoopfile");
-        // HFile
-        String hfile = PropertiesHelper.getProperty("hbase.bulkload.hfile");
-
-        HBaseBulkLoad bulkLoad = new HBaseBulkLoad();
-        bulkLoad.bulkLoad(tableName, family, column, hadoop_file, hfile);
-    }
 }
