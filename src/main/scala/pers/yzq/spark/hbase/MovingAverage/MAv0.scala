@@ -24,7 +24,9 @@ object MAv0 {
     val winStep = PropertiesHelper.getProperty("twa.win.step").toLong
     val winLength = PropertiesHelper.getProperty("twa.win.length").toInt
 
-    val conf = new SparkConf().setAppName("TWA-HBASE-MAv0-" + System.currentTimeMillis())
+    val conf = new SparkConf()
+      .set("spark.deploy.spreadOut", "true")
+      .setAppName("TWA-HBASE-MAv0-" + System.currentTimeMillis())
     val sc = new SparkContext(conf)
     val common = new Common
 
