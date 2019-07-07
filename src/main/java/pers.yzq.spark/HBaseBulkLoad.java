@@ -145,8 +145,8 @@ public class HBaseBulkLoad implements Serializable {
         Connection con = ConnectionFactory.createConnection(hc);
         Admin admin = con.getAdmin();
 
-        ddTable(admin, tableName);
-        cTable(admin, tableName, new ArrayList<String>(){{add(columnFamily);}},
+        ddTable(tableName);
+        cTable(tableName, new ArrayList<String>(){{add(columnFamily);}},
                 getSplits(new ArrayList<String>(){{
                     add("b0000000000");
                     add("c0000000000");
