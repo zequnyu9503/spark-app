@@ -1,8 +1,10 @@
 package pers.yzq.spark;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HConstants;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
@@ -102,11 +104,10 @@ public class HBaseBulkLoad implements Serializable {
     }
 
     public void bulkLoad(String tableName, String columnFamily, String column, String hadoop_file, String hfile) throws IOException {
-        final int hRegionSize = 128 * 1024 * 1024;
 
         Configuration hc = HBaseConfiguration.create();
         hc.set("hbase.mapred.outputtable", tableName);
-        hc.setLong("hbase.hregion.max.filesize", hRegionSize );
+        hc.setLong("hbase.hregion.max.filesize", HConstants.DEFAULT_MAX_FILE_SIZE);
         hc.set("hbase.mapreduce.hfileoutputformat.table.name", tableName);
         hc.setInt(LoadIncrementalHFiles.MAX_FILES_PER_REGION_PER_FAMILY, 1024 * 1024 * 1024);
         Connection con = ConnectionFactory.createConnection(hc);
