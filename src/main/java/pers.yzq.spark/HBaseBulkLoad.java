@@ -25,6 +25,8 @@ import scala.Serializable;
 import scala.Tuple2;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 
 /**
@@ -37,8 +39,13 @@ public class HBaseBulkLoad implements Serializable {
         System.out.println("BulkLoad");
     }
 
-    public Boolean cTable(Admin admin, String tableName, List<String> families, byte[][] splits){
+    public Boolean cTable(String tableName, List<String> families, byte[][] splits){
+        final String hcp = PropertiesHelper.getProperty("hbase.hcp");
         try {
+            Configuration hBaseConfiguration = HBaseConfiguration.create();
+            hBaseConfiguration.addResource(hcp);
+            Connection connection = ConnectionFactory.createConnection(hBaseConfiguration);
+            Admin admin = connection.getAdmin();
             TableName tn = TableName.valueOf(tableName);
             TableDescriptorBuilder tdb = TableDescriptorBuilder.newBuilder(tn);
             HashSet cfdbs = new HashSet<ColumnFamilyDescriptor>(families.size());
@@ -53,6 +60,7 @@ public class HBaseBulkLoad implements Serializable {
                 cfdbs.add(cfdb.build());
             }
             admin.createTable(tdb.setColumnFamilies(cfdbs).build(), splits);
+            admin.close();
             return true;
         } catch (IOException e){
             e.printStackTrace();
@@ -60,18 +68,42 @@ public class HBaseBulkLoad implements Serializable {
         }
     }
 
-    public Boolean ddTable(Admin admin, String tableName){
+    public Boolean ddTable(String tableName){
+        final String hcp = PropertiesHelper.getProperty("hbase.hcp");
         try{
+            Configuration hBaseConfiguration = HBaseConfiguration.create();
+            hBaseConfiguration.addResource(hcp);
+            Connection connection = ConnectionFactory.createConnection(hBaseConfiguration);
+            Admin admin = connection.getAdmin();
             TableName tn = TableName.valueOf(tableName);
             if(!admin.isTableDisabled(tn)) {
                 admin.disableTable(tn);
             }
             admin.deleteTable(tn);
+            admin.close();
             return true;
         }catch (IOException e){
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Boolean cleanHFiles() {
+        final String path = PropertiesHelper.getProperty("hdfs.home");
+        final String user = PropertiesHelper.getProperty("hdfs.user");
+        final String hfiles = PropertiesHelper.getProperty("hbase.bulkload.hfile");
+        try {
+            Configuration configuration = new Configuration();
+            FileSystem fileSystem = FileSystem.get(new URI(path), configuration, user);
+            return fileSystem.delete(new Path(hfiles), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public byte[][] getSplits(long range, int num){
