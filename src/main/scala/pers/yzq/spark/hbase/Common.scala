@@ -49,5 +49,5 @@ class Common {
         e._2.listCells().get(0).getTimestamp))
 
   def trans2D(rdd: RDD[(ImmutableBytesWritable, Result)]) =
-    rdd.map(e => (Bytes.toLong(e._2.listCells().get(0).getValueArray, e._2.listCells().get(0).getValueOffset)))
+    rdd.map(e => Bytes.toLong(e._2.listCells().get(0).getValueArray, e._2.listCells().get(0).getValueOffset))
 }
