@@ -157,11 +157,21 @@ public class HBaseBulkLoad implements Serializable {
                     add("h0000000000");
                     add("i0000000000");
                     add("j0000000000");
+                    add("k0000000000");
+                    add("l0000000000");
+                    add("m0000000000");
+                    add("n0000000000");
+                    add("o0000000000");
+                    add("p0000000000");
+                    add("q0000000000");
+                    add("r0000000000");
+                    add("s0000000000");
+                    add("t0000000000");
                 }}));
         SparkConf conf = new SparkConf().setAppName("YZQ-HBASE-BULKLOAD-"+System.currentTimeMillis());
         JavaSparkContext jsc = new JavaSparkContext(conf);
         JavaRDD<String> rdd = jsc.textFile(hadoop_file).persist(StorageLevel.MEMORY_AND_DISK_SER());
-        JavaPairRDD<ImmutableBytesWritable, KeyValue> rdd_ = hbaseRDDv2(rdd, columnFamily, column, 10);
+        JavaPairRDD<ImmutableBytesWritable, KeyValue> rdd_ = hbaseRDDv2(rdd, columnFamily, column, 20);
         Table table = con.getTable(TableName.valueOf(tableName));
         TableDescriptor td = table.getDescriptor();
         Job job = Job.getInstance(hc);
@@ -185,7 +195,7 @@ public class HBaseBulkLoad implements Serializable {
     }
 
     public JavaPairRDD<ImmutableBytesWritable, KeyValue> hbaseRDDv2(JavaRDD<String> rdd, String columnFamily, String column, int totalTimeStamp){
-        String [] rkPrefix = {"j","a", "b","c","d","e","f","g","h","i"};
+        String [] rkPrefix = {"t","a", "b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s"};
         return rdd.mapToPair((PairFunction<String, String, Tuple2<Integer, Long>>) s -> {
             String[] vt = s.split("-");
             Long timestamp = Long.valueOf(vt[1]);
