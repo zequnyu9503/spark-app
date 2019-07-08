@@ -30,7 +30,7 @@ object MAv0 {
     val common = new Common
 
     var winHeader = winStart
-    var midRDD = sc.emptyRDD[Long].persist(StorageLevel.MEMORY_ONLY)
+//    var midRDD = sc.emptyRDD[Long].persist(StorageLevel.MEMORY_ONLY)
     for (i <- Range(0, winLength)) {
       val winRDD = common.trans2D(common.loadRDD(sc, start = winHeader, end = winHeader + winSize))
       YLogger.ylogInfo(this.getClass.getSimpleName)(s"窗口RDD [${winRDD.id}] 范围 {${winHeader} ~ ${winHeader + winSize}} ")
@@ -38,13 +38,13 @@ object MAv0 {
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"平均值为 ${average}")
       val winAve = sc.parallelize(Seq(average))
       YLogger.ylogInfo(this.getClass.getSimpleName) (s"窗口平均值RDD [${winAve.id}]")
-      midRDD = midRDD.union(winAve).persist(StorageLevel.MEMORY_ONLY)
-      midRDD.count()
+//      midRDD = midRDD.union(winAve).persist(StorageLevel.MEMORY_ONLY)
+//      midRDD.count()
       winHeader += winStep
       YLogger.ylogInfo(this.getClass.getSimpleName) ("\r\n")
     }
-    val nextWinValue = midRDD.reduce(_ + _) / winLength
-    YLogger.ylogInfo(this.getClass.getSimpleName) (s"聚合窗口平均值的平均值 -> ${nextWinValue}")
+//    val nextWinValue = midRDD.reduce(_ + _) / winLength
+//    YLogger.ylogInfo(this.getClass.getSimpleName) (s"聚合窗口平均值的平均值 -> ${nextWinValue}")
     sc.stop()
   }
 }
