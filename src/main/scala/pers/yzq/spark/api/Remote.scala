@@ -34,7 +34,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 import pers.yzq.spark.PropertiesHelper
 
-object Demo {
+object Remote {
 
   def main(args: Array[String]): Unit = {
 
@@ -47,9 +47,9 @@ object Demo {
 
     val conf = new SparkConf().setAppName("Example of TimeWindowRDD")
     val sc = new SparkContext(conf)
+    sc.setLogLevel("OFF")
 
     val winIterator = new TimeWindowRDD[Long, Long](
-      sc,
       winSize,
       winStep,
       (start: Long, end: Long) => {

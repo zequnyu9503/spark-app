@@ -17,12 +17,10 @@
 
 package pers.yzq.spark.api
 
-import org.apache.spark.rdd.RDD
+case class TimeScope(start: Long = 0L, end: Long = Long.MaxValue) {
 
-class TimeWindowIterator[T, V](twr: TimeWindowRDD[T, V])
-    extends Iterator[RDD[(T, V)]] {
+  def isDefault: Boolean = end == Long.MaxValue
 
-  override def hasNext: Boolean = !twr.isNextEmpty
-
-  override def next(): RDD[(T, V)] = twr.nextWinRDD()
+  def isLegal(winStart: Long): Boolean =
+    winStart >= start.asInstanceOf[Long] && winStart <= end.asInstanceOf[Long]
 }

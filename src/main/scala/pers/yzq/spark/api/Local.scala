@@ -18,11 +18,36 @@
 package pers.yzq.spark.api
 
 import org.apache.spark.rdd.RDD
+import org.apache.spark.{SparkConf, SparkContext}
 
-class TimeWindowIterator[T, V](twr: TimeWindowRDD[T, V])
-    extends Iterator[RDD[(T, V)]] {
+object Local {
+  def main(args: Array[String]): Unit = {
 
-  override def hasNext: Boolean = !twr.isNextEmpty
+    val conf = new SparkConf()
+    conf.setMaster("local").setAppName("TWA EXP")
+    val sc = new SparkContext(conf)
+    sc.setLogLevel("OFF")
 
-  override def next(): RDD[(T, V)] = twr.nextWinRDD()
+    def func(start: Long, end: Long): RDD[(Long, Long)] = {
+      if (start < 100) {
+        sc.parallelize(Seq(1, 1, 1, 1, 1)).map((e => (e, e)))
+      } else {
+        sc.emptyRDD[(Long, Long)]
+      }
+    }
+
+    val itr = new TimeWindowRDD[Long, Long](
+      10,
+      10,
+      func
+    ).setScope(0, 100).iterator()
+
+    while (itr.hasNext) {
+      val rdd = itr.next()
+      val count = rdd.count()
+      // scalastyle:off println
+      println(s"count is ${count}")
+      // scalastyle:on println
+    }
+  }
 }
