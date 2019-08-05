@@ -79,18 +79,15 @@ protected[api] sealed class TimeWindowController[T, V](
       }
     } catch {
       case e: Exception =>
-        // scalastyle:off println
-        println(s"Exception ${e.printStackTrace()}")
-        // scalastyle:off println
         None
     }
 
   def next(): RDD[(T, V)] = {
     update()
+    clean(keepInMem)
     nextRDD(true) match {
       case Some(rdd) =>
         entries.put(winId.getAndIncrement(), rdd)
-//        clean(keepInMem)
         rdd
       case _ => null
     }
