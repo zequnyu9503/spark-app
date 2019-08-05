@@ -90,7 +90,7 @@ protected[api] sealed class TimeWindowController[T, V](
     nextRDD(true) match {
       case Some(rdd) =>
         entries.put(winId.getAndIncrement(), rdd)
-        clean(keepInMem)
+//        clean(keepInMem)
         rdd
       case _ => null
     }
