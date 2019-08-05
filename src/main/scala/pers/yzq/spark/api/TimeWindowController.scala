@@ -54,19 +54,27 @@ protected[api] sealed class TimeWindowController[T, V](
 
   private def nextRDD(cached: Boolean = false): Option[RDD[(T, V)]] =
     try {
-      val suffixRDD = func(TimeWindowController.startTime.asInstanceOf[T],
+      var suffixRDD = func(TimeWindowController.startTime.asInstanceOf[T],
                            TimeWindowController.endTime.asInstanceOf[T])
       latest() match {
         case Some(rdd) =>
           var prefixRDD =
             rdd.filter(_._1.asInstanceOf[Long] >= TimeWindowController.winStart)
           if (partitions() > 0) prefixRDD = prefixRDD.coalesce(partitions())
-          val next = prefixRDD.union(suffixRDD)
-          if (cached) next.persist(StorageLevel.MEMORY_ONLY).setName(s"${winId.get()}")
+          var next = prefixRDD.union(suffixRDD)
+          if (cached) {
+            next = next
+              .persist(StorageLevel.MEMORY_ONLY)
+              .setName(s"TimeWindowRDD[${winId.get()}]")
+          }
           Option(next)
         case None =>
           if (partition == 0) partition = suffixRDD.getNumPartitions
-          if (cached) suffixRDD.persist(StorageLevel.MEMORY_ONLY).setName(s"${winId.get()}")
+          if (cached) {
+            suffixRDD = suffixRDD
+              .persist(StorageLevel.MEMORY_ONLY)
+              .setName(s"TimeWindowRDD[${winId.get()}]")
+          }
           Option(suffixRDD)
       }
     } catch {
@@ -155,7 +163,7 @@ protected[api] sealed class TimeWindowController[T, V](
     if (differential > partition) {
       differential
     } else {
-        partition
+      partition
     }
   }
 }
