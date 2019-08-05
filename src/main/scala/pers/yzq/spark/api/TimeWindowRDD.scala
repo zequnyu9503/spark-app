@@ -17,20 +17,16 @@
 
 package pers.yzq.spark.api
 
-import java.util
-
 import org.apache.spark.rdd.RDD
 
-class TimeWindowRDD[T, V](val winSize: T,
-                          val winStep: T,
-                          val func: (T, T) => RDD[(T, V)]) {
+sealed class TimeWindowRDD[T, V](winSize: T,
+                                 winStep: T,
+                                 func: (T, T) => RDD[(T, V)]) {
 
-  private val entries =
-    new util.LinkedHashMap[Integer, RDD[(T, V)]](32, 0.75f, true)
   private val controller = new TimeWindowController(winSize.asInstanceOf[Long],
                                                     winStep.asInstanceOf[Long],
-                                                    func,
-                                                    entries)
+                                                    func)
+
   private var _iterator: TimeWindowIterator[T, V] = _
 
   def iterator(): TimeWindowIterator[T, V] = {
@@ -46,6 +42,11 @@ class TimeWindowRDD[T, V](val winSize: T,
 
   def setKeepInMem(n: Integer): TimeWindowRDD[T, V] = {
     if (n > 0) controller.keepInMem = n
+    this
+  }
+
+  def setPartitionsLimitations(n: Integer): TimeWindowRDD[T, V] = {
+    if (n > 0) controller.partitionLimitations = n
     this
   }
 

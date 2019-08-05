@@ -15,43 +15,40 @@
  * limitations under the License.
  */
 
-package pers.yzq.spark.api
+package pers.yzq.spark.hbase.MovingAverage
 
 import org.apache.hadoop.fs.Path
-import org.apache.hadoop.hbase.{CompareOperator, HBaseConfiguration}
 import org.apache.hadoop.hbase.client.{Result, Scan}
-import org.apache.hadoop.hbase.filter.{
-  BinaryComparator,
-  FamilyFilter,
-  FilterList,
-  QualifierFilter
-}
+import org.apache.hadoop.hbase.{CompareOperator, HBaseConfiguration}
+import org.apache.hadoop.hbase.filter.{BinaryComparator, FamilyFilter, FilterList, QualifierFilter}
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable
 import org.apache.hadoop.hbase.mapreduce.{TableInputFormat, TableMapReduceUtil}
 import org.apache.hadoop.hbase.util.Bytes
-
 import org.apache.spark.{SparkConf, SparkContext}
-
 import pers.yzq.spark.PropertiesHelper
+import pers.yzq.spark.api.TimeWindowRDD
 
-object Remote {
+object API {
 
   def main(args: Array[String]): Unit = {
 
+    val winStart = PropertiesHelper.getProperty("twa.start").toLong
+    val winEnd = PropertiesHelper.getProperty("twa.end").toLong
+    val winSize = PropertiesHelper.getProperty("twa.win.size").toLong
+    val winStep = PropertiesHelper.getProperty("twa.win.step").toLong
+    @deprecated
+    val winLength = PropertiesHelper.getProperty("twa.win.length").toInt
     val hcp = PropertiesHelper.getProperty("hbase.hcp")
     val tableName = PropertiesHelper.getProperty("hbase.tablename")
     val columnFamily = PropertiesHelper.getProperty("hbase.columnfamily")
     val columnQualify = PropertiesHelper.getProperty("hbase.columnqualify")
-    val winSize = PropertiesHelper.getProperty("twa.win.size").toLong
-    val winStep = PropertiesHelper.getProperty("twa.win.step").toLong
 
-    val conf = new SparkConf().setAppName("Example of TimeWindowRDD")
+
+    val conf = new SparkConf()
+    conf.setAppName(s"MA API ${System.currentTimeMillis()}")
     val sc = new SparkContext(conf)
-    sc.setLogLevel("OFF")
-
-    val winIterator = new TimeWindowRDD[Long, Long](
-      winSize,
-      winStep,
+    sc.setLogLevel("FATAL")
+    val itr = new TimeWindowRDD[Long, Long](winSize, winStep,
       (start: Long, end: Long) => {
         val hc = HBaseConfiguration.create()
         hc.addResource(new Path(hcp))
@@ -62,8 +59,7 @@ object Remote {
             new Scan()
               .setFilter(new FilterList(
                 FilterList.Operator.MUST_PASS_ALL,
-                new FamilyFilter(
-                  CompareOperator.EQUAL,
+                new FamilyFilter(CompareOperator.EQUAL,
                   new BinaryComparator(Bytes.toBytes(columnFamily))),
                 new QualifierFilter(
                   CompareOperator.EQUAL,
@@ -72,21 +68,21 @@ object Remote {
               .setTimeRange(start, end))
         )
         sc.newAPIHadoopRDD(hc,
-                           classOf[TableInputFormat],
-                           classOf[ImmutableBytesWritable],
-                           classOf[Result])
-          .map(e =>
+          classOf[TableInputFormat],
+          classOf[ImmutableBytesWritable],
+          classOf[Result]).map(e =>
             (Bytes.toLong(e._2.listCells().get(0).getValueArray),
-             e._2.listCells().get(0).getTimestamp))
-      }
-    ).iterator()
+              e._2.listCells().get(0).getTimestamp))
+      }).setScope(winStart, winEnd).iterator()
 
-    while (winIterator.hasNext) {
-      val winRDD = winIterator.next
-      val count = winRDD.count
-      // scalastyle:off println
-      println(s"count is ${count}")
-      // scalastyle:on println
+    var temp = sc.emptyRDD[Long]
+    while(itr.hasNext) {
+      val rdd = itr.next()
+      val average = rdd.map(e => e._2).reduce(_ + _) / winSize
+      temp = temp.union(sc.parallelize(Seq(average)))
     }
+    // scalastyle:off println
+    println(s"res -> ${temp.reduce(_ + _)}")
+    // scalastyle:on println
   }
 }

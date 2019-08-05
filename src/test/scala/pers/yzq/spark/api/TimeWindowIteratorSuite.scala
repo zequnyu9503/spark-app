@@ -17,23 +17,27 @@
 
 package pers.yzq.spark.api
 
+
 import org.apache.spark.{SparkConf, SparkContext}
+
 import org.scalatest.FunSuite
 
 class TimeWindowIteratorSuite extends FunSuite {
 
-  val conf = new SparkConf()
-  conf.setMaster("local").setAppName("TWA EXP")
-  val sc = new SparkContext(conf)
-  sc.setLogLevel("OFF")
+  test("") {
+    val conf = new SparkConf().setMaster("local").setAppName(s"Exp1")
+    val sc = new SparkContext(conf)
+    sc.setLogLevel("ERROR")
 
-  test("base examination") {
-    val rdd = sc.parallelize(Seq(1, 1, 1)).cache()
-    val id = rdd.id
-    println(s"Id is ${id}")
-    println(s"count is ${rdd.count()}")
-    println(s"rdd storage level is ${rdd.getStorageLevel}")
-    val RDD = sc.getPersistentRDDs(id + 1)
-    println(s"count is ${RDD.count()}")
+    val itr = new TimeWindowRDD[Long, Integer]( 5, 10, (startTime: Long, endTime: Long) => {
+      sc.parallelize(Array.range(startTime.toInt, endTime.toInt)).map(e => (e, e))
+    }).setScope(0, 100).setKeepInMem(1).iterator()
+
+    while (itr.hasNext) {
+      val rdd = itr.next()
+      // scalastyle:off println
+      println(s"Elements < ${rdd.map(e => e._2.asInstanceOf[Integer]).collect().mkString(",")} >")
+      // scalastyle:on println
+    }
   }
 }
