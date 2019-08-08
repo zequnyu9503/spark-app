@@ -17,20 +17,24 @@
 
 package pers.yzq.spark.api
 
+import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
+import org.apache.spark.storage.StorageLevel
 
-sealed class TimeWindowRDD[T, V](winSize: T,
+sealed class TimeWindowRDD[T, V](sc: SparkContext,
+                                 winSize: T,
                                  winStep: T,
                                  func: (T, T) => RDD[(T, V)]) {
 
-  private val controller = new TimeWindowController(winSize.asInstanceOf[Long],
+  private val controller = new TimeWindowController(sc,
+                                                    winSize.asInstanceOf[Long],
                                                     winStep.asInstanceOf[Long],
                                                     func)
 
-  private var _iterator: TimeWindowIterator[T, V] = _
+  private var _iterator: TimeWindowRDDIterator[T, V] = _
 
-  def iterator(): TimeWindowIterator[T, V] = {
-    if (_iterator.eq(null)) _iterator = new TimeWindowIterator[T, V](this)
+  def iterator(): TimeWindowRDDIterator[T, V] = {
+    if (_iterator.eq(null)) _iterator = new TimeWindowRDDIterator[T, V](this)
     _iterator
   }
 
@@ -42,6 +46,18 @@ sealed class TimeWindowRDD[T, V](winSize: T,
 
   def setKeepInMem(n: Integer): TimeWindowRDD[T, V] = {
     if (n > 0) controller.keepInMem = n
+    this
+  }
+
+  def setStorageLevel(level: StorageLevel): TimeWindowRDD[T, V] = {
+    if (level.useMemory && !level.useDisk) {
+      controller.storageLevel = level
+    }
+    this
+  }
+
+  def setKeepInMemSize(size: Long): TimeWindowRDD[T, V] = {
+    if (size > 0) controller.keepInMemSize = size
     this
   }
 

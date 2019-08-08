@@ -17,12 +17,32 @@
 
 package pers.yzq.spark.api
 
-import org.apache.spark.rdd.RDD
+import org.apache.spark.{SparkConf, SparkContext}
 
-class TimeWindowIterator[T, V](twr: TimeWindowRDD[T, V])
-    extends Iterator[RDD[(T, V)]] {
+import org.scalatest.FunSuite
 
-  override def hasNext: Boolean = !twr.isNextEmpty
+class TimeWindowRDDIteratorSuite extends FunSuite {
 
-  override def next(): RDD[(T, V)] = twr.nextWinRDD()
+  test("TimeWindowRDD Basement") {
+    val conf = new SparkConf().setMaster("local").setAppName(s"Exp1")
+    val sc = new SparkContext(conf)
+    sc.setLogLevel("ERROR")
+
+    val itr = new TimeWindowRDD[Long, Integer](
+      sc,
+      5,
+      10,
+      (startTime: Long, endTime: Long) => {
+        sc.parallelize(Array.range(startTime.toInt, endTime.toInt))
+          .map(e => (e, e))
+      }).setScope(0, 100).setKeepInMem(1).iterator()
+
+    while (itr.hasNext) {
+      val rdd = itr.next()
+      // scalastyle:off println
+      println(
+        s"Elements < ${rdd.map(e => e._2.asInstanceOf[Integer]).collect().mkString(",")} >")
+      // scalastyle:on println
+    }
+  }
 }

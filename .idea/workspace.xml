@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala" line="24" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="995a8f6f-dc1b-42a8-8ffe-cd534f152c59" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowIterator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDDIterator.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/API.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/API.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowIteratorSuite.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowRDDIteratorSuite.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -23,10 +30,34 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowRDDIteratorSuite.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="506">
+              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+              <folding>
+                <element signature="e#830#879#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-286">
+              <caret line="75" column="5" lean-forward="true" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
+              <folding>
+                <element signature="e#830#846#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/API.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="954">
-              <caret line="73" column="65" lean-forward="true" selection-start-line="73" selection-start-column="65" selection-end-line="73" selection-end-column="65" />
+            <state relative-caret-position="1166">
+              <caret line="72" column="35" lean-forward="true" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
               <folding>
                 <element signature="e#846#878#0" expanded="true" />
               </folding>
@@ -34,27 +65,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/run.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="80" column="26" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
-              <folding>
-                <element signature="e#830#846#0" expanded="true" />
-                <element signature="e#4741#4920#0" />
-              </folding>
+            <state relative-caret-position="176">
+              <caret line="8" column="42" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowIteratorSuite.scala">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/twa.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="37" column="31" lean-forward="true" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
-              <folding>
-                <element signature="e#831#880#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="308">
+              <caret line="14" column="33" lean-forward="true" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -107,19 +131,22 @@
         <option value="$PROJECT_DIR$/scalastyle-config.xml" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/Demo.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/f.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowIterator.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/Remote.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/Local.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/Local.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeScope.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowIteratorSuite.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala" />
         <option value="$PROJECT_DIR$/twa.properties" />
-        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/API.scala" />
         <option value="$PROJECT_DIR$/run.sh" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowIterator.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDDIterator.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowUtils.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/API.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowRDDIteratorSuite.scala" />
       </list>
     </option>
   </component>
@@ -138,8 +165,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1938" />
-    <option name="y" value="-206" />
+    <option name="x" value="-1564" />
+    <option name="y" value="-199" />
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
@@ -294,8 +321,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -303,24 +330,24 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TimeWindowRDD/src/main/scala/pers/yzq/spark/Example.scala" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\YZQ\Documents\Top Project\spark-app\src\main\resources\pers\yzq\hbase" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="pers.yzq.spark" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="pers.yzq.spark.hbase.MovingAverage" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\YZQ\Documents\Top Project\spark-app\src\main\scala\pers\yzq\spark\api" />
       <recent name="C:\Users\YZQ\Documents\Top Project\spark-app\src\main\resources\pers\yzq\spark" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="pers.yzq.spark.hbase.MovingAverage" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\YZQ\Documents\Top Project\spark-app\src\main\resources\pers\yzq\hbase" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -335,7 +362,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="ScalaTest.TimeWindowIteratorSuite.">
+  <component name="RunManager" selected="ScalaTest.TimeWindowRDDIteratorSuite.">
     <configuration name="Local" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="pers.yzq.spark.Local" />
       <module name="spark" />
@@ -375,25 +402,6 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <configuration name="Some.dynamic RDD" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
-      <module name="spark" />
-      <setting name="path" value="pers.yzq.spark.Some" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="showProgressMessages" value="true" />
-      <setting name="useSbt" value="false" />
-      <setting name="useUiWithSbt" value="false" />
-      <setting name="jrePath" value="" />
-      <envs />
-      <setting name="testKind" value="Test name" />
-      <setting name="path" value="pers.yzq.spark.Some" />
-      <setting name="testName" value="dynamic RDD" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TimeWindowIteratorSuite." type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
       <module name="spark" />
       <setting name="path" value="pers.yzq.spark.api.TimeWindowIteratorSuite" />
@@ -408,25 +416,6 @@
       <envs />
       <setting name="testKind" value="Class" />
       <setting name="path" value="pers.yzq.spark.api.TimeWindowIteratorSuite" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TimeWindowIteratorSuite.base examination" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
-      <module name="spark" />
-      <setting name="path" value="pers.yzq.spark.api.TimeWindowIteratorSuite" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="showProgressMessages" value="true" />
-      <setting name="useSbt" value="false" />
-      <setting name="useUiWithSbt" value="false" />
-      <setting name="jrePath" value="" />
-      <envs />
-      <setting name="testKind" value="Test name" />
-      <setting name="path" value="pers.yzq.spark.api.TimeWindowIteratorSuite" />
-      <setting name="testName" value="base examination" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -450,21 +439,57 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TimeWindowRDDIteratorSuite. (1)" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <module name="spark" />
+      <setting name="path" value="pers.yzq.spark.api.TimeWindowRDDIteratorSuite" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="showProgressMessages" value="true" />
+      <setting name="useSbt" value="false" />
+      <setting name="useUiWithSbt" value="false" />
+      <setting name="jrePath" value="" />
+      <envs />
+      <setting name="testKind" value="Class" />
+      <setting name="path" value="pers.yzq.spark.api.TimeWindowRDDIteratorSuite" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TimeWindowRDDIteratorSuite." type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <module name="spark" />
+      <setting name="path" value="pers.yzq.spark.api.TimeWindowRDDIteratorSuite" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="showProgressMessages" value="true" />
+      <setting name="useSbt" value="false" />
+      <setting name="useUiWithSbt" value="false" />
+      <setting name="jrePath" value="" />
+      <envs />
+      <setting name="testKind" value="Class" />
+      <setting name="path" value="pers.yzq.spark.api.TimeWindowRDDIteratorSuite" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Local" />
       <item itemvalue="Maven.All" />
-      <item itemvalue="ScalaTest.Some.dynamic RDD" />
-      <item itemvalue="ScalaTest.TimeWindowIteratorSuite.base examination" />
       <item itemvalue="ScalaTest.TimeWindowIteratorSuite.xx" />
       <item itemvalue="ScalaTest.TimeWindowIteratorSuite." />
+      <item itemvalue="ScalaTest.TimeWindowRDDIteratorSuite." />
+      <item itemvalue="ScalaTest.TimeWindowRDDIteratorSuite. (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="ScalaTest.TimeWindowRDDIteratorSuite." />
+        <item itemvalue="ScalaTest.TimeWindowRDDIteratorSuite." />
+        <item itemvalue="ScalaTest.TimeWindowRDDIteratorSuite. (1)" />
         <item itemvalue="ScalaTest.TimeWindowIteratorSuite." />
         <item itemvalue="ScalaTest.TimeWindowIteratorSuite." />
-        <item itemvalue="Application.Local" />
-        <item itemvalue="ScalaTest.TimeWindowIteratorSuite.base examination" />
-        <item itemvalue="ScalaTest.TimeWindowIteratorSuite.xx" />
       </list>
     </recent_temporary>
   </component>
@@ -523,14 +548,11 @@
       <workItem from="1564796523016" duration="23723000" />
       <workItem from="1564875316425" duration="9381000" />
       <workItem from="1564968381294" duration="14490000" />
-      <workItem from="1565000257339" duration="1195000" />
-    </task>
-    <task id="LOCAL-00001" summary="Tuesday AM">
-      <created>1561513130177</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1561513130177</updated>
+      <workItem from="1565000257339" duration="3949000" />
+      <workItem from="1565147185151" duration="14583000" />
+      <workItem from="1565182746612" duration="292000" />
+      <workItem from="1565183297229" duration="5843000" />
+      <workItem from="1565226993822" duration="969000" />
     </task>
     <task id="LOCAL-00002" summary="Tuesday AM">
       <created>1561513811805</created>
@@ -868,49 +890,56 @@
       <option name="project" value="LOCAL" />
       <updated>1565001095684</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="1. 修复上一个RDD缓存失败的问题">
+      <created>1565001572072</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1565001572073</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 12h 56m 21s.xml">
-      <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 12h 56m 49s.xml">
-      <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 12h 58m 08s.xml">
-      <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 13h 02m 29s.xml">
-      <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 13h 03m 33s.xml">
-      <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 13h 04m 07s.xml">
-      <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 13h 04m 46s.xml">
-      <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 13h 32m 35s.xml">
-      <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 13h 35m 12s.xml">
       <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
     </history-entry>
     <history-entry file="TimeWindowIteratorSuite_ - 2019.08.05 at 18h 35m 47s.xml">
       <configuration name="TimeWindowIteratorSuite." configurationId="ScalaTestRunConfiguration" />
     </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite_ - 2019.08.07 at 22h 33m 50s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite." configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite__(1) - 2019.08.07 at 22h 34m 30s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite. (1)" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite_ - 2019.08.07 at 22h 35m 09s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite." configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite_ - 2019.08.07 at 22h 36m 08s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite." configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite_ - 2019.08.07 at 22h 47m 27s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite." configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite_ - 2019.08.08 at 09h 20m 45s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite." configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite_ - 2019.08.08 at 09h 21m 33s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite." configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite_ - 2019.08.08 at 09h 22m 15s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite." configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="257441000" />
+    <option name="totallyTimeSpent" value="281882000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-199" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.1663113" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.2521322" />
       <window_info id="Designer" order="1" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -918,7 +947,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.80477226" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.38177875" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4164859" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -929,7 +958,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Version Control" order="12" />
-      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.4989339" weight="0.19739696" />
+      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.4989339" weight="0.055737704" />
       <window_info anchor="bottom" id="Inspection Results" order="14" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -944,7 +973,7 @@
       <window_info anchor="right" id="Structure" order="10" sideWeight="0.5010846" side_tool="true" weight="0.108169444" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.16364606" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.1705757" />
       <window_info id="Designer" order="1" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -952,7 +981,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.06832972" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.80477226" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4164859" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -992,30 +1021,11 @@
     <MESSAGE value="Sunday AM" />
     <MESSAGE value="Tuesday AM" />
     <MESSAGE value="Monday AM" />
-    <option name="LAST_COMMIT_MESSAGE" value="Monday AM" />
+    <MESSAGE value="1. 修复上一个RDD缓存失败的问题" />
+    <MESSAGE value="1. 优化核心函数, 减少缓存RDD大小.&#10;2. Time Window RDD新增接口:&#10; a. 添加控制缓存级别.&#10; b. 添加控制缓存空间限制." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. 优化核心函数, 减少缓存RDD大小.&#10;2. Time Window RDD新增接口:&#10; a. 添加控制缓存级别.&#10; b. 添加控制缓存空间限制." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://D:/Service/REPOSITORIES/org/apache/hbase/hbase-common/2.1.4/hbase-common-2.1.4-sources.jar!/org/apache/hadoop/hbase/HConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="391" column="51" lean-forward="true" selection-start-line="391" selection-start-column="51" selection-end-line="391" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/SparkConf.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="81" column="6" selection-start-line="81" selection-start-column="6" selection-end-line="81" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hdfs/MovingAverage/MAv0.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1034">
-          <caret line="57" column="53" lean-forward="true" selection-start-line="57" selection-start-column="53" selection-end-line="57" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Service/REPOSITORIES/org/apache/hbase/hbase-common/2.1.4/hbase-common-2.1.4-sources.jar!/org/apache/hadoop/hbase/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="430">
@@ -1143,13 +1153,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/SparkContext.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="1328" column="42" selection-start-line="1328" selection-start-column="42" selection-end-line="1328" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/rdd/RDDOperationScope.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -1168,13 +1171,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -1288,20 +1284,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twa.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="30" column="16" lean-forward="true" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv0.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="712">
@@ -1309,51 +1291,96 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowIterator.scala">
+    <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/storage/StorageLevel.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="26" column="53" lean-forward="true" selection-start-line="26" selection-start-column="53" selection-end-line="26" selection-end-column="53" />
+        <state relative-caret-position="364">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/SparkContext.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="1750" column="33" selection-start-line="1750" selection-start-column="19" selection-end-line="1750" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/storage/RDDInfo.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDDIterator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="15" selection-end-column="3" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowUtils.scala" />
+    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="25" selection-start-line="25" selection-end-line="44" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/API.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="954">
-          <caret line="73" column="65" lean-forward="true" selection-start-line="73" selection-start-column="65" selection-end-line="73" selection-end-column="65" />
+        <state relative-caret-position="242">
+          <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
           <folding>
-            <element signature="e#846#878#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowIteratorSuite.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="37" column="31" lean-forward="true" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
-          <folding>
-            <element signature="e#831#880#0" expanded="true" />
+            <element signature="e#830#866#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="80" column="26" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
+        <state relative-caret-position="-286">
+          <caret line="75" column="5" lean-forward="true" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
           <folding>
             <element signature="e#830#846#0" expanded="true" />
-            <element signature="e#4741#4920#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowRDDIteratorSuite.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+          <folding>
+            <element signature="e#830#879#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/API.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1166">
+          <caret line="72" column="35" lean-forward="true" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
+          <folding>
+            <element signature="e#846#878#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twa.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="33" lean-forward="true" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
         </state>
       </provider>
     </entry>

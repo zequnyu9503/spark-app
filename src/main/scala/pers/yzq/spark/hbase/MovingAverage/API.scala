@@ -48,7 +48,7 @@ object API {
     conf.setAppName(s"MA API ${System.currentTimeMillis()}")
     val sc = new SparkContext(conf)
     sc.setLogLevel("FATAL")
-    val itr = new TimeWindowRDD[Long, Long](winSize, winStep,
+    val itr = new TimeWindowRDD[Long, Long](sc, winSize, winStep,
       (start: Long, end: Long) => {
         val hc = HBaseConfiguration.create()
         hc.addResource(new Path(hcp))
