@@ -30,12 +30,12 @@ class TimeWindowRDDIteratorSuite extends FunSuite {
 
     val itr = new TimeWindowRDD[Long, Integer](
       sc,
-      5,
       10,
+      5,
       (startTime: Long, endTime: Long) => {
         sc.parallelize(Array.range(startTime.toInt, endTime.toInt))
           .map(e => (e, e))
-      }).setScope(0, 100).setKeepInMem(1).iterator()
+      }).setKeepInMem(1).iterator()
 
     while (itr.hasNext) {
       val rdd = itr.next()

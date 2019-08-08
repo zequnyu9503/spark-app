@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
-import org.apache.spark.storage.{ StorageLevel}
+import org.apache.spark.storage.StorageLevel
 
 protected[api] sealed class TimeWindowController[T, V](
     val sc: SparkContext,
@@ -34,7 +34,6 @@ protected[api] sealed class TimeWindowController[T, V](
     new util.LinkedHashMap[Integer, RDD[(T, V)]](32, 0.75f, true)
   private val winId = new AtomicInteger(0)
   private var partition: Integer = 0
-  private val gap = size - step
 
   var scope = TimeScope()
   var keepInMem: Integer = 1
@@ -49,14 +48,21 @@ protected[api] sealed class TimeWindowController[T, V](
     * @return 如果RDD处于时间范围内, RDD也可能为空.
     */
   def isEmpty: Boolean = {
+    var isEpt: Boolean = true
     if (scope.isDefault) {
+      // 保存当前时间参数.
+      TimeWindowController.save()
+      update()
       nextRDD() match {
-        case Some(rdd) => rdd._1.isEmpty()
-        case _ => true
+        case Some(rdd) =>
+          isEpt = rdd.isEmpty()
+        case _ =>
       }
+      TimeWindowController.reset()
     } else {
-      !scope.isLegal(TimeWindowController.winStart)
+      isEpt = !scope.isLegal(TimeWindowController.winStart)
     }
+    isEpt
   }
 
   /**
@@ -67,70 +73,62 @@ protected[api] sealed class TimeWindowController[T, V](
     update()
     clean(keepInMem)
     nextRDD(true) match {
-      case Some(rdds) =>
-        if (!rdds._2.eq(null)) {
-          entries.put(winId.getAndIncrement(), rdds._2)
-        }
-        rdds._1
+      case Some(rdd) =>
+        entries.put(winId.getAndIncrement(), rdd)
+        rdd
       case _ => null
     }
   }
 
-  private def nextRDD(cached: Boolean = false): Option[(RDD[(T, V)], RDD[(T, V)])] = {
-
-     def getWholeAndCachedRDD(wholeRDD: RDD[(T, V)]): (RDD[(T, V)], RDD[(T, V)]) = {
-      if (gap > 0) {
-        val gapStart = TimeWindowController.winStart + step
-        val cachedRDD = wholeRDD.filter(_._1.asInstanceOf[Long] >= gapStart).
-          persist(storageLevel)
-        val wasteRDD = wholeRDD.filter(_._1.asInstanceOf[Long] < gapStart)
-        val wholeAndCached = wasteRDD.union(cachedRDD).
-          setName(s"TimeWindowRDD[${winId.get()}]")
-        (wholeAndCached, cachedRDD)
-      } else {
-        (wholeRDD, null)
+  /**
+    * 获取下一个时间窗口RDD并更新相关参数.
+    * @param cached RDD是否被缓存, 一般用于判断RDD是否为空.
+    * @return RDD必须满足(T, V)类型.
+    */
+  private def nextRDD(cached: Boolean = false): Option[RDD[(T, V)]] = {
+    try {
+      // RDD只能从非缓存空间获取.
+      val suffixRDD = func(TimeWindowController.startTime.asInstanceOf[T],
+                           TimeWindowController.endTime.asInstanceOf[T])
+      latest() match {
+        case Some(rdd) =>
+          var prefixRDD =
+            rdd.filter(_._1.asInstanceOf[Long] >= TimeWindowController.winStart)
+          if (partitions() > 0) prefixRDD = prefixRDD.coalesce(partitions())
+          val wholeRDD = prefixRDD.union(suffixRDD)
+          if (cached) {
+            Option(
+              wholeRDD
+                .persist(storageLevel)
+                .setName(s"TimeWindowRDD[${winId.get()}]"))
+          } else {
+            Option(wholeRDD)
+          }
+        case None =>
+          if (partition == 0) partition = suffixRDD.getNumPartitions
+          if (cached) {
+            Option(
+              suffixRDD
+                .persist(storageLevel)
+                .setName(s"TimeWindowRDD[${winId.get()}]"))
+          } else {
+            Option(suffixRDD)
+          }
       }
+    } catch {
+      case e: Exception =>
+        None
     }
+  }
 
-      try {
-        // RDD只能从非缓存空间获取.
-        val suffixRDD = func(TimeWindowController.startTime.asInstanceOf[T],
-          TimeWindowController.endTime.asInstanceOf[T])
-
-        latest() match {
-          case Some(rdd) =>
-            var prefixRDD = rdd
-            if (partitions() > 0) {
-              prefixRDD = prefixRDD.coalesce(partitions())
-            }
-            val wholeRDD = prefixRDD.union(suffixRDD)
-            if (cached) {
-              Option(getWholeAndCachedRDD(wholeRDD))
-            } else {
-              Option(wholeRDD.setName(s"TimeWindowRDD[${winId.get()}]"), null)
-            }
-          case None =>
-            if (partition == 0) partition = suffixRDD.getNumPartitions
-            if (cached) {
-              Option(getWholeAndCachedRDD(suffixRDD))
-            } else {
-              Option(suffixRDD.setName(s"TimeWindowRDD[${winId.get()}]"), null)
-            }
-        }
-      } catch {
-        case e: Exception =>
-          None
-      }
-    }
-
-  private def update(): Unit = synchronized {
+  /**
+    * 更新当前时间参数.
+    */
+  private def update(): Unit = {
     if (TimeWindowController.initialized) {
-
-      TimeWindowController.startTime = TimeWindowController.winStart + Math
-        .max(size, step)
-      TimeWindowController.endTime = TimeWindowController.startTime + Math
-        .min(size, step)
-      TimeWindowController.winStart += step
+        TimeWindowController.startTime = TimeWindowController.winStart + Math.max(size, step)
+        TimeWindowController.endTime = TimeWindowController.startTime + Math.min(size, step)
+        TimeWindowController.winStart += step
     } else {
       TimeWindowController.winStart = scope.start
       TimeWindowController.startTime = TimeWindowController.winStart
@@ -183,36 +181,44 @@ protected[api] sealed class TimeWindowController[T, V](
   }
 
   private def latest(n: Integer = lastWinId()): Option[RDD[(T, V)]] =
-    if (entries.containsKey(n)) {
-      Option(entries.get(n))
-    } else {
-      None
-    }
+    if (entries.containsKey(n)) Option(entries.get(n)) else None
 
   private def lastWinId(): Integer = {
     val nextId = winId.get()
-    if (nextId > 0) {
-      nextId - 1
-    } else {
-      nextId
-    }
+    if (nextId > 0) nextId - 1 else nextId
   }
 
   private def partitions(): Integer = {
     val differential = partitionLimitations - partition
-    if (differential > partition) {
-      differential
-    } else {
-      partition
-    }
+    if (differential > partition) differential else partition
   }
 }
 
 protected[api] object TimeWindowController {
   var initialized: Boolean = false
+
   // 重点: 时间窗口RDD控制参数由于涉及创建与转换操作
   // 其变量必须采用静态变量或者序列化对象.
   var winStart: Long = 0L
   var startTime: Long = 0L
   var endTime: Long = 0L
+
+  // 用户保存某次操作的时间参数.
+  var record: (Long, Long, Long, Boolean) = (winStart, startTime, endTime, initialized)
+
+  /**
+    * 保存当前时间参数.
+    */
+  def save(): Unit =
+    record = (winStart, startTime, endTime, initialized)
+
+  /**
+    * 恢复当前时间参数.
+    */
+  def reset(): Unit = {
+    winStart = record._1
+    startTime = record._2
+    endTime = record._3
+    initialized = record._4
+  }
 }
