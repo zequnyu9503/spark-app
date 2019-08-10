@@ -74,10 +74,10 @@ protected[api] sealed class TimeWindowController[T, V](
     */
   def next(): RDD[(T, V)] = {
     update()
-    clean(keepInMem)
+//    clean(keepInMem)
     nextRDD(true) match {
       case Some(rdds) =>
-        entries.put(winId.getAndDecrement(), rdds._2)
+        entries.put(winId.getAndIncrement(), rdds._2)
         rdds._1
       case _ => null
     }
@@ -97,32 +97,31 @@ protected[api] sealed class TimeWindowController[T, V](
       latestCachedRDD() match {
         case Some(rdd) =>
           // 如果缓存RDD存在则意味着窗口之间存在重叠.
-          var prefixRDD = rdd
-          if (partitions() > 0) prefixRDD = prefixRDD.coalesce(partitions())
+          val prefixRDD = rdd
           val coarseRDD = prefixRDD.++(suffixRDD).
             setName(s"CoarseTimeWindowRDD[${winId.get()}]")
-          val border = TimeWindowController.startTime + step
+          val border = TimeWindowController.winStart + step
           if (cached) {
             val wasteRDD = coarseRDD.filter(_._1.asInstanceOf[Long] < border)
-            val cacheRDD = coarseRDD.filter(_._1.asInstanceOf[Long] >= border).
-              persist(storageLevel)
-            val delicateRDD = wasteRDD.++(cacheRDD)
-              .setName(s"DelicateTimeWindowRDD[${winId.get()}]")
-            Option(delicateRDD, cacheRDD)
+            val cacheRDD = coarseRDD.filter(_._1.asInstanceOf[Long] >= border).persist(storageLevel)
+            var delicateRDD = wasteRDD.++(cacheRDD)
+            if (partitions() > 0) delicateRDD = delicateRDD.coalesce(partitions())
+            Option(delicateRDD.
+              setName(s"DelicateTimeWindowRDD[${winId.get()}]"), cacheRDD)
           } else {
             Option(coarseRDD, rdd)
           }
         case None =>
           if (partition == 0) partition = suffixRDD.getNumPartitions
           if (cached && isOverlap) {
-            val border = TimeWindowController.startTime + step
+            val border = TimeWindowController.winStart + step
             val wasteRDD = suffixRDD.filter(_._1.asInstanceOf[Long] < border)
             val cacheRDD = suffixRDD.filter(_._1.asInstanceOf[Long] >= border).
               persist(storageLevel)
-            val delicateRDD = wasteRDD.union(cacheRDD).
-              persist(storageLevel).
-              setName(s"DelicateTimeWindowRDD[${winId.get()}]")
-            Option(delicateRDD, cacheRDD)
+            var delicateRDD = wasteRDD.union(cacheRDD)
+            if (partitions() > 0) delicateRDD = delicateRDD.coalesce(partitions())
+            Option(delicateRDD.
+              setName(s"DelicateTimeWindowRDD[${winId.get()}]"), cacheRDD)
           } else {
             Option(suffixRDD, null)
           }
@@ -214,8 +213,11 @@ protected[api] sealed class TimeWindowController[T, V](
   }
 
   private def partitions(): Integer = {
-    val differential = partitionLimitations - partition
-    if (differential > partition) differential else partition
+    if (partitionLimitations > partition) {
+      partitionLimitations
+    } else {
+      2 * partition
+    }
   }
 }
 

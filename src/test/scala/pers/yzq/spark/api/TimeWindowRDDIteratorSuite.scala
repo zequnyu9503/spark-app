@@ -31,7 +31,7 @@ class TimeWindowRDDIteratorSuite extends FunSuite {
     val itr = new TimeWindowRDD[Long, Integer](
       sc, 10, 20,
       (startTime: Long, endTime: Long) => {
-        sc.parallelize(Array.range(startTime.toInt, endTime.toInt))
+        sc.parallelize(Array.range(startTime.toInt, endTime.toInt), 2)
           .map(e => (e, e))
       }).setKeepInMem(1).iterator()
 
@@ -39,7 +39,8 @@ class TimeWindowRDDIteratorSuite extends FunSuite {
       val rdd = itr.next()
       // scalastyle:off println
       println(
-        s"Elements < ${rdd.map(e => e._2.asInstanceOf[Integer]).collect().mkString(",")} >")
+        s"Elements < ${rdd.map(e => e._2.asInstanceOf[Integer]).collect().mkString(",")} >" +
+          s" partitions <${rdd.getNumPartitions}>")
       // scalastyle:on println
     }
   }
