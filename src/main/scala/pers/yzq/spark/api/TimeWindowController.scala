@@ -102,10 +102,12 @@ protected[api] sealed class TimeWindowController[T, V](
             setName(s"CoarseTimeWindowRDD[${winId.get()}]")
           val border = TimeWindowController.winStart + step
           if (cached) {
-            val wasteRDD = coarseRDD.filter(_._1.asInstanceOf[Long] < border)
-            val cacheRDD = coarseRDD.filter(_._1.asInstanceOf[Long] >= border).persist(storageLevel)
+            val wasteRDD = coarseRDD.filter(_._1.asInstanceOf[Long] < border).
+              coalesce(partitions(1))
+            val cacheRDD = coarseRDD.filter(_._1.asInstanceOf[Long] >= border).
+              coalesce(partitions(1)).
+              persist(storageLevel)
             var delicateRDD = wasteRDD.++(cacheRDD)
-            if (partitions() > 0) delicateRDD = delicateRDD.coalesce(partitions())
             Option(delicateRDD.
               setName(s"DelicateTimeWindowRDD[${winId.get()}]"), cacheRDD)
           } else {
@@ -116,10 +118,11 @@ protected[api] sealed class TimeWindowController[T, V](
           if (cached && isOverlap) {
             val border = TimeWindowController.winStart + step
             val wasteRDD = suffixRDD.filter(_._1.asInstanceOf[Long] < border)
-            val cacheRDD = suffixRDD.filter(_._1.asInstanceOf[Long] >= border).
+              .coalesce(partitions(1))
+            val cacheRDD = suffixRDD.filter(_._1.asInstanceOf[Long] >= border)
+              .coalesce(partitions(1)).
               persist(storageLevel)
-            var delicateRDD = wasteRDD.union(cacheRDD)
-            if (partitions() > 0) delicateRDD = delicateRDD.coalesce(partitions(1))
+            val delicateRDD = wasteRDD.union(cacheRDD)
             Option(delicateRDD.
               setName(s"DelicateTimeWindowRDD[${winId.get()}]"), cacheRDD)
           } else {
