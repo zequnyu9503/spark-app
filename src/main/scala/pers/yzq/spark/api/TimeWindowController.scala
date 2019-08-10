@@ -74,7 +74,7 @@ protected[api] sealed class TimeWindowController[T, V](
     */
   def next(): RDD[(T, V)] = {
     update()
-//    clean(keepInMem)
+    clean(keepInMem)
     nextRDD(true) match {
       case Some(rdds) =>
         entries.put(winId.getAndIncrement(), rdds._2)
