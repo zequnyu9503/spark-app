@@ -23,15 +23,13 @@ import org.scalatest.FunSuite
 
 class TimeWindowRDDIteratorSuite extends FunSuite {
 
-  test("TimeWindowRDD Basement") {
+  test("TimeWindowRDD Logical Examination") {
     val conf = new SparkConf().setMaster("local").setAppName(s"Exp1")
     val sc = new SparkContext(conf)
     sc.setLogLevel("ERROR")
 
     val itr = new TimeWindowRDD[Long, Integer](
-      sc,
-      10,
-      5,
+      sc, 10, 20,
       (startTime: Long, endTime: Long) => {
         sc.parallelize(Array.range(startTime.toInt, endTime.toInt))
           .map(e => (e, e))

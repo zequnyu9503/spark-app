@@ -34,6 +34,9 @@ protected[api] sealed class TimeWindowController[T, V](
     new util.LinkedHashMap[Integer, RDD[(T, V)]](32, 0.75f, true)
   private val winId = new AtomicInteger(0)
   private var partition: Integer = 0
+  private val isOverlap: Boolean = if (size > step) true else false
+  private val minOne = Math.min(size, step)
+  private val maxOne = Math.max(size, step)
 
   var scope = TimeScope()
   var keepInMem: Integer = 1
@@ -55,7 +58,7 @@ protected[api] sealed class TimeWindowController[T, V](
       update()
       nextRDD() match {
         case Some(rdd) =>
-          isEpt = rdd.isEmpty()
+          isEpt = rdd._1.isEmpty()
         case _ =>
       }
       TimeWindowController.reset()
@@ -73,9 +76,9 @@ protected[api] sealed class TimeWindowController[T, V](
     update()
     clean(keepInMem)
     nextRDD(true) match {
-      case Some(rdd) =>
-        entries.put(winId.getAndIncrement(), rdd)
-        rdd
+      case Some(rdds) =>
+        entries.put(winId.getAndDecrement(), rdds._2)
+        rdds._1
       case _ => null
     }
   }
@@ -83,40 +86,51 @@ protected[api] sealed class TimeWindowController[T, V](
   /**
     * 获取下一个时间窗口RDD并更新相关参数.
     * @param cached RDD是否被缓存, 一般用于判断RDD是否为空.
-    * @return RDD必须满足(T, V)类型.
+    * @return (RDD0, RDD1) 分别代表窗口RDD与缓存部分RDD.
     */
-  private def nextRDD(cached: Boolean = false): Option[RDD[(T, V)]] = {
+  private def nextRDD(
+      cached: Boolean = false): Option[(RDD[(T, V)], RDD[(T, V)])] = {
     try {
-      // RDD只能从非缓存空间获取.
+      // suffixRDD 只能从非缓存空间获取.
       val suffixRDD = func(TimeWindowController.startTime.asInstanceOf[T],
                            TimeWindowController.endTime.asInstanceOf[T])
-      latest() match {
+      latestCachedRDD() match {
         case Some(rdd) =>
-          var prefixRDD =
-            rdd.filter(_._1.asInstanceOf[Long] >= TimeWindowController.winStart)
+          // 如果缓存RDD存在则意味着窗口之间存在重叠.
+          var prefixRDD = rdd
           if (partitions() > 0) prefixRDD = prefixRDD.coalesce(partitions())
-          val wholeRDD = prefixRDD.union(suffixRDD)
+          val coarseRDD = prefixRDD.++(suffixRDD).
+            setName(s"CoarseTimeWindowRDD[${winId.get()}]")
+          val border = TimeWindowController.startTime + step
           if (cached) {
-            Option(
-              wholeRDD
-                .persist(storageLevel)
-                .setName(s"TimeWindowRDD[${winId.get()}]"))
+            val wasteRDD = coarseRDD.filter(_._1.asInstanceOf[Long] < border)
+            val cacheRDD = coarseRDD.filter(_._1.asInstanceOf[Long] >= border).
+              persist(storageLevel)
+            val delicateRDD = wasteRDD.++(cacheRDD)
+              .setName(s"DelicateTimeWindowRDD[${winId.get()}]")
+            Option(delicateRDD, cacheRDD)
           } else {
-            Option(wholeRDD)
+            Option(coarseRDD, rdd)
           }
         case None =>
           if (partition == 0) partition = suffixRDD.getNumPartitions
-          if (cached) {
-            Option(
-              suffixRDD
-                .persist(storageLevel)
-                .setName(s"TimeWindowRDD[${winId.get()}]"))
+          if (cached && isOverlap) {
+            val border = TimeWindowController.startTime + step
+            val wasteRDD = suffixRDD.filter(_._1.asInstanceOf[Long] < border)
+            val cacheRDD = suffixRDD.filter(_._1.asInstanceOf[Long] >= border)
+            val delicateRDD = wasteRDD.union(cacheRDD).
+              persist(storageLevel).
+              setName(s"DelicateTimeWindowRDD[${winId.get()}]")
+            Option(delicateRDD, cacheRDD)
           } else {
-            Option(suffixRDD)
+            Option(suffixRDD, null)
           }
       }
     } catch {
       case e: Exception =>
+        // scalastyle:off println
+        System.err.println(e.printStackTrace())
+        // scalastyle:on println
         None
     }
   }
@@ -126,13 +140,13 @@ protected[api] sealed class TimeWindowController[T, V](
     */
   private def update(): Unit = {
     if (TimeWindowController.initialized) {
-        TimeWindowController.startTime = TimeWindowController.winStart + Math.max(size, step)
-        TimeWindowController.endTime = TimeWindowController.startTime + Math.min(size, step)
-        TimeWindowController.winStart += step
+      TimeWindowController.startTime = TimeWindowController.winStart + maxOne
+      TimeWindowController.endTime = TimeWindowController.startTime + minOne
+      TimeWindowController.winStart += step
     } else {
       TimeWindowController.winStart = scope.start
       TimeWindowController.startTime = TimeWindowController.winStart
-      TimeWindowController.endTime = TimeWindowController.startTime + size
+      TimeWindowController.endTime = TimeWindowController.winStart + size
       TimeWindowController.initialized = !TimeWindowController.initialized
     }
   }
@@ -154,7 +168,7 @@ protected[api] sealed class TimeWindowController[T, V](
   private def clean(keepInMem: Integer): Unit = {
     if (entries.size() > keepInMem) {
       val delList = new util.ArrayList[Integer]
-      val delLimit = lastWinId() - (entries.size() - keepInMem)
+      val delLimit = latestWinId() - (entries.size() - keepInMem)
       val itr = entries.entrySet().iterator()
       while (itr.hasNext) {
         val rddId = itr.next().getKey
@@ -175,15 +189,25 @@ protected[api] sealed class TimeWindowController[T, V](
     }
   }
 
-  private def rddId(winId: Integer): Integer = latest(winId) match {
+  private def cachedMem(): Long = {
+    var memSize = 0L
+    val itr = entries.entrySet().iterator()
+    while (itr.hasNext) {
+      memSize += sizeInMem(rddId(itr.next().getKey))
+    }
+    memSize
+  }
+
+  private def rddId(winId: Integer): Integer = latestCachedRDD(winId) match {
     case Some(rdd) => rdd.id
     case _ => -1
   }
 
-  private def latest(n: Integer = lastWinId()): Option[RDD[(T, V)]] =
+  private def latestCachedRDD(n: Integer = latestWinId()): Option[RDD[(T, V)]] = {
     if (entries.containsKey(n)) Option(entries.get(n)) else None
+  }
 
-  private def lastWinId(): Integer = {
+  private def latestWinId(): Integer = {
     val nextId = winId.get()
     if (nextId > 0) nextId - 1 else nextId
   }
@@ -204,7 +228,8 @@ protected[api] object TimeWindowController {
   var endTime: Long = 0L
 
   // 用户保存某次操作的时间参数.
-  var record: (Long, Long, Long, Boolean) = (winStart, startTime, endTime, initialized)
+  var record: (Long, Long, Long, Boolean) =
+    (winStart, startTime, endTime, initialized)
 
   /**
     * 保存当前时间参数.
