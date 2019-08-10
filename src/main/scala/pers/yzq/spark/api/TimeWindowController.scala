@@ -117,7 +117,8 @@ protected[api] sealed class TimeWindowController[T, V](
           if (cached && isOverlap) {
             val border = TimeWindowController.startTime + step
             val wasteRDD = suffixRDD.filter(_._1.asInstanceOf[Long] < border)
-            val cacheRDD = suffixRDD.filter(_._1.asInstanceOf[Long] >= border)
+            val cacheRDD = suffixRDD.filter(_._1.asInstanceOf[Long] >= border).
+              persist(storageLevel)
             val delicateRDD = wasteRDD.union(cacheRDD).
               persist(storageLevel).
               setName(s"DelicateTimeWindowRDD[${winId.get()}]")
