@@ -119,7 +119,7 @@ protected[api] sealed class TimeWindowController[T, V](
             val cacheRDD = suffixRDD.filter(_._1.asInstanceOf[Long] >= border).
               persist(storageLevel)
             var delicateRDD = wasteRDD.union(cacheRDD)
-            if (partitions() > 0) delicateRDD = delicateRDD.coalesce(partitions())
+            if (partitions() > 0) delicateRDD = delicateRDD.coalesce(partitions(1))
             Option(delicateRDD.
               setName(s"DelicateTimeWindowRDD[${winId.get()}]"), cacheRDD)
           } else {
@@ -212,11 +212,11 @@ protected[api] sealed class TimeWindowController[T, V](
     if (nextId > 0) nextId - 1 else nextId
   }
 
-  private def partitions(): Integer = {
+  private def partitions(times: Integer = 2): Integer = {
     if (partitionLimitations > partition) {
       partitionLimitations
     } else {
-      2 * partition
+      times * partition
     }
   }
 }
