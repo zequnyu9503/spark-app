@@ -21,6 +21,7 @@ import java.util
 import java.util.concurrent.atomic.AtomicInteger
 
 import org.apache.spark.SparkContext
+import org.apache.spark.internal.Logging
 import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 
@@ -28,19 +29,19 @@ protected[api] sealed class TimeWindowController[T, V](
     val sc: SparkContext,
     val size: Long,
     val step: Long,
-    val func: (T, T) => RDD[(T, V)]) {
+    val func: (T, T) => RDD[(T, V)]) extends Logging{
 
   private val entries =
     new util.LinkedHashMap[Integer, RDD[(T, V)]](32, 0.75f, true)
   private val winId = new AtomicInteger(0)
   private var partition: Integer = 0
-  private val isOverlap: Boolean = if (size > step) true else false
+  private var minMemRequire: Long = 0
   private val minOne = Math.min(size, step)
   private val maxOne = Math.max(size, step)
 
   var scope = TimeScope()
   var keepInMem: Integer = 1
-  var keepInMemSize = Long.MaxValue
+  var keepInMemCapacity = Long.MaxValue
   var storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY
   var partitionLimitations: Integer = partition
 
@@ -57,8 +58,8 @@ protected[api] sealed class TimeWindowController[T, V](
       TimeWindowController.save()
       update()
       nextRDD() match {
-        case Some(rdd) =>
-          isEpt = rdd._1.isEmpty()
+        case Some(coarseRDD) =>
+          isEpt = coarseRDD.isEmpty()
         case _ =>
       }
       TimeWindowController.reset()
@@ -73,12 +74,14 @@ protected[api] sealed class TimeWindowController[T, V](
     * @return RDD必须满足(T, V)类型.
     */
   def next(): RDD[(T, V)] = {
-    update()
+    if (entries.size().equals(1)) minMemRequire = memUsedForCache()
+    val isMemSufficient = checkMemCapacity()
+    update(isMemSufficient)
     clean(keepInMem)
-    nextRDD(true) match {
-      case Some(rdds) =>
-        entries.put(winId.getAndIncrement(), rdds._2)
-        rdds._1
+    nextRDD(isMemSufficient) match {
+      case Some(coarseRDD) =>
+        entries.put(winId.getAndIncrement(), coarseRDD)
+        coarseRDD
       case _ => null
     }
   }
@@ -89,7 +92,7 @@ protected[api] sealed class TimeWindowController[T, V](
     * @return (RDD0, RDD1) 分别代表窗口RDD与缓存部分RDD.
     */
   private def nextRDD(
-      cached: Boolean = false): Option[(RDD[(T, V)], RDD[(T, V)])] = {
+      cached: Boolean = false): Option[RDD[(T, V)]] = {
     try {
       // suffixRDD 只能从非缓存空间获取.
       val suffixRDD = func(TimeWindowController.startTime.asInstanceOf[T],
@@ -97,37 +100,20 @@ protected[api] sealed class TimeWindowController[T, V](
       latestCachedRDD() match {
         case Some(rdd) =>
           // 如果缓存RDD存在则意味着窗口之间存在重叠.
-          val prefixRDD = rdd
-          val coarseRDD = prefixRDD.++(suffixRDD).
-            setName(s"CoarseTimeWindowRDD[${winId.get()}]")
-          val border = TimeWindowController.winStart + step
-          if (cached) {
-            val wasteRDD = coarseRDD.filter(_._1.asInstanceOf[Long] < border).
-              coalesce(partitions(1))
-            val cacheRDD = coarseRDD.filter(_._1.asInstanceOf[Long] >= border).
-              coalesce(partitions(1)).
+          var prefixRDD = rdd.filter(_._1.asInstanceOf[Long] >= TimeWindowController.winStart)
+          if (partitionsReserved() > 0) prefixRDD = prefixRDD.coalesce(partitionsReserved())
+          var coarseRDD = prefixRDD.union(suffixRDD)
+          if (cached) coarseRDD = coarseRDD.
               persist(storageLevel)
-            var delicateRDD = wasteRDD.++(cacheRDD)
-            Option(delicateRDD.
-              setName(s"DelicateTimeWindowRDD[${winId.get()}]"), cacheRDD)
-          } else {
-            Option(coarseRDD, rdd)
-          }
+                .setName(s"TimeWindowRDD[${winId.get()}]")
+          Option(coarseRDD)
         case None =>
-          if (partition == 0) partition = suffixRDD.getNumPartitions
-          if (cached && isOverlap) {
-            val border = TimeWindowController.winStart + step
-            val wasteRDD = suffixRDD.filter(_._1.asInstanceOf[Long] < border)
-              .coalesce(partitions(1))
-            val cacheRDD = suffixRDD.filter(_._1.asInstanceOf[Long] >= border)
-              .coalesce(partitions(1)).
-              persist(storageLevel)
-            val delicateRDD = wasteRDD.union(cacheRDD)
-            Option(delicateRDD.
-              setName(s"DelicateTimeWindowRDD[${winId.get()}]"), cacheRDD)
-          } else {
-            Option(suffixRDD, null)
-          }
+          if (partition.equals(0)) partition = suffixRDD.getNumPartitions
+          var coarseRDD = suffixRDD
+          if (cached) coarseRDD = coarseRDD.
+            persist(storageLevel).
+            setName(s"TimeWindowRDD[${winId.get()}]")
+          Option(coarseRDD)
       }
     } catch {
       case e: Exception =>
@@ -141,10 +127,15 @@ protected[api] sealed class TimeWindowController[T, V](
   /**
     * 更新当前时间参数.
     */
-  private def update(): Unit = {
+  private def update(cached: Boolean = false): Unit = {
     if (TimeWindowController.initialized) {
-      TimeWindowController.startTime = TimeWindowController.winStart + maxOne
-      TimeWindowController.endTime = TimeWindowController.startTime + minOne
+      if (cached) {
+        TimeWindowController.startTime = TimeWindowController.winStart + maxOne
+        TimeWindowController.endTime = TimeWindowController.startTime + minOne
+      } else {
+        TimeWindowController.startTime = TimeWindowController.winStart + step
+        TimeWindowController.endTime = TimeWindowController.startTime + size
+      }
       TimeWindowController.winStart += step
     } else {
       TimeWindowController.winStart = scope.start
@@ -185,18 +176,37 @@ protected[api] sealed class TimeWindowController[T, V](
     }
   }
 
-  private def sizeInMem(winId: Integer): Long = {
-    sc.getRDDStorageInfo.find(_.id == rddId(winId)) match {
+  private def rddSizeInMem(winId: Integer): Long = {
+    sc.getRDDStorageInfo.find(_.id.equals(rddId(winId))) match {
       case Some(info) => info.memSize
       case _ => -1
     }
   }
 
-  private def cachedMem(): Long = {
+  private def checkMemCapacity(): Boolean = if (!minMemRequire.equals(0)) {
+    if (keepInMemCapacity < minMemRequire) {
+      // scalastyle:off println
+      System.err.println("Cannot persist TimeWindowRDD in memory")
+      // scalastyle:on println
+      false
+    } else {
+      // 当前缓存RDD所占用的内存量.
+      val memUsed = memUsedForCache()
+      var freeMemReserved = keepInMemCapacity - memUsed
+      while (freeMemReserved < minMemRequire && entries.size() > 1) {
+          clean(entries.size() - 1)
+        freeMemReserved = keepInMemCapacity - memUsed
+      }
+      if (freeMemReserved < minMemRequire) false else true
+    }
+  } else true
+
+  private def memUsedForCache(): Long = {
     var memSize = 0L
-    val itr = entries.entrySet().iterator()
-    while (itr.hasNext) {
-      memSize += sizeInMem(rddId(itr.next().getKey))
+    var id = latestWinId()
+    while (entries.containsKey(id)) {
+      memSize += rddSizeInMem(id)
+      id -= 1
     }
     memSize
   }
@@ -206,7 +216,8 @@ protected[api] sealed class TimeWindowController[T, V](
     case _ => -1
   }
 
-  private def latestCachedRDD(n: Integer = latestWinId()): Option[RDD[(T, V)]] = {
+  private def latestCachedRDD(
+      n: Integer = latestWinId()): Option[RDD[(T, V)]] = {
     if (entries.containsKey(n)) Option(entries.get(n)) else None
   }
 
@@ -215,37 +226,27 @@ protected[api] sealed class TimeWindowController[T, V](
     if (nextId > 0) nextId - 1 else nextId
   }
 
-  private def partitions(times: Integer = 2): Integer = {
+  private def partitionsReserved(): Integer = {
     if (partitionLimitations > partition) {
-      partitionLimitations
+      partitionLimitations - partition
     } else {
-      times * partition
+      partition
     }
   }
 }
 
 protected[api] object TimeWindowController {
   var initialized: Boolean = false
-
-  // 重点: 时间窗口RDD控制参数由于涉及创建与转换操作
-  // 其变量必须采用静态变量或者序列化对象.
   var winStart: Long = 0L
   var startTime: Long = 0L
   var endTime: Long = 0L
 
-  // 用户保存某次操作的时间参数.
   var record: (Long, Long, Long, Boolean) =
     (winStart, startTime, endTime, initialized)
 
-  /**
-    * 保存当前时间参数.
-    */
   def save(): Unit =
     record = (winStart, startTime, endTime, initialized)
 
-  /**
-    * 恢复当前时间参数.
-    */
   def reset(): Unit = {
     winStart = record._1
     startTime = record._2

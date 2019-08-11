@@ -33,7 +33,7 @@ class TimeWindowRDDIteratorSuite extends FunSuite {
       (startTime: Long, endTime: Long) => {
         sc.parallelize(Array.range(startTime.toInt, endTime.toInt), 2)
           .map(e => (e, e))
-      }).setKeepInMem(1).iterator()
+      }).setKeepInMem(5).setKeepInMemCapacity(8).iterator()
 
     while (itr.hasNext) {
       val rdd = itr.next()

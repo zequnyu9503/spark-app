@@ -56,8 +56,8 @@ sealed class TimeWindowRDD[T, V](sc: SparkContext,
     this
   }
 
-  def setKeepInMemSize(size: Long): TimeWindowRDD[T, V] = {
-    if (size > 0) controller.keepInMemSize = size
+  def setKeepInMemCapacity(size: Long): TimeWindowRDD[T, V] = {
+    if (size > 0) controller.keepInMemCapacity = size
     this
   }
 
