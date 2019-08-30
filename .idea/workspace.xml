@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/bulkload/US_Traffic_2015.scala" line="86" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="995a8f6f-dc1b-42a8-8ffe-cd534f152c59" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/scala_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/HBaseCommon.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/bulkload/BulkLoad.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/bulkload/US_Traffic_2015.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowRDDIteratorSuite.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowRDDIteratorSuite.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scalastyle-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/scalastyle-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/PropertiesHelper.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/PropertiesHelper.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Starter.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Starter.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twa.properties" beforeDir="false" afterPath="$PROJECT_DIR$/twa.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -23,50 +34,7 @@
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowRDDIteratorSuite.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="34" column="27" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="27" />
-              <folding>
-                <element signature="e#830#879#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="26" column="61" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="189" column="30" lean-forward="true" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
-              <folding>
-                <element signature="e#830#846#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDDIterator.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -86,6 +54,9 @@
       <find>println</find>
       <find>Spark</find>
       <find>Boolean</find>
+      <find>should be</find>
+      <find>not</find>
+      <find>spark</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -100,7 +71,6 @@
         <option value="$PROJECT_DIR$/../../MobaXterm/slash/RemoteFiles/132776_2_1/MAv1.scala" />
         <option value="$PROJECT_DIR$/../../MobaXterm/slash/RemoteFiles/132776_2_4/MAv1.scala" />
         <option value="$PROJECT_DIR$/../../MobaXterm/slash/RemoteFiles/132776_2_6/MAv1.scala" />
-        <option value="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala" />
         <option value="$PROJECT_DIR$/src/main/java/pers.yzq.spark/monitor/Monitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers.yzq.spark/monitor/MemMonitor.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/YLogger.scala" />
@@ -110,8 +80,6 @@
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/Rolling.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/Example.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala" />
-        <option value="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java" />
-        <option value="$PROJECT_DIR$/scalastyle-config.xml" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/Demo.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/f.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common.scala" />
@@ -121,15 +89,28 @@
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeScope.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowIteratorSuite.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala" />
-        <option value="$PROJECT_DIR$/twa.properties" />
         <option value="$PROJECT_DIR$/run.sh" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowIterator.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDDIterator.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowUtils.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/API.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/api/TimeWindowRDDIteratorSuite.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Starter.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/US_Traffic_2015.scala" />
+        <option value="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseHelper.java" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/bulkload/BulkLoadCommon.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/HBaseCommon.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala" />
+        <option value="$PROJECT_DIR$/scalastyle-config.xml" />
+        <option value="$PROJECT_DIR$/twa.properties" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/bulkload/BulkLoad.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/PropertiesHelper.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/utils/dot_traffic_2015.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/utils/Dot_Traffic_2015.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/bulkload/US_Traffic_2015.scala" />
       </list>
     </option>
   </component>
@@ -148,7 +129,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1640" />
+    <option name="x" value="-1928" />
     <option name="y" value="-199" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -161,6 +142,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -214,16 +197,22 @@
               <item name="spark-app" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
               <item name="yzq" type="462c0819:PsiDirectoryNode" />
-              <item name="hbase" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="spark" type="b2602c69:ProjectViewProjectNode" />
               <item name="spark-app" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
               <item name="yzq" type="462c0819:PsiDirectoryNode" />
               <item name="spark" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -233,30 +222,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="spark" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="spark" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
+              <item name="yzq" type="462c0819:PsiDirectoryNode" />
               <item name="spark" type="462c0819:PsiDirectoryNode" />
               <item name="hbase" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -266,9 +232,21 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
+              <item name="yzq" type="462c0819:PsiDirectoryNode" />
               <item name="spark" type="462c0819:PsiDirectoryNode" />
               <item name="hbase" type="462c0819:PsiDirectoryNode" />
-              <item name="MovingAverage" type="462c0819:PsiDirectoryNode" />
+              <item name="bulkload" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+              <item name="yzq" type="462c0819:PsiDirectoryNode" />
+              <item name="spark" type="462c0819:PsiDirectoryNode" />
+              <item name="hbase" type="462c0819:PsiDirectoryNode" />
+              <item name="Common" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="spark" type="b2602c69:ProjectViewProjectNode" />
@@ -290,22 +268,11 @@
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
               <item name="spark" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spark" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spark-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="spark" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -319,19 +286,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\YZQ\Documents\Top Project\spark-app\src\main\resources\pers\yzq\hbase" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="pers.yzq.spark.api" />
       <recent name="pers.yzq.spark" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="pers.yzq.spark.hbase.MovingAverage" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\YZQ\Documents\Top Project\spark-app\src\main\scala\pers\yzq\spark\api" />
       <recent name="C:\Users\YZQ\Documents\Top Project\spark-app\src\main\resources\pers\yzq\spark" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="pers.yzq.spark.hbase.MovingAverage" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\YZQ\Documents\Top Project\spark-app\src\main\resources\pers\yzq\hbase" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -403,6 +370,9 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ScalaProjectSettings">
+    <option name="dontShowConversionDialog" value="true" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -468,14 +438,13 @@
       <workItem from="1565335634463" duration="659000" />
       <workItem from="1565397916874" duration="12864000" />
       <workItem from="1565422591429" duration="22280000" />
-      <workItem from="1565487522165" duration="2452000" />
-    </task>
-    <task id="LOCAL-00010" summary="Wednesday AM">
-      <created>1561603137980</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1561603137980</updated>
+      <workItem from="1565487522165" duration="3738000" />
+      <workItem from="1566872606949" duration="3009000" />
+      <workItem from="1566952660483" duration="10207000" />
+      <workItem from="1566966197473" duration="4937000" />
+      <workItem from="1567040690542" duration="3533000" />
+      <workItem from="1567061588280" duration="3858000" />
+      <workItem from="1567125641156" duration="6016000" />
     </task>
     <task id="LOCAL-00011" summary="Wednesday AM">
       <created>1561603770599</created>
@@ -813,13 +782,17 @@
       <option name="project" value="LOCAL" />
       <updated>1565426991408</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="1. 优化核心函数, 时间窗口RDD缓存了完整的时间窗口RDD.&#10;2. 实现了时间窗口缓存RDD空间限制.">
+      <created>1565490355030</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1565490355031</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TimeWindowRDDIteratorSuite_TimeWindowRDD_Logical_Examination - 2019.08.10 at 16h 25m 56s.xml">
-      <configuration name="TimeWindowRDDIteratorSuite.TimeWindowRDD Logical Examination" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TimeWindowRDDIteratorSuite_TimeWindowRDD_Logical_Examination - 2019.08.10 at 16h 26m 38s.xml">
       <configuration name="TimeWindowRDDIteratorSuite.TimeWindowRDD Logical Examination" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
@@ -847,24 +820,26 @@
     <history-entry file="TimeWindowRDDIteratorSuite_TimeWindowRDD_Logical_Examination - 2019.08.11 at 10h 23m 58s.xml">
       <configuration name="TimeWindowRDDIteratorSuite.TimeWindowRDD Logical Examination" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
+    <history-entry file="TimeWindowRDDIteratorSuite_TimeWindowRDD_Logical_Examination - 2019.08.29 at 15h 19m 27s.xml">
+      <configuration name="TimeWindowRDDIteratorSuite.TimeWindowRDD Logical Examination" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="346935000" />
+    <option name="totallyTimeSpent" value="379781000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-199" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.18923241" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.16471216" />
       <window_info id="Designer" order="1" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.0889371" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.72993493" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3294964" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.0889371" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.27548808" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -941,115 +916,10 @@
     <MESSAGE value="1. 优化核心函数, 减少缓存RDD大小.&#10;2. Time Window RDD新增接口:&#10; a. 添加控制缓存级别.&#10; b. 添加控制缓存空间限制." />
     <MESSAGE value="1. 恢复核心函数.&#10;2. 控制缓存资源大小未实现." />
     <MESSAGE value="1. 优化核心函数(待测试)" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. 优化核心函数(待测试)" />
+    <MESSAGE value="1. 优化核心函数, 时间窗口RDD缓存了完整的时间窗口RDD.&#10;2. 实现了时间窗口缓存RDD空间限制." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. 优化核心函数, 时间窗口RDD缓存了完整的时间窗口RDD.&#10;2. 实现了时间窗口缓存RDD空间限制." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://D:/Service/REPOSITORIES/org/apache/hbase/hbase-common/2.1.4/hbase-common-2.1.4-sources.jar!/org/apache/hadoop/hbase/Cell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="166" column="23" lean-forward="true" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/Rolling.scala" />
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/YLogger.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="45" column="29" lean-forward="true" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/shuffle/sort/BypassMergeSortShuffleWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="148" column="44" selection-start-line="148" selection-start-column="44" selection-end-line="148" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/shuffle/sort/UnsafeShuffleWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="187" column="39" selection-start-line="187" selection-start-column="39" selection-end-line="187" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/pers/yzq/hbase/hbase-site.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/Example.scala" />
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="38" column="68" lean-forward="true" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="68" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2486">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="e#0#10262#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="method#cTable#0;class#HBaseBulkLoad#0" />
-            <element signature="method#ddTable#0;class#HBaseBulkLoad#0" />
-            <element signature="method#getSplits#0;class#HBaseBulkLoad#0" />
-            <element signature="method#getSplits#1;class#HBaseBulkLoad#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
-          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
-          <folding>
-            <element signature="n#build#0;n#project#0;n#!!top" />
-            <element signature="n#plugin#0;n#plugins#0;n#build#0;n#project#0;n#!!top" />
-            <element signature="n#plugin#1;n#plugins#0;n#build#0;n#project#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../TimeWindowRDD/src/main/scala/pers/yzq/spark/Example.scala" />
-    <entry file="file://$PROJECT_DIR$/scalastyle-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="143" column="88" selection-start-line="143" selection-start-column="60" selection-end-line="143" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Service/REPOSITORIES/org/apache/spark/spark-core_2.11/2.4.0/spark-core_2.11-2.4.0-sources.jar!/org/apache/spark/rdd/EmptyRDD.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Service/REPOSITORIES/org/scalatest/scalatest_2.11/3.0.3/scalatest_2.11-3.0.3-sources.jar!/org/scalatest/Transformer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Service/REPOSITORIES/org/scalatest/scalatest_2.11/3.0.3/scalatest_2.11-3.0.3-sources.jar!/org/scalatest/TestSuite.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="195" column="4" selection-start-line="195" selection-start-column="4" selection-end-line="195" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Service/REPOSITORIES/org/scalatest/scalatest_2.11/3.0.3/scalatest_2.11-3.0.3-sources.jar!/org/scalatest/FunSuiteLike.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="228" column="56" selection-start-line="228" selection-start-column="56" selection-end-line="228" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Service/REPOSITORIES/org/scalatest/scalatest_2.11/3.0.3/scalatest_2.11-3.0.3-sources.jar!/org/scalatest/Engine.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
@@ -1164,16 +1034,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="77" column="8" lean-forward="true" selection-start-line="77" selection-start-column="8" selection-end-line="80" selection-end-column="47" />
-          <folding>
-            <element signature="e#832#864#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv0.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="712">
@@ -1196,20 +1056,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowUtils.scala" />
-    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="25" selection-start-line="25" selection-end-line="44" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeScope.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/MovingAverage/MAv1.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -1248,31 +1094,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twa.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="24" column="12" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/src.zip!/java/util/LinkedHashMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="718" column="22" selection-start-line="718" selection-start-column="22" selection-end-line="718" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDDIterator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="26" column="61" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
         </state>
       </provider>
     </entry>
@@ -1286,12 +1111,173 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDD.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
-          <caret line="189" column="30" lean-forward="true" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
+          <caret line="35" column="49" lean-forward="true" selection-start-line="35" selection-start-column="49" selection-end-line="35" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowRDDIterator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeWindowController.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="44" column="59" selection-start-line="44" selection-start-column="59" selection-end-line="44" selection-end-column="59" />
           <folding>
             <element signature="e#830#846#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Starter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/US_Traffic_2015.scala" />
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="16" />
+          <folding>
+            <element signature="e#832#864#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/pers/yzq/spark/spark-hbase.shell">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="2421" column="31" lean-forward="true" selection-start-line="2421" selection-start-column="31" selection-end-line="2421" selection-end-column="31" />
+          <folding>
+            <element signature="e#94598#94599#0" expanded="true" />
+            <element signature="e#94636#94637#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/BulkLoad.scala" />
+    <entry file="jar://D:/Service/REPOSITORIES/org/scala-lang/scala-library/2.11.12/scala-library-2.11.12-sources.jar!/scala/Array.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-19">
+          <caret line="84" column="3" lean-forward="true" selection-start-line="84" selection-start-column="3" selection-end-line="84" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseBulkLoad.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="105" column="109" lean-forward="true" selection-start-line="105" selection-start-column="109" selection-end-line="105" selection-end-column="109" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Service/REPOSITORIES/org/apache/hbase/hbase-common/2.1.4/hbase-common-2.1.4-sources.jar!/org/apache/hadoop/hbase/util/Bytes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="730" column="23" selection-start-line="730" selection-start-column="23" selection-end-line="730" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/pers/yzq/spark/Some.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="86" column="23" lean-forward="true" selection-start-line="86" selection-start-column="23" selection-end-line="86" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scalastyle-config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="253" column="77" lean-forward="true" selection-start-line="253" selection-start-column="77" selection-end-line="253" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twa.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/bulkload/BulkLoad.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="31" column="27" lean-forward="true" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
+          <folding>
+            <element signature="e#841#873#0" expanded="true" />
+            <element signature="e#1459#1744#0" />
+            <element signature="e#1991#3107#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/api/TimeScope.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/PropertiesHelper.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="22" selection-start-line="22" selection-end-line="26" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Service/REPOSITORIES/com/google/guava/guava/14.0.1/guava-14.0.1-sources.jar!/com/google/common/io/Files.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="79" column="31" selection-start-line="79" selection-start-column="31" selection-end-line="79" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/utils/Dot_Traffic_2015.scala" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers.yzq.spark/HBaseHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="852">
+          <caret line="106" column="15" lean-forward="true" selection-start-line="106" selection-start-column="15" selection-end-line="106" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getSplits#0;class#HBaseHelper#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/HBaseCommon.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="92" column="73" lean-forward="true" selection-start-line="91" selection-start-column="6" selection-end-line="92" selection-end-column="73" />
+          <folding>
+            <element signature="e#839#865#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/bulkload/US_Traffic_2015.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="586">
+          <caret line="120" column="7" lean-forward="true" selection-start-line="120" selection-start-column="7" selection-end-line="120" selection-end-column="7" />
+          <folding>
+            <element signature="e#841#860#0" expanded="true" />
+            <element signature="e#3043#3397#0" />
           </folding>
         </state>
       </provider>

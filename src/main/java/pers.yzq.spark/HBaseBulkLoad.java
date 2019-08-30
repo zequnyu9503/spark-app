@@ -42,8 +42,6 @@ import scala.Serializable;
 import scala.Tuple2;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
 /**
@@ -52,94 +50,6 @@ import java.util.*;
  */
 public class HBaseBulkLoad implements Serializable {
 
-    public HBaseBulkLoad() {
-        System.out.println("BulkLoad");
-    }
-
-    public Boolean cTable(String tableName, List<String> families, byte[][] splits){
-        final String hcp = PropertiesHelper.getProperty("hbase.hcp");
-        try {
-            Configuration hBaseConfiguration = HBaseConfiguration.create();
-            hBaseConfiguration.addResource(hcp);
-            Connection connection = ConnectionFactory.createConnection(hBaseConfiguration);
-            Admin admin = connection.getAdmin();
-            TableName tn = TableName.valueOf(tableName);
-            TableDescriptorBuilder tdb = TableDescriptorBuilder.newBuilder(tn);
-            HashSet cfdbs = new HashSet<ColumnFamilyDescriptor>(families.size());
-            Iterator<String> familyIterator = families.iterator();
-            while (familyIterator.hasNext()) {
-                String family = familyIterator.next();
-                ColumnFamilyDescriptorBuilder cfdb = ColumnFamilyDescriptorBuilder
-                        .newBuilder(Bytes.toBytes(family))
-                        .setBlockCacheEnabled(true)
-                        .setBloomFilterType(BloomType.NONE)
-                        .setDataBlockEncoding(DataBlockEncoding.NONE);
-                cfdbs.add(cfdb.build());
-            }
-            admin.createTable(tdb.setColumnFamilies(cfdbs).build(), splits);
-            admin.close();
-            return true;
-        } catch (IOException e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public Boolean ddTable(String tableName){
-        final String hcp = PropertiesHelper.getProperty("hbase.hcp");
-        try{
-            Configuration hBaseConfiguration = HBaseConfiguration.create();
-            hBaseConfiguration.addResource(hcp);
-            Connection connection = ConnectionFactory.createConnection(hBaseConfiguration);
-            Admin admin = connection.getAdmin();
-            TableName tn = TableName.valueOf(tableName);
-            if(!admin.isTableDisabled(tn)) {
-                admin.disableTable(tn);
-            }
-            admin.deleteTable(tn);
-            admin.close();
-            return true;
-        }catch (IOException e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public Boolean cleanHFiles() {
-        final String path = PropertiesHelper.getProperty("hdfs.home");
-        final String user = PropertiesHelper.getProperty("hdfs.user");
-        final String hfiles = PropertiesHelper.getProperty("hbase.bulkload.hfile");
-        try {
-            Configuration configuration = new Configuration();
-            FileSystem fileSystem = FileSystem.get(new URI(path), configuration, user);
-            return fileSystem.delete(new Path(hfiles), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public byte[][] getSplits(long range, int num){
-        long split = range / num;
-        long [] keys = new long[num - 1];
-        for(int i = 0;i<keys.length; ++i) {
-            keys[i] = split * (i+1);
-        }
-        TreeSet set = new TreeSet<>(Bytes.BYTES_COMPARATOR);
-        for(int i = 0; i<keys.length;){
-            set.add(Bytes.toBytes(keys[i++]));
-        }
-        Iterator<byte[]> iterator = set.iterator();
-        byte[][] splits = new byte[keys.length][];
-        for(int i =0; i<keys.length && iterator.hasNext();){
-            splits[i++] = iterator.next();
-        }
-        return splits;
-    }
 
     public byte[][] getSplits(List<String> ss){
         TreeSet set = new TreeSet<>(Bytes.BYTES_COMPARATOR);
@@ -153,7 +63,6 @@ public class HBaseBulkLoad implements Serializable {
     }
 
     public void bulkLoad(String tableName, String columnFamily, String column, String hadoop_file, String hfile) throws IOException {
-
         Configuration hc = HBaseConfiguration.create();
         hc.set("hbase.mapred.outputtable", tableName);
         hc.setLong("hbase.hregion.max.filesize", HConstants.DEFAULT_MAX_FILE_SIZE);
@@ -161,31 +70,7 @@ public class HBaseBulkLoad implements Serializable {
         hc.setInt(LoadIncrementalHFiles.MAX_FILES_PER_REGION_PER_FAMILY, 1024 * 1024 * 1024);
         Connection con = ConnectionFactory.createConnection(hc);
         Admin admin = con.getAdmin();
-
-        cleanHFiles();
-        ddTable(tableName);
-        cTable(tableName, new ArrayList<String>(){{add(columnFamily);}},
-                getSplits(new ArrayList<String>(){{
-                    add("b0000000000");
-                    add("c0000000000");
-                    add("d0000000000");
-                    add("e0000000000");
-                    add("f0000000000");
-                    add("g0000000000");
-                    add("h0000000000");
-                    add("i0000000000");
-                    add("j0000000000");
-                    add("k0000000000");
-                    add("l0000000000");
-                    add("m0000000000");
-                    add("n0000000000");
-                    add("o0000000000");
-                    add("p0000000000");
-                    add("q0000000000");
-                    add("r0000000000");
-                    add("s0000000000");
-                    add("t0000000000");
-                }}));
+        //TO-DO
         SparkConf conf = new SparkConf().setAppName("YZQ-HBASE-BULKLOAD-"+System.currentTimeMillis());
         JavaSparkContext jsc = new JavaSparkContext(conf);
         JavaRDD<String> rdd = jsc.textFile(hadoop_file).persist(StorageLevel.MEMORY_AND_DISK_SER());
