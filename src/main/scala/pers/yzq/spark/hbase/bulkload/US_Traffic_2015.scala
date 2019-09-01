@@ -70,15 +70,13 @@ object US_Traffic_2015 extends BulkLoad {
       .sortByKey()
       .map(e => {
         val k = new ImmutableBytesWritable(Bytes.toBytes(e._1))
-        val ky = new KeyValue(
+        val kv = new KeyValue(
           Bytes.toBytes(e._1),
-          Bytes.toBytes(
-            PropertiesHelper.getProperty("hbase.bulkload.columnfamily")),
-          Bytes.toBytes(
-            PropertiesHelper.getProperty("hbase.bulkload.columnqualify")),
+          Bytes.toBytes(PropertiesHelper.getProperty("hbase.bulkload.columnfamily")),
+          Bytes.toBytes(PropertiesHelper.getProperty("hbase.bulkload.columnqualify")),
           e._2._2,
-          Bytes.toBytes(e._2._1)
-        )
+          Bytes.toBytes(e._2._1))
+        (k, kv)
       })
   }
 
@@ -88,7 +86,7 @@ object US_Traffic_2015 extends BulkLoad {
     for (i <- Range(0, 20))
       set.add(Bytes.toBytes((98 + i).asInstanceOf[Char] + "0000000000"))
     val itr = splitSet.iterator
-    while(itr.hasNext) splitSet :+ itr.next()
+    while (itr.hasNext) splitSet :+ itr.next()
     splitSet
   }
 
@@ -103,7 +101,9 @@ object US_Traffic_2015 extends BulkLoad {
     }
     val conf = new SparkConf().setAppName("US_Traffic_2015_P")
     val sc = new SparkContext(conf)
-    val source = sc.textFile("/data/dot_traffic_2015.txt").persist(StorageLevel.MEMORY_ONLY)
+    val source = sc
+      .textFile("/data/dot_traffic_2015.txt")
+      .persist(StorageLevel.MEMORY_ONLY)
     val rdd_0 = source.map(e => e.replaceAll("\"", ""))
     val rdd_1 = rdd_0.map(e => e.split(","))
     val rdd_2 = rdd_1.map(e => {

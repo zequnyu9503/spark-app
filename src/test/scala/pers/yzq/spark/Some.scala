@@ -22,7 +22,6 @@ import org.apache.hadoop.hbase.util.Bytes
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.FunSuite
-import pers.yzq.spark.hbase.MovingAverage.MAv0
 
 import scala.collection.mutable
 
