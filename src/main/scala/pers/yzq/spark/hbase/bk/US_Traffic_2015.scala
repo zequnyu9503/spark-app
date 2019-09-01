@@ -108,7 +108,7 @@ object US_Traffic_2015 extends BulkLoad {
     val rdd_1 = rdd_0.map(e => e.split(","))
     val rdd_2 = rdd_1.map(e => {
       val newArray = new Array[String](24)
-      Array.copy(e, 12, newArray, 0, 24)
+      Array.copy(e, 13, newArray, 0, 24)
       (e(0), newArray)
     })
     val rdd_3 = rdd_2.map(e => {
