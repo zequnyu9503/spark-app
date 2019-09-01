@@ -99,9 +99,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-
-                </configuration>
             </plugin>
             <!-- This plugin compiles Java sources.-->
             <plugin>
@@ -120,7 +117,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.scalastyle</groupId>
                 <artifactId>scalastyle-maven-plugin</artifactId>
