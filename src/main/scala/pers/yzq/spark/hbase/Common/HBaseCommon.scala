@@ -24,7 +24,7 @@ import java.util
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.hadoop.hbase.{HBaseConfiguration, TableName}
-import org.apache.hadoop.hbase.client.{Admin, ColumnFamilyDescriptor, ColumnFamilyDescriptorBuilder, Connection, ConnectionFactory, TableDescriptorBuilder}
+import org.apache.hadoop.hbase.client.{ColumnFamilyDescriptor, ColumnFamilyDescriptorBuilder, ConnectionFactory, TableDescriptorBuilder}
 import org.apache.hadoop.hbase.io.encoding.DataBlockEncoding
 import org.apache.hadoop.hbase.regionserver.BloomType
 import org.apache.hadoop.hbase.util.Bytes
@@ -77,9 +77,11 @@ object HBaseCommon {
       val connection = ConnectionFactory.createConnection(hBaseConfiguration)
       val admin = connection.getAdmin
       val tn = TableName.valueOf(tableName)
-      if (!admin.isTableDisabled(tn)) admin.disableTable(tn)
-      admin.deleteTable(tn)
-      admin.close()
+      if (admin.tableExists(tn)) {
+        if (!admin.isTableDisabled(tn)) admin.disableTable(tn)
+        admin.deleteTable(tn)
+        admin.close()
+      }
       true
     } catch {
       case e: IOException => e.printStackTrace()
