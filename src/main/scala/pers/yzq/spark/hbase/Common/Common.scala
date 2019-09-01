@@ -15,24 +15,17 @@
  * limitations under the License.
  */
 
-package pers.yzq.spark.hbase
+package pers.yzq.spark.hbase.Common
 
 import org.apache.hadoop.fs.Path
-import org.apache.hadoop.hbase.{CompareOperator, HBaseConfiguration}
 import org.apache.hadoop.hbase.client.{Result, Scan}
-import org.apache.hadoop.hbase.filter.{
-  BinaryComparator,
-  FamilyFilter,
-  FilterList,
-  QualifierFilter
-}
+import org.apache.hadoop.hbase.filter.{BinaryComparator, FamilyFilter, FilterList, QualifierFilter}
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable
 import org.apache.hadoop.hbase.mapreduce.{TableInputFormat, TableMapReduceUtil}
 import org.apache.hadoop.hbase.util.Bytes
-
+import org.apache.hadoop.hbase.{CompareOperator, HBaseConfiguration}
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
-
 import pers.yzq.spark.PropertiesHelper
 
 /**

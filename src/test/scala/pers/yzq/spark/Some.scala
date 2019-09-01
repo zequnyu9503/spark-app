@@ -87,5 +87,10 @@ class Some extends FunSuite {
     val op = None
     if (op.isDefined) println("defined") else println("not defined")
   }
+
+  test("about replaceAll") {
+    val date = "\"2019.9.1\""
+    println(s"before ${date} after ${date.replace("\"", "")}")
+  }
   // scalastyle:off println
 }

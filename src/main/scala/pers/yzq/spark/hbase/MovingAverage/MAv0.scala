@@ -1,8 +1,8 @@
 package pers.yzq.spark.hbase.MovingAverage
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
+import pers.yzq.spark.hbase.Common.Common
 import pers.yzq.spark.{PropertiesHelper, YLogger}
-import pers.yzq.spark.hbase.Common
 
 /**
   *

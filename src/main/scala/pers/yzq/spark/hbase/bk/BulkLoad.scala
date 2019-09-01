@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package pers.yzq.spark.hbase.bulkload
+package pers.yzq.spark.hbase.bk
 
 import org.apache.hadoop.fs.Path
 import org.apache.hadoop.hbase.client.ConnectionFactory

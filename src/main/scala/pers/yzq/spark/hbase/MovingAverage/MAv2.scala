@@ -4,7 +4,7 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.storage.StorageLevel
 import pers.yzq.spark.PropertiesHelper
-import pers.yzq.spark.hbase.Common
+import pers.yzq.spark.hbase.Common.Common
 
 import scala.collection.mutable.Queue
 

@@ -3,7 +3,7 @@ package pers.yzq.spark.hbase.Sort
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 import pers.yzq.spark.PropertiesHelper
-import pers.yzq.spark.hbase.Common
+import pers.yzq.spark.hbase.Common.Common
 
 /**
   *

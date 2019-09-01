@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package pers.yzq.spark.hbase.bulkload
+package pers.yzq.spark.hbase.bk
 
 import java.net.URI
 import java.text.SimpleDateFormat
@@ -112,7 +112,7 @@ object US_Traffic_2015 extends BulkLoad {
       (e(0), newArray)
     })
     val rdd_3 = rdd_2.map(e => {
-      val dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(e._1)
+      val dateFormat = new SimpleDateFormat("yyyy-MM-dd").parse(e._1)
       val timestamp: Long = String.valueOf(dateFormat).toLong
       val dataSet = e._2.map(y => y.toLong)
       for (i <- Range(0, 24)) {

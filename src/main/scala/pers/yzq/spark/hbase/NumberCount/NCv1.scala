@@ -3,7 +3,7 @@ package pers.yzq.spark.hbase.NumberCount
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.storage.StorageLevel
 import pers.yzq.spark.PropertiesHelper
-import pers.yzq.spark.hbase.Common
+import pers.yzq.spark.hbase.Common.Common
 
 /**
   *
