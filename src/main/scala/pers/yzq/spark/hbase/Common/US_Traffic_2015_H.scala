@@ -36,7 +36,7 @@ object US_Traffic_2015_H {
 
     val file = new File(path)
     val fr = new FileReader(file)
-    val reader = new BufferedReader(fr, 1024 * 1024 * 512)
+    val reader = new BufferedReader(fr)
     var record_id: Long = 0L
     val first = reader.readLine()
     val conf = HBaseConfiguration.create
