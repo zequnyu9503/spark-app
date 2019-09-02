@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_H.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="38" column="39" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
+            <state relative-caret-position="638">
+              <caret line="166" column="53" selection-start-line="166" selection-start-column="53" selection-end-line="166" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -555,21 +555,7 @@
       <workItem from="1567327619557" duration="3248000" />
       <workItem from="1567331540086" duration="592000" />
       <workItem from="1567385056425" duration="1406000" />
-      <workItem from="1567387896128" duration="7715000" />
-    </task>
-    <task id="LOCAL-00020" summary="Saturday AM">
-      <created>1561800409485</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1561800409485</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Saturday AM">
-      <created>1561801604015</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1561801604015</updated>
+      <workItem from="1567387896128" duration="8309000" />
     </task>
     <task id="LOCAL-00022" summary="Saturday AM">
       <created>1561806300185</created>
@@ -900,7 +886,21 @@
       <option name="project" value="LOCAL" />
       <updated>1567401055643</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="修复heap过高">
+      <created>1567401216311</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1567401216311</updated>
+    </task>
+    <task id="LOCAL-00070" summary="修复US_Traffic">
+      <created>1567401586513</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1567401586513</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -936,13 +936,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="413860000" />
+    <option name="totallyTimeSpent" value="414454000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-199" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.15405117" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.15405117" />
       <window_info id="Designer" order="1" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -950,7 +950,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3294964" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.3438178" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.106290676" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5065076" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1035,7 +1035,9 @@
     <MESSAGE value="修改启动脚本" />
     <MESSAGE value="修改方法(删除HBase表)" />
     <MESSAGE value="修复预分区函数" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复预分区函数" />
+    <MESSAGE value="修复heap过高" />
+    <MESSAGE value="修复US_Traffic" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复US_Traffic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1397,8 +1399,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_H.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="38" column="39" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
+        <state relative-caret-position="638">
+          <caret line="166" column="53" selection-start-line="166" selection-start-column="53" selection-end-line="166" selection-end-column="53" />
         </state>
       </provider>
     </entry>

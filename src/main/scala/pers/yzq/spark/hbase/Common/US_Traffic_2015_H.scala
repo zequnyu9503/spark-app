@@ -77,7 +77,7 @@ object US_Traffic_2015_H {
                     Bytes.toBytes(newLines(7)))
       put.addColumn(Bytes.toBytes(columnFamily),
                     Bytes.toBytes("lane_of_travel"),
-                    Bytes.toBytes(newLines(8).toLong))
+                    Bytes.toBytes(newLines(8)))
       put.addColumn(Bytes.toBytes(columnFamily),
                     Bytes.toBytes("month_of_data"),
                     Bytes.toBytes(newLines(8).toLong))
@@ -89,7 +89,7 @@ object US_Traffic_2015_H {
                     Bytes.toBytes(newLines(11)))
       put.addColumn(Bytes.toBytes(columnFamily),
                     Bytes.toBytes("station_id"),
-                    Bytes.toBytes(newLines(12).toLong))
+                    Bytes.toBytes(newLines(12)))
       put.addColumn(Bytes.toBytes(columnFamily),
                     Bytes.toBytes("traffic_volume_counted_after_0000_to_0100"),
                     Bytes.toBytes(newLines(13).toLong))
@@ -164,7 +164,7 @@ object US_Traffic_2015_H {
                     Bytes.toBytes(newLines(36).toLong))
       put.addColumn(Bytes.toBytes(columnFamily),
                     Bytes.toBytes("year_of_data"),
-                    Bytes.toBytes(newLines(37)))
+                    Bytes.toBytes(newLines(37).toLong))
 
       table.put(put)
       // scalastyle:off println
