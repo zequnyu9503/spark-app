@@ -181,7 +181,11 @@ object US_Traffic_2015_H {
     for (i <- Range(0, 9))
       set.add(Bytes.toBytes((98 + i).asInstanceOf[Char] + "0000000000"))
     val itr = set.iterator
-    while (itr.hasNext) splitSet :+ itr.next()
+    var index: Integer = 0
+    while (itr.hasNext) {
+      splitSet(index) = itr.next()
+      index += 1
+    }
     splitSet
   }
 }

@@ -30,7 +30,11 @@ class CommonSuite extends FunSuite{
     for (i <- Range(0, 9))
       set.add(Bytes.toBytes((98 + i).asInstanceOf[Char] + "0000000000"))
     val itr = set.iterator
-    while (itr.hasNext) splitSet :+ itr.next()
+    var index: Integer = 0
+    while (itr.hasNext) {
+      splitSet(index) = itr.next()
+      index += 1
+    }
     splitSet
   }
 
@@ -44,7 +48,7 @@ class CommonSuite extends FunSuite{
     // scalastyle:off println
     val tableName = "Exam_for_Creation"
     if (HBaseCommon.dropDeleteTable(tableName)) {
-      println("创建成功")
+      println("删除成功")
     }
   }
 

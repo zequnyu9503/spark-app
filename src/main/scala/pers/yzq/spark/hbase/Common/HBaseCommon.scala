@@ -18,7 +18,7 @@
 package pers.yzq.spark.hbase.Common
 
 import java.io.IOException
-import java.net.{URI, URISyntaxException}
+import java.net.{URI, URISyntaxException, URL}
 import java.util
 
 import org.apache.hadoop.conf.Configuration
@@ -74,6 +74,7 @@ object HBaseCommon {
   def createTable(tableName: String, families: Array[String]): Boolean = {
     try {
       val hBaseConfiguration = HBaseConfiguration.create
+      hBaseConfiguration.addResource(hcp)
       val connection = ConnectionFactory.createConnection(hBaseConfiguration)
       val admin = connection.getAdmin
       val htd = new HTableDescriptor(TableName.valueOf(tableName))
