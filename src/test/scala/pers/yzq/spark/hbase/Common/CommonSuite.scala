@@ -39,9 +39,9 @@ class CommonSuite extends FunSuite{
   }
 
   test("splits") {
-    val s = split()
+    val prefix = (0 % 10 + 97).asInstanceOf[Char]
     // scalastyle:off println
-    println(s.eq(null))
+    println(new StringBuilder().append(prefix).toString())
   }
 
   test("drop table") {

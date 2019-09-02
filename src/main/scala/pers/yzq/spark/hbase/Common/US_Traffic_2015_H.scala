@@ -30,9 +30,11 @@ object US_Traffic_2015_H {
     val path = "/home/zc/Documents/downloads/dot_traffic_2015.txt"
     val tableName = "US_Traffic"
     val columnFamily = "dot_traffic_2015"
-
+    // scalastyle:off println
+    System.err.println("Check Environment")
     assert(HBaseCommon.dropDeleteTable(tableName))
     assert(HBaseCommon.createTable(tableName, Array(columnFamily), split()))
+    System.err.println("Success and Start load")
 
     val file = new File(path)
     val fr = new FileReader(file)
@@ -48,7 +50,7 @@ object US_Traffic_2015_H {
       val newLines = line.replaceAll("\"", "").split(",")
       val rowKey = {
         val prefix = (record_id % 10 + 97).asInstanceOf[Char]
-        new StringBuilder(prefix).append(record_id).toString()
+        new StringBuilder().append(prefix).append(record_id).toString()
       }
       val put = new Put(Bytes.toBytes(rowKey))
       put.addColumn(Bytes.toBytes(columnFamily),
