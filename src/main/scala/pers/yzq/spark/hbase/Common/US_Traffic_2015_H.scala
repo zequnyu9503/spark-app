@@ -38,13 +38,13 @@ object US_Traffic_2015_H {
     val fr = new FileReader(file)
     val reader = new BufferedReader(fr)
     var record_id: Long = 0L
-    val first = reader.readLine()
+    var line = reader.readLine()
     val conf = HBaseConfiguration.create
     val conn = ConnectionFactory.createConnection(conf)
     val table = conn.getTable(TableName.valueOf(tableName)).asInstanceOf[HTable]
 
-    while (first != null) {
-      val line = reader.readLine()
+    while (line != null) {
+      line = reader.readLine()
       val newLines = line.replaceAll("\"", "").split(",")
       val rowKey = {
         val prefix = (record_id % 10 + 97).asInstanceOf[Char]
@@ -168,7 +168,7 @@ object US_Traffic_2015_H {
 
       table.put(put)
       // scalastyle:off println
-      System.err.println(s"Record[${record_id}] inserted into HBase")
+      System.err.println(s"Record[${record_id}][${rowKey}] inserted into HBase")
       // scalastyle:on println
       record_id += 1
     }
