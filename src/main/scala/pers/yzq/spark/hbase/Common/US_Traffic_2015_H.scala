@@ -31,8 +31,8 @@ object US_Traffic_2015_H {
     val tableName = "US_Traffic"
     val columnFamily = "dot_traffic_2015"
 
-    HBaseCommon.dropDeleteTable(tableName)
-    HBaseCommon.createTable(tableName, Array(columnFamily), split())
+    assert(HBaseCommon.dropDeleteTable(tableName))
+    assert(HBaseCommon.createTable(tableName, Array(columnFamily), split()))
 
     val file = new File(path)
     val fr = new FileReader(file)
@@ -71,10 +71,10 @@ object US_Traffic_2015_H {
                     Bytes.toBytes(newLines(5)))
       put.addColumn(Bytes.toBytes(columnFamily),
                     Bytes.toBytes("functional_classification"),
-                    Bytes.toBytes(newLines(6).toLong))
+                    Bytes.toBytes(newLines(6)))
       put.addColumn(Bytes.toBytes(columnFamily),
                     Bytes.toBytes("functional_classification_name"),
-                    Bytes.toBytes(newLines(7).toLong))
+                    Bytes.toBytes(newLines(7)))
       put.addColumn(Bytes.toBytes(columnFamily),
                     Bytes.toBytes("lane_of_travel"),
                     Bytes.toBytes(newLines(8).toLong))
