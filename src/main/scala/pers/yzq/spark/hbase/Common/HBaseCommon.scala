@@ -23,7 +23,7 @@ import java.util
 
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
-import org.apache.hadoop.hbase.{HBaseConfiguration, TableName}
+import org.apache.hadoop.hbase.{HBaseConfiguration, HColumnDescriptor, HTableDescriptor, TableName}
 import org.apache.hadoop.hbase.client.{ColumnFamilyDescriptor, ColumnFamilyDescriptorBuilder, ConnectionFactory, TableDescriptorBuilder}
 import org.apache.hadoop.hbase.io.encoding.DataBlockEncoding
 import org.apache.hadoop.hbase.regionserver.BloomType
@@ -40,8 +40,10 @@ object HBaseCommon {
   def createTable(tableName: String,
                   families: Array[String],
                   splits: Array[Array[Byte]]): Boolean = {
+    assert(!tableName.eq(null))
+    assert(!families.eq(null))
     try {
-      val hBaseConfiguration = HBaseConfiguration.create
+      val hBaseConfiguration = HBaseConfiguration.create()
       hBaseConfiguration.addResource(hcp)
       val connection = ConnectionFactory.createConnection(hBaseConfiguration)
       val admin = connection.getAdmin
@@ -49,9 +51,7 @@ object HBaseCommon {
       val tdb = TableDescriptorBuilder.newBuilder(tn)
       val cfdbs = new util.HashSet[ColumnFamilyDescriptor](families.size)
       val familyIterator = families.iterator
-      while ({
-        familyIterator.hasNext
-      }) {
+      while (familyIterator.hasNext) {
         val family = familyIterator.next
         val cfdb = ColumnFamilyDescriptorBuilder
           .newBuilder(Bytes.toBytes(family))
@@ -61,6 +61,24 @@ object HBaseCommon {
         cfdbs.add(cfdb.build)
       }
       admin.createTable(tdb.setColumnFamilies(cfdbs).build, splits)
+      admin.close()
+      true
+    } catch {
+      case e: IOException =>
+        e.printStackTrace()
+        false
+    }
+  }
+
+  @deprecated
+  def createTable(tableName: String, families: Array[String]): Boolean = {
+    try {
+      val hBaseConfiguration = HBaseConfiguration.create
+      val connection = ConnectionFactory.createConnection(hBaseConfiguration)
+      val admin = connection.getAdmin
+      val htd = new HTableDescriptor(TableName.valueOf(tableName))
+      families.foreach(e => htd.addFamily(new HColumnDescriptor(Bytes.toBytes(e))))
+      admin.createTable(htd)
       admin.close()
       true
     } catch {
@@ -101,4 +119,5 @@ object HBaseCommon {
     }
     false
   }
+
 }

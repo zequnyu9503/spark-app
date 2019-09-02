@@ -1,4 +1,3 @@
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -15,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package pers.yzq.spark
-import org.apache.hadoop.hbase.util.Bytes
 import org.scalatest.FunSuite
 
 /**
@@ -26,14 +25,4 @@ import org.scalatest.FunSuite
   */
 class Scala extends FunSuite {
 
-  test("String") {
-    val num: Long = 21
-    val res = String.format("%07d", java.lang.Long.valueOf(num))
-    println(res)
-
-    for (i <- Range(0, 9))
-      println((98 + i).asInstanceOf[Char] + "0000000000")
-
-    println((0 % 10 + 97).asInstanceOf[Char])
-  }
 }
