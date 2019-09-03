@@ -53,8 +53,7 @@ object DataSize {
         hbaseConf.set(
           TableInputFormat.SCAN,
           TableMapReduceUtil.convertScanToString(
-            new Scan().setFilter(new FilterList(
-              FilterList.Operator.MUST_PASS_ALL,
+            new Scan().setFilter(new FilterList(FilterList.Operator.MUST_PASS_ALL,
               new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
                                           Bytes.toBytes(columnQualify),
                                           CompareOperator.GREATER_OR_EQUAL,
@@ -62,17 +61,17 @@ object DataSize {
               new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
                                           Bytes.toBytes(columnQualify),
                                           CompareOperator.LESS_OR_EQUAL,
-                                          Bytes.toBytes(endDay))
-            )))
-        )
+                                          Bytes.toBytes(endDay))))))
         sc.newAPIHadoopRDD(hbaseConf,
                            classOf[TableInputFormat],
                            classOf[ImmutableBytesWritable],
                            classOf[Result])
           .map(e =>
-              (Bytes.toLong(e._2.getValue(Bytes.toBytes(columnFamily),
-                                          Bytes.toBytes(columnQualify))), e._2))
-      }).setStorageLevel(StorageLevel.MEMORY_ONLY).iterator()
+              (Bytes.toLong(e._2.getValue(Bytes.toBytes(columnFamily), Bytes.toBytes(columnQualify))), e._2))
+      })
+      .setStorageLevel(StorageLevel.MEMORY_ONLY)
+      .setScope(0, 30)
+      .iterator()
 
     while (twrs.hasNext) {
       val timeWindowRDD = twrs.next()
@@ -89,4 +88,3 @@ object DataSize {
     }
   }
 }
-// scan 'US_Traffic', {COLUMNS => ['dot_traffic_2015:day_of_data']}
