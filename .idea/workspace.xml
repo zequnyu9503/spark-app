@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="995a8f6f-dc1b-42a8-8ffe-cd534f152c59" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_R.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run-spark.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run-spark.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_R.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_R.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/ml/DataSize.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/ml/DataSize.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -26,23 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_R.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="28" column="24" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="24" />
-              <folding>
-                <element signature="e#839#907#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/ml/DataSize.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1210">
-              <caret line="70" column="37" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
+            <state relative-caret-position="340">
+              <caret line="82" column="9" lean-forward="true" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
               <folding>
                 <element signature="e#829#848#0" expanded="true" />
               </folding>
@@ -50,11 +38,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/run-spark.sh">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_R.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12">
-              <caret line="8" column="54" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
+            <state relative-caret-position="208">
+              <caret line="46" column="44" lean-forward="true" selection-start-line="46" selection-start-column="44" selection-end-line="46" selection-end-column="44" />
+              <folding>
+                <element signature="e#839#907#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -143,9 +134,9 @@
         <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_H.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/pers/yzq/spark/hbase/Common/CommonSuite.scala" />
         <option value="$PROJECT_DIR$/twa.properties" />
-        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/ml/DataSize.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_R.scala" />
         <option value="$PROJECT_DIR$/run-spark.sh" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_R.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/pers/yzq/spark/ml/DataSize.scala" />
       </list>
     </option>
   </component>
@@ -569,21 +560,7 @@
       <workItem from="1567387896128" duration="11817000" />
       <workItem from="1567430975746" duration="6541000" />
       <workItem from="1567471781970" duration="763000" />
-      <workItem from="1567475134645" duration="653000" />
-    </task>
-    <task id="LOCAL-00027" summary="Wednesday PM">
-      <created>1562144282068</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1562144282068</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Saturday PM">
-      <created>1562413868022</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1562413868022</updated>
+      <workItem from="1567475134645" duration="1857000" />
     </task>
     <task id="LOCAL-00029" summary="Saturday PM">
       <created>1562420688431</created>
@@ -914,7 +891,21 @@
       <option name="project" value="LOCAL" />
       <updated>1567471343878</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="分析RDD数据规模">
+      <created>1567475802515</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1567475802515</updated>
+    </task>
+    <task id="LOCAL-00077" summary="分析RDD数据规模">
+      <created>1567476223988</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1567476223988</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -950,7 +941,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="425919000" />
+    <option name="totallyTimeSpent" value="427123000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1387,37 +1378,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/twa.properties">
+    <entry file="file://$PROJECT_DIR$/run-spark.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="166">
+          <caret line="15" column="45" lean-forward="true" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/ml/DataSize.scala">
+    <entry file="file://$PROJECT_DIR$/twa.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1210">
-          <caret line="70" column="37" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
-          <folding>
-            <element signature="e#829#848#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-22">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/hbase/Common/US_Traffic_2015_R.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="28" column="24" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="24" />
+        <state relative-caret-position="208">
+          <caret line="46" column="44" lean-forward="true" selection-start-line="46" selection-start-column="44" selection-end-line="46" selection-end-column="44" />
           <folding>
             <element signature="e#839#907#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run-spark.sh">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/pers/yzq/spark/ml/DataSize.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12">
-          <caret line="8" column="54" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
+        <state relative-caret-position="340">
+          <caret line="82" column="9" lean-forward="true" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
+          <folding>
+            <element signature="e#829#848#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

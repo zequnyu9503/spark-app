@@ -77,15 +77,15 @@ object DataSize {
     while (twrs.hasNext) {
       val timeWindowRDD = twrs.next()
       val records_num = timeWindowRDD.count()
-      val used_mem = sc.getRDDStorageInfo.find(_.id == timeWindowRDD.id) match {
-        case Some(rDDInfo) => rDDInfo.memSize
-        case _ => 0L
-      }
-      val b = new StringBuilder()
-      b.append(s"RDD[${timeWindowRDD.id}]")
-      b.append(s"{${records_num}}")
-      b.append(s"<${used_mem}>")
-      Files.write(Bytes.toBytes(b.toString()), local)
+//      val used_mem = sc.getRDDStorageInfo.find(_.id == timeWindowRDD.id) match {
+//        case Some(rDDInfo) => rDDInfo.memSize
+//        case _ => 0L
+//      }
+//      val b = new StringBuilder()
+//      b.append(s"RDD[${timeWindowRDD.id}]")
+//      b.append(s"{${records_num}}")
+//      b.append(s"<${used_mem}>")
+//      Files.write(Bytes.toBytes(b.toString()), local)
     }
   }
 }

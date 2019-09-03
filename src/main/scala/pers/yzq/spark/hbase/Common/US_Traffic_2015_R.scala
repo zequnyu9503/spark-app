@@ -25,7 +25,6 @@ import org.apache.hadoop.hbase.mapreduce.{TableInputFormat, TableMapReduceUtil}
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.spark.{SparkConf, SparkContext}
 import pers.yzq.spark.PropertiesHelper
-import pers.yzq.spark.ml.DataSize.{columnFamily, columnQualify}
 
 object US_Traffic_2015_R {
   def main(args: Array[String]): Unit = {
@@ -49,11 +48,11 @@ object US_Traffic_2015_R {
           new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
                                       Bytes.toBytes(columnQualify),
                                       CompareOperator.GREATER_OR_EQUAL,
-                                      Bytes.toBytes(0)),
+                                      Bytes.toBytes(1)),
           new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
                                       Bytes.toBytes(columnQualify),
                                       CompareOperator.LESS_OR_EQUAL,
-                                      Bytes.toBytes(1))
+                                      Bytes.toBytes(7))
         )))
     )
 
@@ -63,7 +62,7 @@ object US_Traffic_2015_R {
                                  classOf[Result])
       .map(e =>
         (Bytes.toLong(e._2.getValue(Bytes.toBytes(columnFamily),
-          Bytes.toBytes(columnQualify))), e._2))
-    rdd.count()
+          Bytes.toBytes(columnQualify))), e._2)).cache()
+    val co = rdd.count()
   }
 }
