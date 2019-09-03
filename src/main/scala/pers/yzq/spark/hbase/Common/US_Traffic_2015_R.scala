@@ -74,15 +74,6 @@ object US_Traffic_2015_R {
         classOf[Result])
         .map(e => (d, e._2)).cache()
       val co = rdd.count()
-      val used_mem = sc.getRDDStorageInfo.find(_.id == rdd.id) match {
-        case Some(rDDInfo) => rDDInfo.memSize
-        case _ => 0L
-      }
-      val b = new StringBuilder()
-      b.append(s"RDD[${rdd.id}]")
-      b.append(s"{${co}}")
-      b.append(s"<${used_mem}>")
-      Files.write(Bytes.toBytes(b.toString()), local)
     }
   }
 }
