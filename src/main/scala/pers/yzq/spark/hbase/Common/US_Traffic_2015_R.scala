@@ -18,6 +18,7 @@
 package pers.yzq.spark.hbase.Common
 
 import java.io.File
+import java.nio.charset.StandardCharsets
 
 import com.google.common.io.Files
 import org.apache.hadoop.hbase.{CompareOperator, HBaseConfiguration}
@@ -27,24 +28,22 @@ import org.apache.hadoop.hbase.io.ImmutableBytesWritable
 import org.apache.hadoop.hbase.mapreduce.{TableInputFormat, TableMapReduceUtil}
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.spark.{SparkConf, SparkContext}
-import pers.yzq.spark.PropertiesHelper
 
 object US_Traffic_2015_R {
   def main(args: Array[String]): Unit = {
 
-    val local = new File("/home/zc/Documents/size.y")
-    val hcp = PropertiesHelper.getProperty("hbase.hcp")
-    val tableName = PropertiesHelper.getProperty("hbase.tablename")
-    val columnFamily = PropertiesHelper.getProperty("hbase.columnfamily")
-    val day_of_data = "day_of_data"
+    val local = new File("/home/zc/Documents/size_m1_per_day")
+    val hcp = "/home/zc/software/hbase-2.1.4/conf/hbase-site.xml"
+    val tableName = "US_Traffic"
+    val columnFamily = "dot_traffic_2015"
     val month_of_data = "month_of_data"
+    val day_of_data = "day_of_data"
 
     val conf = new SparkConf().setAppName("Data_Size_Statistic")
     val sc = new SparkContext(conf)
-    val month: Long = 1L
-    for( d <- Range(0, 6)) {
-      val dayStart: Long = d * 7 + 1
-      val dayEnd: Long = dayStart + 6
+
+    val month: Long = 1
+    for (day <- Range(0, 30)) {
       val hbaseConf = HBaseConfiguration.create()
       hbaseConf.addResource(hcp)
       hbaseConf.set(TableInputFormat.INPUT_TABLE, tableName)
@@ -54,26 +53,34 @@ object US_Traffic_2015_R {
           new Scan().setFilter(new FilterList(
             FilterList.Operator.MUST_PASS_ALL,
             new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
-              Bytes.toBytes(month_of_data),
-              CompareOperator.EQUAL,
-              Bytes.toBytes(month)),
+                                        Bytes.toBytes(month_of_data),
+                                        CompareOperator.EQUAL,
+                                        Bytes.toBytes(month)),
             new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
-              Bytes.toBytes(day_of_data),
-              CompareOperator.GREATER_OR_EQUAL,
-              Bytes.toBytes(dayStart)),
-            new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
-              Bytes.toBytes(day_of_data),
-              CompareOperator.LESS_OR_EQUAL,
-              Bytes.toBytes(dayEnd))
+                                        Bytes.toBytes(day_of_data),
+                                        CompareOperator.EQUAL,
+                                        Bytes.toBytes(day))
           )))
       )
 
-      val rdd = sc.newAPIHadoopRDD(hbaseConf,
-        classOf[TableInputFormat],
-        classOf[ImmutableBytesWritable],
-        classOf[Result])
-        .map(e => (d, e._2)).cache()
+      val rdd = sc
+        .newAPIHadoopRDD(hbaseConf,
+                         classOf[TableInputFormat],
+                         classOf[ImmutableBytesWritable],
+                         classOf[Result])
+        .map(e => (day, e._2))
+        .cache()
       val co = rdd.count()
+      val used_mem = sc.getRDDStorageInfo.find(_.id == rdd.id) match {
+        case Some(rDDInfo) => rDDInfo.memSize
+        case _             => 0L
+      }
+      val b = new StringBuilder()
+      b.append(s"RDD[id.${rdd.id}]")
+      b.append(s"(2015/${month}/${day})")
+      b.append(s"{ele.${co}}")
+      b.append(s"<mem.${used_mem}>\r\n")
+      Files.append(b.toString(), local, StandardCharsets.UTF_8)
     }
   }
 }
