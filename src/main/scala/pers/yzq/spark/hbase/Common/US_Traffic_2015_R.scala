@@ -41,10 +41,10 @@ object US_Traffic_2015_R {
 
     val conf = new SparkConf().setAppName("Data_Size_Statistic")
     val sc = new SparkContext(conf)
-
+    val month: Long = 1L
     for( d <- Range(0, 6)) {
-      val dayStart = d * 7 + 1
-      val dayEnd = dayStart + 6
+      val dayStart: Long = d * 7 + 1
+      val dayEnd: Long = dayStart + 6
       val hbaseConf = HBaseConfiguration.create()
       hbaseConf.addResource(hcp)
       hbaseConf.set(TableInputFormat.INPUT_TABLE, tableName)
@@ -55,8 +55,8 @@ object US_Traffic_2015_R {
             FilterList.Operator.MUST_PASS_ALL,
             new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
               Bytes.toBytes(month_of_data),
-              CompareOperator.GREATER_OR_EQUAL,
-              Bytes.toBytes(1)),
+              CompareOperator.EQUAL,
+              Bytes.toBytes(month)),
             new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
               Bytes.toBytes(day_of_data),
               CompareOperator.GREATER_OR_EQUAL,
