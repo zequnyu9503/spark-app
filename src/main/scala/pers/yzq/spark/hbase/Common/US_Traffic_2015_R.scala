@@ -32,7 +32,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object US_Traffic_2015_R {
   def main(args: Array[String]): Unit = {
 
-    val local = new File("/home/zc/Documents/size_m1_per_day")
+    val local = new File("/home/zc/Documents/size_month_day")
     val hcp = "/home/zc/software/hbase-2.1.4/conf/hbase-site.xml"
     val tableName = "US_Traffic"
     val columnFamily = "dot_traffic_2015"
@@ -42,8 +42,9 @@ object US_Traffic_2015_R {
     val conf = new SparkConf().setAppName("Data_Size_Statistic")
     val sc = new SparkContext(conf)
 
-    val month: Long = 1
-    for (day <- Range(0, 30)) {
+    for (i <- Range(1, 31)) {
+      val month: Long = 2L
+      val day: Long = i
       val hbaseConf = HBaseConfiguration.create()
       hbaseConf.addResource(hcp)
       hbaseConf.set(TableInputFormat.INPUT_TABLE, tableName)
@@ -68,7 +69,7 @@ object US_Traffic_2015_R {
                          classOf[TableInputFormat],
                          classOf[ImmutableBytesWritable],
                          classOf[Result])
-        .map(e => (day, e._2))
+        .map(e => (month, e._2))
         .cache()
       val co = rdd.count()
       val used_mem = sc.getRDDStorageInfo.find(_.id == rdd.id) match {
@@ -82,5 +83,6 @@ object US_Traffic_2015_R {
       b.append(s"<mem.${used_mem}>\r\n")
       Files.append(b.toString(), local, StandardCharsets.UTF_8)
     }
+
   }
 }

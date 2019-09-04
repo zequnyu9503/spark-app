@@ -37,15 +37,17 @@ object DataSize {
   val hcp = PropertiesHelper.getProperty("hbase.hcp")
   val tableName = PropertiesHelper.getProperty("hbase.tablename")
   val columnFamily = PropertiesHelper.getProperty("hbase.columnfamily")
-  val columnQualify = PropertiesHelper.getProperty("hbase.columnqualify")
+  val day_of_data = "day_of_data"
+  val month_of_data = "month_of_data"
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("Data_Size_Statistic")
     val sc = new SparkContext(conf)
+    val month: Long = 1
     val twrs = new TimeWindowRDD[Long, Result](
       sc,
       1,
-      7,
+      1,
       (startDay: Long, endDay: Long) => {
         val hbaseConf = HBaseConfiguration.create()
         hbaseConf.addResource(hcp)
@@ -53,38 +55,42 @@ object DataSize {
         hbaseConf.set(
           TableInputFormat.SCAN,
           TableMapReduceUtil.convertScanToString(
-            new Scan().setFilter(new FilterList(FilterList.Operator.MUST_PASS_ALL,
+            new Scan().setFilter(new FilterList(
+              FilterList.Operator.MUST_PASS_ALL,
               new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
-                                          Bytes.toBytes(columnQualify),
+                                          Bytes.toBytes(month_of_data),
                                           CompareOperator.GREATER_OR_EQUAL,
                                           Bytes.toBytes(startDay)),
               new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
-                                          Bytes.toBytes(columnQualify),
+                                          Bytes.toBytes(day_of_data),
+                                          CompareOperator.GREATER_OR_EQUAL,
+                                          Bytes.toBytes(startDay)),
+              new SingleColumnValueFilter(Bytes.toBytes(columnFamily),
+                                          Bytes.toBytes(day_of_data),
                                           CompareOperator.LESS_OR_EQUAL,
-                                          Bytes.toBytes(endDay))))))
+                                          Bytes.toBytes(endDay))
+            )))
+        )
         sc.newAPIHadoopRDD(hbaseConf,
                            classOf[TableInputFormat],
                            classOf[ImmutableBytesWritable],
                            classOf[Result])
-          .map(e =>
-              (Bytes.toLong(e._2.getValue(Bytes.toBytes(columnFamily), Bytes.toBytes(columnQualify))), e._2))
-      })
-      .setStorageLevel(StorageLevel.MEMORY_ONLY)
-      .setScope(0, 30)
-      .iterator()
+          .map(e => (startDay, e._2))
+      }
+    ).setStorageLevel(StorageLevel.MEMORY_ONLY).setScope(0, 30).iterator()
 
     while (twrs.hasNext) {
       val timeWindowRDD = twrs.next()
       val records_num = timeWindowRDD.count()
-//      val used_mem = sc.getRDDStorageInfo.find(_.id == timeWindowRDD.id) match {
-//        case Some(rDDInfo) => rDDInfo.memSize
-//        case _ => 0L
-//      }
-//      val b = new StringBuilder()
-//      b.append(s"RDD[${timeWindowRDD.id}]")
-//      b.append(s"{${records_num}}")
-//      b.append(s"<${used_mem}>")
-//      Files.write(Bytes.toBytes(b.toString()), local)
+      val used_mem = sc.getRDDStorageInfo.find(_.id == timeWindowRDD.id) match {
+        case Some(rDDInfo) => rDDInfo.memSize
+        case _ => 0L
+      }
+      val b = new StringBuilder()
+      b.append(s"RDD[${timeWindowRDD.id}]")
+      b.append(s"{${records_num}}")
+      b.append(s"<${used_mem}>")
+      Files.write(Bytes.toBytes(b.toString()), local)
     }
   }
 }
