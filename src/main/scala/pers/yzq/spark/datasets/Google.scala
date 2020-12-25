@@ -82,6 +82,6 @@ object Google {
         }
         (jt._1._1, jt._1._2, updated.toArray)
     }
-    res.repartition(1).saveAsTextFile("hdfs://node1:9000/google/new_task_events")
+    res.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
   }
 }
