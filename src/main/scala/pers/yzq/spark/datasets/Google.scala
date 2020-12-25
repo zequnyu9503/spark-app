@@ -33,7 +33,7 @@ object Google {
   val STR_EVENT_TYPE_OTHERS: Array[String] = Array("2", "3", "4", "5", "6")
 
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf().setAppName("Google").setMaster("local")
+    val conf = new SparkConf().setAppName("Google")
     val sc = new SparkContext(conf)
     sc.setLogLevel("INFO")
 
