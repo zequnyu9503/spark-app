@@ -1,2 +1,0 @@
-val rdd = sc.parallelize(Seq((3,3),(2,2),(1,1))).cache
-val rdd1 = rdd.sortBy(_._1)
