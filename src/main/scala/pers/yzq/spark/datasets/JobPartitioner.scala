@@ -32,6 +32,6 @@ class JobPartitioner extends Partitioner {
 
   override def getPartition(key: Any): Int = {
     val k = key.asInstanceOf[String].toLong
-    ((k - minKey) / ((maxKey - minKey) / numPartitions)).toInt
+    ((k - minKey) / ((maxKey - minKey) / numPartitions)).toInt % numPartitions
   }
 }
