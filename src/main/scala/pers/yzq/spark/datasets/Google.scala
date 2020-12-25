@@ -63,37 +63,25 @@ object Google {
     // 过滤空数据.
     val filtered_1 = deleted_1.filter(l => l._3 != null)
     // 按照Job Id分组.
-    val groupByJobId_1 = filtered_1.groupBy(f = v => v._2, p = new JobPartitioner)
-    val jts = groupByJobId_1.map(job => {
-      // 分组 & 排序 & 处理.
-      job._2.groupBy(f => f._3).
-        map(task => {
-          val status = task._2.toArray.sortBy(_._1)
-          val updated = new ArrayBuffer[(Long, Long, String, String, String, String,
-            String, String, String, String, String, String)]()
-          for (index <- status.indices) {
-            if (status(index)._5 == STR_EVENT_TYPE_SCHEDULE) {
-              val start = status(index)._1
-              if (index + 1 < status.length) {
-                val m = status(index + 1)
-                if (STR_EVENT_TYPE_OTHERS.contains(m._5)) {
-                  updated.append((start, m._1, m._2, m._3, m._4,
-                    m._5, m._6, m._7, m._8, m._9, m._10, m._11))
-                }
+    val res = filtered_1.groupBy(f = v => (v._2, v._3)).map{
+      jt =>
+        val status = jt._2.toArray.sortBy(_._1)
+        val updated = new ArrayBuffer[(Long, Long, String, String, String, String,
+          String, String, String, String, String, String)]()
+        for (index <- status.indices) {
+          if (status(index)._5 == STR_EVENT_TYPE_SCHEDULE) {
+            val start = status(index)._1
+            if (index + 1 < status.length) {
+              val m = status(index + 1)
+              if (STR_EVENT_TYPE_OTHERS.contains(m._5)) {
+                updated.append((start, m._1, m._2, m._3, m._4,
+                  m._5, m._6, m._7, m._8, m._9, m._10, m._11))
               }
             }
           }
-          (job._1, task._1, updated.toArray)
-        })
-    })
-    jts.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
-  }
-
-  def decode(key: String): String = {
-    key
-  }
-
-  def encode(key: String): String = {
-    key
+        }
+        (jt._1._1, jt._1._2, updated.toArray)
+    }
+    res.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
   }
 }
