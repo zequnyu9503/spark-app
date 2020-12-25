@@ -63,9 +63,8 @@ object Google {
     // 过滤空数据.
     val filtered_1 = deleted_1.filter(l => l._3 != null)
     // 按照Job Id分组.
-    val groupByJobId_1 = filtered_1.groupBy(f => f._2)
-    val partitioned = groupByJobId_1.partitionBy(new JobPartitioner)
-    val jts = partitioned.map(job => {
+    val groupByJobId_1 = filtered_1.groupBy(f = v => v._2, p = new JobPartitioner)
+    val jts = groupByJobId_1.map(job => {
       // 分组 & 排序 & 处理.
       job._2.groupBy(f => f._3).
         map(task => {
