@@ -93,7 +93,7 @@ object Google {
       map(l => ((l(2), l(3)), l)).
       persist(StorageLevel.MEMORY_AND_DISK_SER)
 
-    val joined = right.join(left)
+    val joined = left.join(right)
 
     val res = joined.map(f => {
       val job = f._1._1
