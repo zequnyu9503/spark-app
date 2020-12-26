@@ -61,7 +61,7 @@ object Google {
     // 过滤空数据.
     val filtered_1 = deleted_1.filter(l => l._3 != null)
     // 按照Job Id分组.
-    filtered_1.groupBy(f = v => (v._2, v._3)).map{
+    val res_1 = filtered_1.groupBy(f = v => (v._2, v._3)).flatMap {
       jt =>
         val status = jt._2.toArray.sortBy(_._1)
         val updated = new ArrayBuffer[(Long, Long, String, String, String, String,
@@ -79,10 +79,11 @@ object Google {
           }
         }
         updated.toArray
-    }.flatMap(_).saveAsTextFile("hdfs://node1:9000/google/new_task_events")
+    }
 
+    res_1.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
 
-//    val origin_2 = sc.textFile("hdfs://node1:9000/google/task_usage")
+    //    val origin_2 = sc.textFile("hdfs://node1:9000/google/task_usage")
 //    val jt_2 = origin_2.map()
   }
 }
