@@ -90,7 +90,7 @@ object Google {
       persist(StorageLevel.DISK_ONLY)
     val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
       map(_.split(",", -1)).
-      map(l => ((l(2), l(3)), l)).persist(StorageLevel.MEMORY_AND_DISK_SER)
+      map(l => ((l(2), l(3)), l)).persist(StorageLevel.DISK_ONLY)
 
     val joined = left.join(right)
 
