@@ -87,10 +87,10 @@ object Google {
     val right = sc.textFile("hdfs://node1:9000/google/task_usage_all.csv").
       map(_.split(",", -1)).
       map(l => ((l(2), l(3)), l)).
-      persist(StorageLevel.MEMORY_AND_DISK_SER)
+      persist(StorageLevel.DISK_ONLY)
     val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
       map(_.split(",", -1)).
-      map(l => ((l(2), l(3)), l))
+      map(l => ((l(2), l(3)), l)).persist(StorageLevel.MEMORY_AND_DISK_SER)
 
     val joined = left.join(right)
 
