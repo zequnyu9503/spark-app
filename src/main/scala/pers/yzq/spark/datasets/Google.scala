@@ -83,14 +83,12 @@ object Google {
 //    res_1.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
 //
 
-    val right = sc.textFile("hdfs://node1:9000/google/task_usage").
+    val right = sc.textFile("hdfs://node1:9000/google/task_usage_all.csv").
       map(_.split(",")).
       map(l => ((l(2), l(3)), l))
     val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
       map(_.split(",")).
-      map(l => ((l(2), l(3)), l)).cache()
-
-    left.count()
+      map(l => ((l(2), l(3)), l))
 
     val joined = right.join(left)
 
