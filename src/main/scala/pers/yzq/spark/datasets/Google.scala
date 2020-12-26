@@ -62,7 +62,7 @@ object Google {
     // 过滤空数据.
     val filtered_1 = deleted_1.filter(l => l._3 != null)
     // 按照Job Id分组.
-    val right = filtered_1.groupBy(f = v => (v._2, v._3)).flatMap {
+    val res_1 = filtered_1.groupBy(f = v => (v._2, v._3)).flatMap {
       jt =>
         val status = jt._2.toArray.sortBy(_._1)
         val updated = new ArrayBuffer[String]()
@@ -79,61 +79,66 @@ object Google {
           }
         }
         updated
-    }.map(_.split(",", -1)).
-      map(l => ((l(2), l(3)), l)).
-      persist(StorageLevel.DISK_ONLY)
-    val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
-      map(_.split(",", -1)).
-      map(l => ((l(2), l(3)), l)).persist(StorageLevel.DISK_ONLY)
+    }
+    res_1.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
 
-    val joined = left.join(right)
 
-    val res = joined.map(f => {
-      val job = f._1._1
-      val task = f._1._2
-      val timescope = f._2._1.
-        map(_.split(",", -1)).
-        map(l => (l(0).toLong, l(1).toLong))
-      val records = f._2._2.
-        map(_.split(",", -1)).
-        map(l => (l(0).toLong, l(1).toLong, s"${l(5)},${l(6)},${l(7)}," +
-          s"${l(8)},${l(9)}, ${l(10)},${l(11)},${l(12)},${l(13)},${l(14)}," +
-          s"${l(15)},${l(16)},${l(17)},${l(18)},${l(19)}"))
-      // 这里定义保存的数据结构
-      // start time                         [0]
-      // end time                           [1]
-      // job ID                             [2]
-      // task index                         [3]
-      // machine ID                         [4]
-      // CPU rate                           [5]
-      // canonical memory usage             [6]
-      // assigned memory usage              [7]
-      // unmapped page cache                [8]
-      // total page cache                   [9]
-      // maximum memory usage               [10]
-      // disk I/O time                      [11]
-      // local disk space usage             [12]
-      // maximum CPU rate                   [13]
-      // maximum disk IO time               [14]
-      // cycles per instruction             [15]
-      // memory accesses per instruction    [16]
-      // sample portion                     [17]
-      // aggregation type                   [18]
-      // sampled CPU usage                  [19]
-      val set = new mutable.HashSet[String]()
-      timescope.foreach(ts => {
-        records.
-          filter(_._1 <= ts._1).
-          filter(_._2 >= ts._1).
-          foreach(r => set.add(s"$job,$task,${ts._1},${ts._2},${r._3}"))
-        records.
-          filter(_._1 <= ts._2).
-          filter(_._2 >= ts._2).
-          foreach(r => set.add(s"$job,$task,${ts._1},${ts._2},${r._3}"))
-      })
-      set
-    })
-
-    res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
+//    val right = sc.textFile("hdfs://node1:9000/google/task_usage_all.csv").
+//      map(_.split(",", -1)).
+//      map(l => ((l(2), l(3)), l)).
+//      persist(StorageLevel.DISK_ONLY)
+//    val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
+//      map(_.split(",", -1)).
+//      map(l => ((l(2), l(3)), l)).persist(StorageLevel.DISK_ONLY)
+//
+//    val joined = left.join(right)
+//
+//    val res = joined.map(f => {
+//      val job = f._1._1
+//      val task = f._1._2
+//      val timescope = f._2._1.
+//        map(_.split(",", -1)).
+//        map(l => (l(0).toLong, l(1).toLong))
+//      val records = f._2._2.
+//        map(_.split(",", -1)).
+//        map(l => (l(0).toLong, l(1).toLong, s"${l(5)},${l(6)},${l(7)}," +
+//          s"${l(8)},${l(9)}, ${l(10)},${l(11)},${l(12)},${l(13)},${l(14)}," +
+//          s"${l(15)},${l(16)},${l(17)},${l(18)},${l(19)}"))
+//      // 这里定义保存的数据结构
+//      // start time                         [0]
+//      // end time                           [1]
+//      // job ID                             [2]
+//      // task index                         [3]
+//      // machine ID                         [4]
+//      // CPU rate                           [5]
+//      // canonical memory usage             [6]
+//      // assigned memory usage              [7]
+//      // unmapped page cache                [8]
+//      // total page cache                   [9]
+//      // maximum memory usage               [10]
+//      // disk I/O time                      [11]
+//      // local disk space usage             [12]
+//      // maximum CPU rate                   [13]
+//      // maximum disk IO time               [14]
+//      // cycles per instruction             [15]
+//      // memory accesses per instruction    [16]
+//      // sample portion                     [17]
+//      // aggregation type                   [18]
+//      // sampled CPU usage                  [19]
+//      val set = new mutable.HashSet[String]()
+//      timescope.foreach(ts => {
+//        records.
+//          filter(_._1 <= ts._1).
+//          filter(_._2 >= ts._1).
+//          foreach(r => set.add(s"$job,$task,${ts._1},${ts._2},${r._3}"))
+//        records.
+//          filter(_._1 <= ts._2).
+//          filter(_._2 >= ts._2).
+//          foreach(r => set.add(s"$job,$task,${ts._1},${ts._2},${r._3}"))
+//      })
+//      set
+//    })
+//
+//    res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
   }
 }
