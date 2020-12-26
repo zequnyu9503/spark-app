@@ -38,54 +38,48 @@ object Google {
     val conf = new SparkConf().setAppName("Google")
     val sc = new SparkContext(conf)
     sc.setLogLevel("INFO")
-//
-//    val origin_1 = sc.textFile("hdfs://node1:9000/google/task_events")
-//
-//    // task_events time                [0]             {0}
-//    // missing info                    [1] <deleted>   { }
-//    // job ID                          [2]             {1}
-//    // task index                      [3] <not null>  {2}
-//    // machine ID                      [4]             {3}
-//    // event type                      [5]             {4}
-//    // user                            [6] <deleted>   { }
-//    // scheduling class                [7]             {5}
-//    // priority                        [8]             {6}
-//    // CPU request                     [9]             {7}
-//    // memory request                  [10]            {8}
-//    // disk space request              [11]            {9}
-//    // different machines restriction  [12]            {10}
-//
-//    // 删除第1&6列.
-//    val deleted_1 = origin_1.map(_.split(",", -1)).
-//      filter(l => l(0).length <= 19).
-//      map(l => (l(0).toLong, l(2), l(3), l(4), l(5), l(7), l(8), l(9), l(10), l(11), l(12)))
-//    // 过滤空数据.
-//    val filtered_1 = deleted_1.filter(l => l._3 != null)
-//    // 按照Job Id分组.
-//    val res_1 = filtered_1.groupBy(f = v => (v._2, v._3)).flatMap {
-//      jt =>
-//        val status = jt._2.toArray.sortBy(_._1)
-//        val updated = new ArrayBuffer[(Long, Long, String, String, String, String,
-//          String, String, String, String, String, String)]()
-//        for (index <- status.indices) {
-//          if (status(index)._5 == STR_EVENT_TYPE_SCHEDULE) {
-//            val start = status(index)._1
-//            if (index + 1 < status.length) {
-//              val m = status(index + 1)
-//              if (STR_EVENT_TYPE_OTHERS.contains(m._5)) {
-//                updated.append((start, m._1, m._2, m._3, m._4,
-//                  m._5, m._6, m._7, m._8, m._9, m._10, m._11))
-//              }
-//            }
-//          }
-//        }
-//        updated
-//    }
-//    res_1.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
-//
 
-    val right = sc.textFile("hdfs://node1:9000/google/task_usage_all.csv").
-      map(_.split(",", -1)).
+    val origin_1 = sc.textFile("hdfs://node1:9000/google/task_events")
+
+    // task_events time                [0]             {0}
+    // missing info                    [1] <deleted>   { }
+    // job ID                          [2]             {1}
+    // task index                      [3] <not null>  {2}
+    // machine ID                      [4]             {3}
+    // event type                      [5]             {4}
+    // user                            [6] <deleted>   { }
+    // scheduling class                [7]             {5}
+    // priority                        [8]             {6}
+    // CPU request                     [9]             {7}
+    // memory request                  [10]            {8}
+    // disk space request              [11]            {9}
+    // different machines restriction  [12]            {10}
+
+    // 删除第1&6列.
+    val deleted_1 = origin_1.map(_.split(",", -1)).
+      filter(l => l(0).length <= 19).
+      map(l => (l(0).toLong, l(2), l(3), l(4), l(5), l(7), l(8), l(9), l(10), l(11), l(12)))
+    // 过滤空数据.
+    val filtered_1 = deleted_1.filter(l => l._3 != null)
+    // 按照Job Id分组.
+    val right = filtered_1.groupBy(f = v => (v._2, v._3)).flatMap {
+      jt =>
+        val status = jt._2.toArray.sortBy(_._1)
+        val updated = new ArrayBuffer[String]()
+        for (index <- status.indices) {
+          if (status(index)._5 == STR_EVENT_TYPE_SCHEDULE) {
+            val start = status(index)._1
+            if (index + 1 < status.length) {
+              val m = status(index + 1)
+              if (STR_EVENT_TYPE_OTHERS.contains(m._5)) {
+                updated.append(s"$start,${m._1},${m._2},${m._3},${m._4}" +
+                  s",${m._5},${m._6},${m._7},${m._8},${m._9},${m._10},${m._11}")
+              }
+            }
+          }
+        }
+        updated
+    }.map(_.split(",", -1)).
       map(l => ((l(2), l(3)), l)).
       persist(StorageLevel.DISK_ONLY)
     val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
