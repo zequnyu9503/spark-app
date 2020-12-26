@@ -17,6 +17,7 @@
 
 package pers.yzq.spark.datasets
 
+import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.collection.mutable
@@ -85,10 +86,12 @@ object Google {
 
     val right = sc.textFile("hdfs://node1:9000/google/task_usage_all.csv").
       map(_.split(",")).
-      map(l => ((l(2), l(3)), l))
+      map(l => ((l(2), l(3)), l)).
+      persist(StorageLevel.MEMORY_AND_DISK_SER)
     val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
       map(_.split(",")).
-      map(l => ((l(2), l(3)), l))
+      map(l => ((l(2), l(3)), l)).
+      persist(StorageLevel.MEMORY_AND_DISK_SER)
 
     val joined = right.join(left)
 
