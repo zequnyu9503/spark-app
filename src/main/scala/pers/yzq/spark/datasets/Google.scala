@@ -39,8 +39,6 @@ object Google {
 
     // val origin_1 = sc.textFile("C:\\Users\\yzq\\Desktop\\test.txt")
     val origin_1 = sc.textFile("hdfs://node1:9000/google/task_events")
-    val origin_2 = sc.textFile("hdfs://node1:9000/google/task_usage")
-
 
     // task_events time                [0]             {0}
     // missing info                    [1] <deleted>   { }
@@ -63,7 +61,7 @@ object Google {
     // 过滤空数据.
     val filtered_1 = deleted_1.filter(l => l._3 != null)
     // 按照Job Id分组.
-    val res = filtered_1.groupBy(f = v => (v._2, v._3)).map{
+    filtered_1.groupBy(f = v => (v._2, v._3)).map{
       jt =>
         val status = jt._2.toArray.sortBy(_._1)
         val updated = new ArrayBuffer[(Long, Long, String, String, String, String,
@@ -80,8 +78,11 @@ object Google {
             }
           }
         }
-        (jt._1._1, jt._1._2, updated.toArray)
-    }
-    res.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
+        updated.toArray
+    }.flatMap(_).saveAsTextFile("hdfs://node1:9000/google/new_task_events")
+
+
+//    val origin_2 = sc.textFile("hdfs://node1:9000/google/task_usage")
+//    val jt_2 = origin_2.map()
   }
 }
