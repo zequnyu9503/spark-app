@@ -83,12 +83,13 @@ object Google {
 //    res_1.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
 //
 
-    val origin_2 = sc.textFile("hdfs://node1:9000/google/task_usage")
-    val right = origin_2.map(_.split(",")).
+    val right = sc.textFile("hdfs://node1:9000/google/task_usage").
+      map(_.split(",")).
       map(l => ((l(2), l(3)), l))
-    val origin_3 = sc.textFile("hdfs://node1:9000/google/new_task_events")
-    val left = origin_3.map(_.split(",")).
+    val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
+      map(_.split(",")).
       map(l => ((l(2), l(3)), l))
+
     val joined = left.join(right)
     val res = joined.map(f => {
       val job = f._1._1
