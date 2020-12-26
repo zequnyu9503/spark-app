@@ -78,7 +78,7 @@ object Google {
             }
           }
         }
-        updated.toArray
+        updated
     }
 
     res_1.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
