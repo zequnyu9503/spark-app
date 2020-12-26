@@ -96,10 +96,10 @@ object Google {
       val job = f._1._1
       val task = f._1._2
       val timescope = f._2._1.
-        map(_.split(",")).
+        map(_.split(",", -1)).
         map(l => (l(0).toLong, l(1).toLong))
       val records = f._2._2.
-        map(_.split(",")).
+        map(_.split(",", -1)).
         map(l => (l(0).toLong, l(1).toLong, s"${l(5)},${l(6)},${l(7)}," +
           s"${l(8)},${l(9)}, ${l(10)},${l(11)},${l(12)},${l(13)},${l(14)}," +
           s"${l(15)},${l(16)},${l(17)},${l(18)},${l(19)}"))
