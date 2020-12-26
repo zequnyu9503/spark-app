@@ -88,9 +88,12 @@ object Google {
       map(l => ((l(2), l(3)), l))
     val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
       map(_.split(",")).
-      map(l => ((l(2), l(3)), l))
+      map(l => ((l(2), l(3)), l)).cache()
 
-    val joined = left.join(right)
+    left.count()
+
+    val joined = right.join(left)
+
     val res = joined.map(f => {
       val job = f._1._1
       val task = f._1._2
@@ -136,6 +139,7 @@ object Google {
       })
       set
     })
+
     res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
   }
 }
