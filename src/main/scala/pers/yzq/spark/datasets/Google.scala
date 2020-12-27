@@ -21,7 +21,6 @@ import java.io.File
 import java.nio.charset.Charset
 
 import com.google.common.io.Files
-import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat
 import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
@@ -90,8 +89,13 @@ object Google {
 
     val jobs = res_1.map(_._1).distinct().collect()
     jobs.foreach(job => {
-      val toBeSaved = res_1.filter(_._1 == job).sortBy(_._2)
-      toBeSaved.saveAsTextFile(s"/opt/zequnyu/result_1/job_${job}")
+      val f = new File(s"/opt/zequnyu/result_1/job_${job}")
+      val toBeSaved = res_1.
+        filter(_._1 == job).
+        sortBy(_._2).
+        map(_._3).
+        reduce(_ + "\n" + _)
+      Files.write(toBeSaved.getBytes, f)
     })
 
 
@@ -143,11 +147,5 @@ object Google {
 //
 //    res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
 
-  }
-}
-
-class P1 extends MultipleTextOutputFormat[String, String]{
-  override def generateFileNameForKeyValue(key: String, value: String, name: String): String = {
-    s"job_${key}"
   }
 }
