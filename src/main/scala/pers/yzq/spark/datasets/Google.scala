@@ -82,52 +82,82 @@ object Google {
 //    }
 //    res_1.saveAsTextFile("hdfs://node1:9000/google/new_task_events")
 
+    // 这里定义保存的数据结构
+    // start time                         [0]
+    // end time                           [1]
+    // job ID                             [2]
+    // task index                         [3]
+    // machine ID                         [4]
+    // CPU rate                           [5]
+    // canonical memory usage             [6]
+    // assigned memory usage              [7]
+    // unmapped page cache                [8]
+    // total page cache                   [9]
+    // maximum memory usage               [10]
+    // disk I/O time                      [11]
+    // local disk space usage             [12]
+    // maximum CPU rate                   [13]
+    // maximum disk IO time               [14]
+    // cycles per instruction             [15]
+    // memory accesses per instruction    [16]
+    // sample portion                     [17]
+    // aggregation type                   [18]
+    // sampled CPU usage                  [19]
 
-    val right = sc.textFile("hdfs://node1:9000/google/task_usage_all.csv").
-      map(_.split(",", -1)).
-      map(l => ((l(2), l(3)), l.mkString(","))).
-      persist(StorageLevel.DISK_ONLY)
-    val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
-      map(_.split(",", -1)).
-      map(l => ((l(2), l(3)), l.mkString(","))).persist(StorageLevel.DISK_ONLY)
+//    val right = sc.textFile("hdfs://node1:9000/google/task_usage_all.csv").
+//      map(_.split(",", -1)).
+//      map(l => ((l(2), l(3)), l.mkString(","))).
+//      persist(StorageLevel.DISK_ONLY)
+//    val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
+//      map(_.split(",", -1)).
+//      map(l => ((l(2), l(3)), l.mkString(","))).persist(StorageLevel.DISK_ONLY)
+//
+//    val joined = left.join(right)
+//
+//    val res = joined.filter(f => {
+//      val timescope = f._2._1.split(",")
+//      val startTime = timescope(0).toLong
+//      val endTime = timescope(1).toLong
+//
+//      val records = f._2._2.split(",")
+//      val startRange = records(0).toLong
+//      val endRange = records(1).toLong
+//
+//      (startTime >= startRange && startTime <= endRange) ||
+//        (endTime >= startRange && endTime <= endRange)
+//    })
+//
+//    res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
 
-    val joined = left.join(right)
 
-    val res = joined.filter(f => {
-      val timescope = f._2._1.split(",")
-      val startTime = timescope(0).toLong
-      val endTime = timescope(1).toLong
-
-      val records = f._2._2.split(",")
-      val startRange = records(0).toLong
-      val endRange = records(1).toLong
-
-      (startTime >= startRange && startTime <= endRange) ||
-        (endTime >= startRange && endTime <= endRange)
+    val res_2 = sc.textFile("hdfs://node1:9000/google/new_task_usage").
+      map(_.replaceAll("[(|)]", "").split(",", -1)).
+      map(l => {
+        val key = l(0).split(",", -1)
+        val v = l(1).split(",", -1)
+        // path1的所有数据项全部保存.
+        val s1 = s"${v(0)},${v(1)},${v(2)},${v(3)},${v(4)}," +
+          s"${v(5)},${v(6)},${v(7)},${v(8)},${v(9)},${v(10)},${v(11)}"
+        // path2的数据项前5列丢弃, 保存剩余15项.
+        val s2 = s"${v(17)},${v(18)},${v(19)},${v(20)},${v(21)},${v(22)},${v(23)}" +
+          s"${v(24)},${v(25)},${v(26)},${v(27)},${v(28)},${v(29)},${v(30)},${v(31)}"
+        (key(0).toLong, key(1).toLong, v(0).toLong, v(1).toLong, s1, s2)
+      }).persist(StorageLevel.MEMORY_AND_DISK)
+    // 获取所有JobID, 感觉起始时间排序, 并按照JobId分组保存.
+    val jobs = res_2.map(_._1).collect()
+    jobs.foreach(j => {
+      val rdd = res_2.filter(_._1 == j).sortBy(_._2)
+      rdd.map(_._5).coalesce(1).
+        saveAsTextFile(s"hdfs://node1:9000/google/res/job_$j")
     })
-
-    res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
+    // 获取JobId_taskId_startTime_endTime分组保存.
+    val jtses = res_2.map(m => (m._1, m._2, m._3, m._4)).collect()
+    jtses.foreach(r => {
+      val rdd = res_2.filter(m => m._1 == r._1 && m._2 == r._2 && m._3 == r._3 && m._4 == r._4)
+      rdd.map(_._6).coalesce(1).
+        saveAsTextFile(s"hdfs://node1:9000/google/res/${r._1}_${r._2}_${r._3}_${r._4}")
+    })
+    res_2.unpersist(true)
+    sc.stop()
   }
-
-  // 这里定义保存的数据结构
-  // start time                         [0]
-  // end time                           [1]
-  // job ID                             [2]
-  // task index                         [3]
-  // machine ID                         [4]
-  // CPU rate                           [5]
-  // canonical memory usage             [6]
-  // assigned memory usage              [7]
-  // unmapped page cache                [8]
-  // total page cache                   [9]
-  // maximum memory usage               [10]
-  // disk I/O time                      [11]
-  // local disk space usage             [12]
-  // maximum CPU rate                   [13]
-  // maximum disk IO time               [14]
-  // cycles per instruction             [15]
-  // memory accesses per instruction    [16]
-  // sample portion                     [17]
-  // aggregation type                   [18]
-  // sampled CPU usage                  [19]
 }
