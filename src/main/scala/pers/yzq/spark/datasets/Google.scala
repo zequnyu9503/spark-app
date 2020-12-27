@@ -21,6 +21,7 @@ import java.io.File
 import java.nio.charset.Charset
 
 import com.google.common.io.Files
+import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat
 import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
@@ -66,7 +67,7 @@ object Google {
     // 过滤空数据.
     val filtered_1 = deleted_1.filter(l => l._3 != null)
     // 按照Job Id分组.
-    val res_1: RDD[(String, Long, String)] =
+    val res_1: RDD[(String, String)] =
       filtered_1.groupBy(f = v => (v._2, v._3)).flatMap {
       jt =>
         val status = jt._2.toArray.sortBy(_._1)
@@ -83,16 +84,10 @@ object Google {
             }
           }
         }
-        updated
-    }.persist(StorageLevel.MEMORY_ONLY_SER)
-
-    val jobs = res_1.map(_._1).distinct().collect()
-    jobs.foreach(job => {
-      val file = new File(s"/opt/zequnyu/jdata/job_${job}")
-      val saved = res_1.filter(_._1 == job).sortBy(_._2).map(_._3).collect()
-      Files.write(saved.mkString("\n").getBytes(Charset.defaultCharset()), file)
-    })
-
+        updated.sortBy(_._2).map(jt => (jt._1, jt._3))
+    }
+    res_1.saveAsHadoopFile("hdfs://node1:9000/google/res_1",
+      classOf[String], classOf[String], classOf[P1])
 
     // 这里定义保存的数据结构
     // start time                         [0]
@@ -141,5 +136,11 @@ object Google {
 //
 //    res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
 
+  }
+}
+
+class P1 extends MultipleTextOutputFormat[String, String]{
+  override def generateFileNameForKeyValue(key: String, value: String, name: String): String = {
+    s"job_${key}"
   }
 }
