@@ -94,6 +94,7 @@ object Google {
         filter(_._1 == job).
         sortBy(_._2).
         map(_._3).
+        distinct().
         reduce(_ + "\n" + _)
       Files.write(toBeSaved.getBytes, f)
     })
