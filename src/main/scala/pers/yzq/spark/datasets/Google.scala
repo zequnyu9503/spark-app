@@ -131,10 +131,10 @@ object Google {
 
 
     val res_2 = sc.textFile("hdfs://node1:9000/google/new_task_usage").
-      map(_.replaceAll("[(|)]", "").split(",", -1)).
+      map(l => l.substring(1, l.length - 1).split(",", -1)).
       map(l => {
-        val key = l(0).split(",", -1)
-        val v = l(1).split(",", -1)
+        val key = l(0).substring(1, l.length - 1).split(",", -1)
+        val v = l(1).substring(1, l.length - 1).split(",", -1)
         // path1的所有数据项全部保存.
         val s1 = s"${v(0)},${v(1)},${v(2)},${v(3)},${v(4)}," +
           s"${v(5)},${v(6)},${v(7)},${v(8)},${v(9)},${v(10)},${v(11)}"
