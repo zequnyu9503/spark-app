@@ -17,6 +17,10 @@
 
 package pers.yzq.spark.datasets
 
+import java.io.File
+import java.nio.charset.Charset
+
+import com.google.common.io.Files
 import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
@@ -84,10 +88,9 @@ object Google {
 
     val jobs = res_1.map(_._1).distinct().collect()
     jobs.foreach(job => {
-      val saved = res_1.filter(_._1 == job).sortBy(_._2).map(_._3)
-      saved.
-        coalesce(1).
-        saveAsTextFile(s"hdfs://node1:9000/google/res/job_${job}")
+      val file = new File(s"/opt/zequnyu/jdata/job_${job}")
+      val saved = res_1.filter(_._1 == job).sortBy(_._2).map(_._3).collect()
+      Files.write(saved.mkString("\n").getBytes(Charset.defaultCharset()), file)
     })
 
 
@@ -117,7 +120,7 @@ object Google {
 //      map(_.split(",", -1)).
 //      map(l => ((l(2), l(3)), l.mkString(","))).
 //      persist(StorageLevel.DISK_ONLY)
-//    val left = sc.textFile("hdfs://node1:9000/google/new_task_events").
+//    val left = res_1.map(_._3).
 //      map(_.split(",", -1)).
 //      map(l => ((l(2), l(3)), l.mkString(","))).persist(StorageLevel.DISK_ONLY)
 //
