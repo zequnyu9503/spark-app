@@ -85,7 +85,8 @@ object Google {
           }
         }
         updated
-    }
+    }.
+        persist(StorageLevel.MEMORY_ONLY_SER)
 
     val jobs = res_1.map(_._1).distinct().collect()
     jobs.foreach(job => {
