@@ -67,7 +67,7 @@ object Google {
     // 过滤空数据.
     val filtered_1 = deleted_1.filter(l => l._3 != null)
     // 按照Job Id分组.
-    val res_1: RDD[(String, String)] =
+    val resRDD: RDD[(String, Long, String)] =
       filtered_1.groupBy(f = v => (v._2, v._3)).flatMap {
       jt =>
         val status = jt._2.toArray.sortBy(_._1)
@@ -84,9 +84,11 @@ object Google {
             }
           }
         }
-        updated.sortBy(_._2).map(jt => (jt._1, jt._3))
+        updated
     }
-    res_1.saveAsHadoopFile("hdfs://node1:9000/google/res_1",
+    resRDD.groupBy(_._1).map(job => {
+      (job._1, job._2.toArray.sortBy(_._2).mkString("\n"))
+    }).saveAsHadoopFile("hdfs://node1:9000/google/res_1",
       classOf[String], classOf[String], classOf[P1])
 
     // 这里定义保存的数据结构
