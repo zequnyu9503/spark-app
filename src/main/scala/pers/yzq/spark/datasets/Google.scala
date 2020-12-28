@@ -97,7 +97,7 @@ object Google {
         toArray.
         sortBy(_._2).
         reduce(_._3 + "\n" + _._3)
-      s"${jobId}|${records}"
+      jobId + "|" + records
     }).saveAsTextFile("hdfs://node1:9000/google/origin_1.txt")
 
 //
