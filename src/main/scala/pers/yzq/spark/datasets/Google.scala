@@ -93,7 +93,10 @@ object Google {
 
     res_1.groupBy(_._1).map(job => {
       val jobId = job._1
-      val records = job._2.toArray.sortBy(_._2).reduce((a, b) => a._3 + "\n" + b._3)
+      val records = job._2.
+        toArray.
+        sortBy(_._2).
+        reduce((a: (String, Long, String), b: (String, Long, String)) => a._3 + "\n" + b._3)
       s"${jobId}|${records}"
     }).saveAsTextFile("hdfs://node1:9000/google/origin_1.txt")
 
