@@ -44,26 +44,26 @@ object Google {
     val sc = new SparkContext(conf)
     sc.setLogLevel("INFO")
 
-    val source = Source.fromFile("/opt/zequnyu/result_1/list.txt", "UTF-8")
-    val lines = source.getLines().toArray
-    val handled = lines.map(_.split("_")(1))
-
+//    val source = Source.fromFile("/opt/zequnyu/result_1/list.txt", "UTF-8")
+//    val lines = source.getLines().toArray
+//    val handled = lines.map(_.split("_")(1))
+//
     val origin_1 = sc.textFile("hdfs://node1:9000/google/task_events")
-
-    // task_events time                [0]             {0}
-    // missing info                    [1] <deleted>   { }
-    // job ID                          [2]             {1}
-    // task index                      [3] <not null>  {2}
-    // machine ID                      [4]             {3}
-    // event type                      [5]             {4}
-    // user                            [6] <deleted>   { }
-    // scheduling class                [7]             {5}
-    // priority                        [8]             {6}
-    // CPU request                     [9]             {7}
-    // memory request                  [10]            {8}
-    // disk space request              [11]            {9}
-    // different machines restriction  [12]            {10}
-
+//
+//    // task_events time                [0]             {0}
+//    // missing info                    [1] <deleted>   { }
+//    // job ID                          [2]             {1}
+//    // task index                      [3] <not null>  {2}
+//    // machine ID                      [4]             {3}
+//    // event type                      [5]             {4}
+//    // user                            [6] <deleted>   { }
+//    // scheduling class                [7]             {5}
+//    // priority                        [8]             {6}
+//    // CPU request                     [9]             {7}
+//    // memory request                  [10]            {8}
+//    // disk space request              [11]            {9}
+//    // different machines restriction  [12]            {10}
+//
     // 删除第1&6列.
     val deleted_1 = origin_1.map(_.split(",", -1)).
       filter(l => l(0).length <= 19).
@@ -89,73 +89,84 @@ object Google {
           }
         }
         updated
-    }.
-        persist(StorageLevel.MEMORY_ONLY_SER)
+    }
 
-    val jobs = res_1.map(_._1).distinct().collect().filter(job => {
-      !handled.contains(job)
-    })
+    res_1.groupBy(_._1).map(job => {
+      val jobId = job._1
+      val records = job._2.toArray.sortBy(_._2).reduce((a, b) => a._3 + "\n" + b._3)
+      s"${jobId}|${records}"
+    }).saveAsTextFile("hdfs://node1:9000/google/origin_1.txt")
 
-    jobs.foreach(job => {
-      val f = new File(s"/opt/zequnyu/result_1/job_${job}")
-      val toBeSaved = res_1.
-        filter(_._1 == job).
-        sortBy(_._2).
-        map(_._3).
-        distinct().
-        reduce(_ + "\n" + _)
-      Files.write(toBeSaved.getBytes, f)
-    })
+//
+//    val jobs = res_1.map(_._1).distinct().collect().filter(job => {
+//      !handled.contains(job)
+//    })
+//
+//    jobs.foreach(job => {
+//      val f = new File(s"/opt/zequnyu/result_1/job_${job}")
+//      val toBeSaved = res_1.
+//        filter(_._1 == job).
+//        sortBy(_._2).
+//        map(_._3).
+//        distinct().
+//        reduce(_ + "\n" + _)
+//      Files.write(toBeSaved.getBytes, f)
+//    })
+//
 
 
-
-    // 这里定义保存的数据结构
-    // start time                         [0]
-    // end time                           [1]
-    // job ID                             [2]
-    // task index                         [3]
-    // machine ID                         [4]
-    // CPU rate                           [5]
-    // canonical memory usage             [6]
-    // assigned memory usage              [7]
-    // unmapped page cache                [8]
-    // total page cache                   [9]
-    // maximum memory usage               [10]
-    // disk I/O time                      [11]
-    // local disk space usage             [12]
-    // maximum CPU rate                   [13]
-    // maximum disk IO time               [14]
-    // cycles per instruction             [15]
-    // memory accesses per instruction    [16]
-    // sample portion                     [17]
-    // aggregation type                   [18]
-    // sampled CPU usage                  [19]
-
+//    // 这里定义保存的数据结构
+//    // start time                         [0]
+//    // end time                           [1]
+//    // job ID                             [2]
+//    // task index                         [3]
+//    // machine ID                         [4]
+//    // CPU rate                           [5]
+//    // canonical memory usage             [6]
+//    // assigned memory usage              [7]
+//    // unmapped page cache                [8]
+//    // total page cache                   [9]
+//    // maximum memory usage               [10]
+//    // disk I/O time                      [11]
+//    // local disk space usage             [12]
+//    // maximum CPU rate                   [13]
+//    // maximum disk IO time               [14]
+//    // cycles per instruction             [15]
+//    // memory accesses per instruction    [16]
+//    // sample portion                     [17]
+//    // aggregation type                   [18]
+//    // sampled CPU usage                  [19]
+//
 //    val right = sc.textFile("hdfs://node1:9000/google/task_usage_all.csv").
 //      map(_.split(",", -1)).
 //      map(l => ((l(2), l(3)), l.mkString(","))).
 //      persist(StorageLevel.DISK_ONLY)
 //    val left = res_1.map(_._3).
 //      map(_.split(",", -1)).
-//      map(l => ((l(2), l(3)), l.mkString(","))).persist(StorageLevel.DISK_ONLY)
+//      map(l => ((l(2), l(3)), l.mkString(","))).persist(StorageLevel.MEMORY_ONLY_SER)
 //
 //    val joined = left.join(right)
 //
 //    val res = joined.filter(f => {
-//      val timescope = f._2._1.split(",")
+//      val timescope = f._2._1.split(",", -1)
 //      val startTime = timescope(0).toLong
 //      val endTime = timescope(1).toLong
 //
-//      val records = f._2._2.split(",")
+//      val records = f._2._2.split(",", -1)
 //      val startRange = records(0).toLong
 //      val endRange = records(1).toLong
 //
 //      (startTime >= startRange && startTime <= endRange) ||
 //        (endTime >= startRange && endTime <= endRange)
+//    }).map(f => {
+//      val d = f._2._2.split(",", -1)
+//      // 前5列数据丢弃, 构造Key作为第一个.
+//      s"${d(2)}-${d(3)}-${d(0)}-${d(1)},${d(5)},${d(6)}," +
+//        s"${d(7)},${d(8)},${d(9)},${d(10)},${d(11)}," +
+//        s"${d(12)},${d(13)},${d(14)},${d(15)},${d(16)}," +
+//        s"${d(17)},${d(18)},${d(19)}"
 //    })
 //
 //    res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
-
-
   }
 }
