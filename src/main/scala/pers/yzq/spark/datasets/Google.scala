@@ -96,7 +96,8 @@ object Google {
       val records = job._2.
         toArray.
         sortBy(_._2).
-        reduce(_._3 + "\n" + _._3)
+        map(_._3).
+        reduce(_ + "\n" + _)
       jobId + "|" + records
     })
 
