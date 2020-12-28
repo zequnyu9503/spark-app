@@ -96,7 +96,7 @@ object Google {
       val records = job._2.
         toArray.
         sortBy(_._2).
-        reduce((a: (String, Long, String), b: (String, Long, String)) => a._3 + "\n" + b._3)
+        reduce(_._3 + "\n" + _._3)
       s"${jobId}|${records}"
     }).saveAsTextFile("hdfs://node1:9000/google/origin_1.txt")
 
