@@ -91,14 +91,16 @@ object Google {
         updated
     }
 
-    res_1.groupBy(_._1).map(job => {
+    val res_2: RDD[String] = res_1.groupBy(_._1).map(job => {
       val jobId = job._1
       val records = job._2.
         toArray.
         sortBy(_._2).
         reduce(_._3 + "\n" + _._3)
       jobId + "|" + records
-    }).saveAsTextFile("hdfs://node1:9000/google/origin_1.txt")
+    })
+
+    res_2.saveAsTextFile("hdfs://node1:9000/google/origin_1.txt")
 
 //
 //    val jobs = res_1.map(_._1).distinct().collect().filter(job => {
