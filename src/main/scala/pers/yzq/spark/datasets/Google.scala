@@ -26,6 +26,7 @@ import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
 
 object Google {
 
@@ -42,6 +43,10 @@ object Google {
     val conf = new SparkConf().setAppName("Google")
     val sc = new SparkContext(conf)
     sc.setLogLevel("INFO")
+
+    val source = Source.fromFile("/opt/zequnyu/result_1/list.txt", "UTF-8")
+    val lines = source.getLines().toArray
+    val handled = lines.map(_.split("_")(1))
 
     val origin_1 = sc.textFile("hdfs://node1:9000/google/task_events")
 
@@ -87,7 +92,10 @@ object Google {
     }.
         persist(StorageLevel.MEMORY_ONLY_SER)
 
-    val jobs = res_1.map(_._1).distinct().collect()
+    val jobs = res_1.map(_._1).distinct().collect().filter(job => {
+      !handled.contains(job)
+    })
+
     jobs.foreach(job => {
       val f = new File(s"/opt/zequnyu/result_1/job_${job}")
       val toBeSaved = res_1.
@@ -147,6 +155,7 @@ object Google {
 //    })
 //
 //    res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
+
 
   }
 }
