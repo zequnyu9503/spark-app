@@ -52,7 +52,7 @@ object LocalHandler {
       true
     }
 
-    override def getResult: Int = total
+    override def getResult: Integer = total
   }
 
 
