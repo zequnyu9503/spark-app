@@ -21,11 +21,13 @@ public class JobHandler implements LineProcessor<String> {
         String [] splited = filtered.split(",", -1);
 
         if (job != splited[0]) {
+            total += 1L;
             job = splited[0];
             nf = new File("/opt/zequnyu/res_1/job_" + job);
 
-            if (total % 100000 == 0) System.out.println(total);
+            if (total % 100000L == 0) System.out.println(total);
         }
+
         String record = new StringBuilder().
                 append(splited[1]).append(",").
                 append(splited[2]).append(",").
