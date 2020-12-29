@@ -71,18 +71,18 @@ object Google {
     // 过滤空数据.
     val filtered_1 = deleted_1.filter(l => l._3 != null)
     // 按照Job Id分组.
-    val res_1: RDD[(String, Long, String)] =
+    val res_1: RDD[(Long, Long, String)] =
       filtered_1.groupBy(f = v => (v._2, v._3)).flatMap {
       jt =>
         val status = jt._2.toArray.sortBy(_._1)
-        val updated = new ArrayBuffer[(String, Long, String)]()
+        val updated = new ArrayBuffer[(Long, Long, String)]()
         for (index <- status.indices) {
           if (status(index)._5 == STR_EVENT_TYPE_SCHEDULE) {
             val start = status(index)._1
             if (index + 1 < status.length) {
               val m = status(index + 1)
               if (STR_EVENT_TYPE_OTHERS.contains(m._5)) {
-                updated.append((jt._1._1, start, s"$start,${m._1},${m._2},${m._3},${m._4}" +
+                updated.append((jt._1._1.toLong, start, s"$start,${m._1},${m._2},${m._3},${m._4}" +
                   s",${m._5},${m._6},${m._7},${m._8},${m._9},${m._10},${m._11}"))
               }
             }
@@ -91,7 +91,7 @@ object Google {
         updated
     }
 
-    val res_2: RDD[String] = res_1.groupBy(_._1).map(job => {
+    val res_2 = res_1.groupBy(_._1).map(job => {
       val jobId = job._1
       val records = job._2.
         toArray.
