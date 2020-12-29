@@ -42,6 +42,7 @@ object LocalHandler {
       val splited = filtered.split(",", -1)
 
       if (job != splited(0)) {
+        print("#")
         job = splited(0)
         nf = new File(s"/opt/zequnyu/res_1/job_$job")
       }
