@@ -17,7 +17,7 @@ public class JobHandler implements LineProcessor<String> {
 
     @Override
     public boolean processLine(String line) throws IOException {
-        String filtered = line.replaceAll("[(|)]]", "");
+        String filtered = line.replaceAll("[(|)]", "");
         String [] splited = filtered.split(",", -1);
 
         if (job != splited[0]) {
