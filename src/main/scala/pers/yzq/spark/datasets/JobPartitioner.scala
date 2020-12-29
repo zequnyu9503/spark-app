@@ -26,8 +26,7 @@ class JobPartitioner extends Partitioner {
   private val total = 672004L
 
   override def numPartitions: Int = {
-    // 5个计算节点, 每个节点24个核心, 每个核心处理2个分区.
-    9 * 24 * 2
+    450
   }
 
   override def getPartition(key: Any): Int = {

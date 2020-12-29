@@ -150,7 +150,7 @@ object Google {
       map(f => ((f._2(2), f._2(3)), f._1)).
       persist(StorageLevel.DISK_ONLY)
     val left = sc.textFile("hdfs://node1:9000/google/res_1.txt").
-      map(_.replace("[(|)]", "")).
+      map(f => f.substring(1, f.length - 1)).
       map(_.split(",", -1)).
       map(l => ((l(3), l(4)), (l(1).toLong, l(2).toLong))).
       persist(StorageLevel.MEMORY_ONLY_SER)
@@ -173,18 +173,16 @@ object Google {
       val taskId = f._1._2
       val st = f._2._1._1
       val et = f._2._1._2
-      s"${jobId}-${taskId}-${st}-${et}|${f._2._2}"
-    })
-
-//      .map(f => {
-//        val d = f._2._2.split(",", -1)
-//        // 前5列数据丢弃, 构造Key作为第一个.
-//        val vals = s"${d(5)},${d(6)}," +
-//          s"${d(7)},${d(8)},${d(9)},${d(10)},${d(11)}," +
-//          s"${d(12)},${d(13)},${d(14)},${d(15)},${d(16)}," +
-//          s"${d(17)},${d(18)},${d(19)}"
-//        (s"${d(2)}-${d(3)}-${d(0)}-${d(1)}", vals)
-//      }).sortBy(_._1).map(f => s"${f._1}|${f._2}")
+      (s"${jobId}-${taskId}-${st}-${et}", ${f._2._2})
+    }).sortBy(_._1).map(f => {
+        val d = f._1.split(",", -1)
+        // 前5列数据丢弃, 构造Key作为第一个.
+        val vals = s"${d(5)},${d(6)}," +
+          s"${d(7)},${d(8)},${d(9)},${d(10)},${d(11)}," +
+          s"${d(12)},${d(13)},${d(14)},${d(15)},${d(16)}," +
+          s"${d(17)},${d(18)},${d(19)}"
+        s"${d(2)}-${d(3)}-${d(0)}-${d(1)}|${vals}"
+      })
 //
     res.saveAsTextFile("hdfs://node1:9000/google/new_unsort_task_usage")
   }
