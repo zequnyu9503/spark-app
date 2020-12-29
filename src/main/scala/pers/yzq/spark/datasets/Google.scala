@@ -173,7 +173,7 @@ object Google {
       val taskId = f._1._2
       val st = f._2._1._1
       val et = f._2._1._2
-      (s"${jobId}-${taskId}-${st}-${et}", ${f._2._2})
+      (s"${jobId}-${taskId}-${st}-${et}", f._2._2)
     }).sortBy(_._1).map(f => {
         val d = f._1.split(",", -1)
         // 前5列数据丢弃, 构造Key作为第一个.
