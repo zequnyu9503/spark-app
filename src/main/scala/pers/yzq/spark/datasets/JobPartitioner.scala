@@ -27,11 +27,11 @@ class JobPartitioner extends Partitioner {
 
   override def numPartitions: Int = {
     // 5个计算节点, 每个节点24个核心, 每个核心处理2个分区.
-    5 * 24 * 2
+    9 * 24 * 2
   }
 
   override def getPartition(key: Any): Int = {
-    val k = key.asInstanceOf[String].toLong
-    ((k - minKey) / ((maxKey - minKey) / numPartitions)).toInt % numPartitions
+    val k = key.asInstanceOf[(String, String)]
+    ((k._1.toLong - minKey) / ((maxKey - minKey) / numPartitions)).toInt % numPartitions
   }
 }

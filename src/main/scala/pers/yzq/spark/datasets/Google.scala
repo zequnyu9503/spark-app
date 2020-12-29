@@ -155,7 +155,7 @@ object Google {
       map(l => ((l(3), l(4)), (l(1).toLong, l(2).toLong))).
       persist(StorageLevel.MEMORY_ONLY_SER)
 
-    val joined = left.join(right)
+    val joined = left.join(right, partitioner = new JobPartitioner)
 
     val res = joined.filter(f => {
       val va: ((Long, Long), String) = f._2
