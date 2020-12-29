@@ -178,7 +178,7 @@ object Google {
         s"${d(12)},${d(13)},${d(14)},${d(15)},${d(16)}," +
         s"${d(17)},${d(18)},${d(19)}"
       (s"${d(2)}-${d(3)}-${d(0)}-${d(1)}", vals)
-    }).sortBy(_._1)
+    }).sortBy(_._1).map(f => s"${f._1}|${f._2}")
 
     res.saveAsTextFile("hdfs://node1:9000/google/new_task_usage")
   }
