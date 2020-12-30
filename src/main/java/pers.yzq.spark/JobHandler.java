@@ -40,7 +40,7 @@ public class JobHandler implements LineProcessor<String> {
                 append(splited[9]).append(",").
                 append(splited[10]).append(",").
                 append(splited[11]).append(",").
-                append(splited[12]).append(",").toString();
+                append(splited[12]).append("\n").toString();
         Files.append(record, nf, Charset.defaultCharset());
         return true;
     }
