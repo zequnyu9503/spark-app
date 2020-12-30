@@ -414,7 +414,7 @@ object Google {
       map(_.split(",", -1)).
       map(l => ((l(3), l(4)), (l(1).toLong, l(2).toLong))).
       filter(f => !exclude.contains(f._1._1.toLong)).
-      persist(StorageLevel.MEMORY_ONLY_SER)
+      persist(StorageLevel.MEMORY_ONLY)
 
     val joined = left.join(right)
 
