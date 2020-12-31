@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 public class LocalHandler {
 
     public static void main(String[] args) throws IOException {
-        File f = new File("/opt/zequnyu/res_1.txt");
+        File f = new File("/opt/zequnyu/new_nomax_unsort_task_usage");
         Files.readLines(f,
                 Charset.defaultCharset(),
                 new JobHandler());

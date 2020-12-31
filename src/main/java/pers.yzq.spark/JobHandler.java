@@ -17,31 +17,17 @@ public class JobHandler implements LineProcessor<String> {
 
     @Override
     public boolean processLine(String line) throws IOException {
-        String filtered = line.replaceAll("[(|)]", "");
-        String [] splited = filtered.split(",", -1);
+        String [] splited = line.split("|", -1);
 
         if (job != splited[0]) {
             total += 1L;
             job = splited[0];
-            nf = new File("/opt/zequnyu/res_1/job_" + job);
+            nf = new File("/opt/zequnyu/res_2/" + splited[0]);
 
             if (total % 100000L == 0) System.out.println(total);
         }
 
-        String record = new StringBuilder().
-                append(splited[1]).append(",").
-                append(splited[2]).append(",").
-                append(splited[3]).append(",").
-                append(splited[4]).append(",").
-                append(splited[5]).append(",").
-                append(splited[6]).append(",").
-                append(splited[7]).append(",").
-                append(splited[8]).append(",").
-                append(splited[9]).append(",").
-                append(splited[10]).append(",").
-                append(splited[11]).append(",").
-                append(splited[12]).append("\n").toString();
-        Files.append(record, nf, Charset.defaultCharset());
+        Files.append(splited[1] + "\n", nf, Charset.defaultCharset());
         return true;
     }
 
