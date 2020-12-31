@@ -17,7 +17,7 @@ public class JobHandler implements LineProcessor<String> {
 
     @Override
     public boolean processLine(String line) throws IOException {
-        String [] splited = line.split("|", -1);
+        String [] splited = line.split("\\|", -1);
 
         if (job != splited[0]) {
             total += 1L;
